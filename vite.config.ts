@@ -21,6 +21,7 @@ const staticRoutes = [
   'policies',
   'trust',
   'account/recovery',
+  'auth/callback',
 ]
 const githubPages = process.env.STATIC_HOST === 'github-pages'
 const pagesHosting = (): Plugin => ({
@@ -45,6 +46,7 @@ const pagesHosting = (): Plugin => ({
     // its own copy; only dynamic detail routes fall back to 404.html.
     copyFileSync(resolve('dist/index.html'), resolve('dist/404.html'))
     mkdirSync(resolve('dist/account'), { recursive: true })
+    mkdirSync(resolve('dist/auth'), { recursive: true })
     for (const route of staticRoutes)
       copyFileSync(resolve('dist/index.html'), resolve(`dist/${route}.html`))
   },

@@ -1,6 +1,6 @@
 {
   "scope": "PASS — LOCAL ONLY: source/ignore/hash review; no cloud request, OTP or hosted RLS test",
-  "migrationCount": 21,
+  "migrationCount": 22,
   "migrations": [
     {
       "file": "20261010000100_schema.sql",
@@ -106,6 +106,11 @@
       "file": "20261014000100_storage_retention.sql",
       "sha256": "efe2c4c958a9a14ec65d06d3e00cfdc18adf8791210b5352bf920eac43bf6bfa",
       "bytes": 987
+    },
+    {
+      "file": "20261014000200_github_participation.sql",
+      "sha256": "e99966b283f0784cfad0b732b805a498b7caeeae18a8d9d7eec68509e468adeb",
+      "bytes": 1293
     }
   ],
   "environment": [
@@ -118,8 +123,8 @@
       ]
     }
   ],
-  "backup": ".cloud/backups/2026-10-14T14-37-37-077Z",
-  "filesCopied": 167,
+  "backup": ".cloud/backups/2026-10-14T17-09-56-078Z",
+  "filesCopied": 171,
   "fingerprints": [
     {
       "file": "src/App.tsx",
@@ -174,6 +179,10 @@
       "sha256": "63e1a694ff50de137670130f36873c5c9f5a3c0a5bcb711cb7c1ef7af8e4e608"
     },
     {
+      "file": "src/domain/oauth.ts",
+      "sha256": "a93d7ed4b2672508503e7522d16a1f17354f56060243a92c41746a346e9eab37"
+    },
+    {
       "file": "src/domain/paths.ts",
       "sha256": "913b6f0d6ff143d4af0a4fbb1c1c07f82998b3fa2fc103ca6427094f6d605288"
     },
@@ -207,7 +216,7 @@
     },
     {
       "file": "src/features/Auth.tsx",
-      "sha256": "7f0b4cc625410a6f9d6427a3d5b6f2e373bd325069516d128d80b9e9d8d6c77b"
+      "sha256": "9c62595b163bb5b3a736bf5c39bf65b1d6d170cd6dbae9564196f7749f5fc1be"
     },
     {
       "file": "src/features/Avatar.tsx",
@@ -238,6 +247,10 @@
       "sha256": "942c2de3ba2c948dc30235723e1d5faa47063564503af0679f1ee80d3fa056d2"
     },
     {
+      "file": "src/features/OAuthCallback.tsx",
+      "sha256": "1351c37b3d88af17e5471ce82eabeca656d485e8b31998f9526fc058801974a8"
+    },
+    {
       "file": "src/features/ProjectImages.tsx",
       "sha256": "3d0ed372eb048c5ad584da957722059585f5564a043f5f4fe6b5774f1926ac84"
     },
@@ -259,7 +272,7 @@
     },
     {
       "file": "src/main.tsx",
-      "sha256": "11beb821ade03feb67546b6af56d3ef4e5c411ef7dda5330d53da39e5b3f5fe7"
+      "sha256": "23aa1d2cc97d94dfbe05a44cebe1a947c2de4a33470e0ab7d9969be412384edd"
     },
     {
       "file": "src/styles.css",
@@ -267,11 +280,7 @@
     },
     {
       "file": "src/Workbench.tsx",
-      "sha256": "9c6dcebdc7da63e7b715a41dc666bbf2b6c4a1d522913ddc4267a4e14233d138"
-    },
-    {
-      "file": "scripts/.pwa-probe.tmp.mjs",
-      "sha256": "29a9621a19d52342114585bf3ec8628c7138cea68b465849e85034d3a28de1b5"
+      "sha256": "08292a30131645da9f3f67a8cfea2797572c24b360b2b1c6422d75a3094bc7f9"
     },
     {
       "file": "scripts/apply-final-rls.mjs",
@@ -298,6 +307,10 @@
       "sha256": "e853ac159530ffbfb1a3ed9a5f726ec2f81851045ca4ceb7ab166183cc329130"
     },
     {
+      "file": "scripts/check-github-oauth.mjs",
+      "sha256": "90161a65a4a498875f9288a067a01e7db23b08b2cc61ee2610c7148a42ea4948"
+    },
+    {
       "file": "scripts/cleanup-storage.mjs",
       "sha256": "191495a8e31424756c6314cf9b5aa71b39e537f1d9adac48b8cb05ffd4c5ac06"
     },
@@ -311,7 +324,7 @@
     },
     {
       "file": "scripts/cloud-preflight.mjs",
-      "sha256": "4870fbb618cac2083d4c7943e7c288feaa720a693b4b3bde55e26523a43ecf4f"
+      "sha256": "9a291161617af629e0ad37d47e2d97f4385fdf8035f8db3e63d448550f1e6102"
     },
     {
       "file": "scripts/cloud-target.mjs",
@@ -391,7 +404,7 @@
     },
     {
       "file": "scripts/test-cloud-catalog.mjs",
-      "sha256": "aa494d867241a6611b6d90d3661e624cf1e913696e52d47d2e1a0af2429b54cf"
+      "sha256": "075ce595f19d3100c0a37c34535f811a75ee23c8c704cc37d657c227e31bcfdb"
     },
     {
       "file": "scripts/test-connected-staging.mjs",
@@ -399,7 +412,7 @@
     },
     {
       "file": "scripts/test-db.mjs",
-      "sha256": "235f07967dbbf63e78117604eeb70807a7d7b26c9e3cbacc580a466c71664ffe"
+      "sha256": "ab69acb8fae4c542c960c43ebdd01a9a51300d515358f5903f919551a01cf219"
     },
     {
       "file": "scripts/test-delivered-recovery-staging.mjs",
@@ -439,7 +452,7 @@
     },
     {
       "file": "scripts/test-rls-initplan.mjs",
-      "sha256": "a83b722fe6f8201910089665fd3daeee6ef47462108d0b6dc7002ea6511a6415"
+      "sha256": "d9f0ae3f87e761eb9f784daab686bd99943b44d531fee0019d363b70a868e563"
     },
     {
       "file": "scripts/test-source-connectivity.mjs",
@@ -520,6 +533,10 @@
     {
       "file": "tests/gateway.test.ts",
       "sha256": "5f51a5b4f93dfedad626fa31bb17d6ce5ac0e6641f3afcd04bcc791a15bfbd67"
+    },
+    {
+      "file": "tests/oauth-arrival.test.ts",
+      "sha256": "efc8781678470af725b2bd462c32d8e9e03e149ba290e3d81602ccd63509f52e"
     },
     {
       "file": "tests/processor-http.test.ts",
@@ -678,6 +695,10 @@
       "sha256": "efe2c4c958a9a14ec65d06d3e00cfdc18adf8791210b5352bf920eac43bf6bfa"
     },
     {
+      "file": "supabase/migrations/20261014000200_github_participation.sql",
+      "sha256": "e99966b283f0784cfad0b732b805a498b7caeeae18a8d9d7eec68509e468adeb"
+    },
+    {
       "file": "supabase/seed.sql",
       "sha256": "1008ac24e73c309958e07bb53161dbecd1a63568428f4e10722ca4e9021951ca"
     },
@@ -767,7 +788,7 @@
     },
     {
       "file": "vite.config.ts",
-      "sha256": "3a074817cc0d0df85539148d529a28c930f6d79a75f9a4058e80a3af50471e81"
+      "sha256": "362ec3f84407d336bbc064f95cdc1622cfc17fe2ad2cfef89a0b2f4746f80635"
     },
     {
       "file": "tsconfig.json",

@@ -6,9 +6,10 @@ const migrationNames = (await readdir('supabase/migrations'))
   .filter((f) => f.endsWith('.sql'))
   .sort()
 if (
-  migrationNames.length !== 21 ||
+  migrationNames.length !== 22 ||
   migrationNames[19] !== '20261013000100_rls_initplan.sql' ||
   migrationNames[20] !== '20261014000100_storage_retention.sql' ||
+  migrationNames[21] !== '20261014000200_github_participation.sql' ||
   migrationNames
     .slice(0, 19)
     .some(

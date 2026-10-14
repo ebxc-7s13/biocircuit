@@ -1,0 +1,6 @@
+
+> biocircuit@0.1.0 format:check
+> prettier --check src scripts tests supabase/functions *.json *.ts *.js
+
+Checking formatting...
+All matched files use Prettier code style!

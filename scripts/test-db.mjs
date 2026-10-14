@@ -25,7 +25,7 @@ const deny = async (fn, label) => {
   check(denied, label)
 }
 await db.exec(
-  `create role anon;create role authenticated;create role service_role bypassrls;create schema auth;create schema storage;create table auth.users(id uuid primary key,phone_confirmed_at timestamptz);create function auth.uid()returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to anon,authenticated;grant execute on function auth.uid()to anon,authenticated;create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);create table storage.objects(id uuid primary key,bucket_id text,name text);alter table storage.objects enable row level security;`,
+  `create role anon;create role authenticated;create role service_role bypassrls;create schema auth;create schema storage;create table auth.users(id uuid primary key,phone_confirmed_at timestamptz);create table auth.identities(id uuid primary key default gen_random_uuid(),user_id uuid not null references auth.users(id) on delete cascade,provider text not null);create function auth.uid()returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to anon,authenticated;grant execute on function auth.uid()to anon,authenticated;create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);create table storage.objects(id uuid primary key,bucket_id text,name text);alter table storage.objects enable row level security;`,
 )
 for (const f of (await readdir('supabase/migrations')).sort())
   if (f.endsWith('.sql'))
@@ -977,6 +977,79 @@ check(
 check(
   (await scalar("select to_regnamespace('cron') is null")) === true,
   'retention schedule is skipped where pg_cron is unavailable',
+)
+// GitHub OAuth identity → automatic preview membership (migration 22).
+await db.exec('reset role')
+const [emailOnly, viaGithub, rejectedUser, suspendedUser] = Array.from(
+  { length: 4 },
+  () => randomUUID(),
+)
+for (const id of [emailOnly, viaGithub, rejectedUser, suspendedUser])
+  await db.query('insert into auth.users values($1,null)', [id])
+await db.query("update public.profiles set membership='rejected' where id=$1", [
+  rejectedUser,
+])
+await db.query('update public.profiles set suspended=true where id=$1', [
+  suspendedUser,
+])
+const membershipOf = (id) =>
+  scalar('select membership from public.profiles where id=$1', [id])
+await db.query(
+  "insert into auth.identities(user_id,provider)values($1,'email')",
+  [emailOnly],
+)
+check(
+  (await membershipOf(emailOnly)) === 'not_submitted',
+  'an email identity alone never grants membership',
+)
+await db.query(
+  "insert into auth.identities(user_id,provider)values($1,'github')",
+  [viaGithub],
+)
+check(
+  (await membershipOf(viaGithub)) === 'approved' &&
+    (await scalar(
+      "select count(*)::int from public.audit where action='membership_auto_github' and target_id=$1",
+      [viaGithub],
+    )) === 1,
+  'a GitHub OAuth identity approves preview membership with an audit record',
+)
+for (const id of [rejectedUser, suspendedUser])
+  await db.query(
+    "insert into auth.identities(user_id,provider)values($1,'github')",
+    [id],
+  )
+check(
+  (await membershipOf(rejectedUser)) === 'rejected' &&
+    (await membershipOf(suspendedUser)) === 'not_submitted',
+  'GitHub identity never overrides a staff rejection or a suspension',
+)
+for (const role of ['anon', 'authenticated']) {
+  await identity(emailOnly, role)
+  let denied = false
+  try {
+    await db.query(
+      "insert into auth.identities(user_id,provider)values($1,'github')",
+      [emailOnly],
+    )
+  } catch {
+    denied = true
+  }
+  await db.exec('reset role')
+  check(denied, role + ' cannot create an Auth identity to self-approve')
+  let execDenied = false
+  await identity(emailOnly, role)
+  try {
+    await db.query('select private.approve_github_identity()')
+  } catch {
+    execDenied = true
+  }
+  await db.exec('reset role')
+  check(execDenied, role + ' cannot call the approval trigger function')
+}
+check(
+  (await membershipOf(emailOnly)) === 'not_submitted',
+  'denied attempts left the email-only account unapproved',
 )
 console.log(
   'Database authorization checks passed: ' +

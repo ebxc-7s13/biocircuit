@@ -1,0 +1,92 @@
+
+> biocircuit@0.1.0 test:e2e
+> playwright test
+
+
+Running 47 tests using 1 worker
+
+  ok  1 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan / (16.8s)
+  ok  2 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /feed (4.3s)
+  ok  3 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /explore (3.4s)
+  ok  4 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /questions (3.7s)
+  ok  5 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /collaborators (3.1s)
+  ok  6 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /saved (2.9s)
+  ok  7 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /projects (3.0s)
+  ok  8 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /journal (2.9s)
+  ok  9 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /profile (2.6s)
+  ok 10 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /settings (2.7s)
+  ok 11 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /policies (2.4s)
+  ok 12 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /notifications (2.6s)
+  ok 13 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /trust (2.5s)
+  ok 14 tests\e2e\accessibility.spec.ts:19:3 › WCAG automated scan /member/10000000-0000-4000-8000-000000000002 (2.8s)
+  ok 15 tests\e2e\accessibility.spec.ts:35:1 › dark theme and mobile accessibility, actual screenshots (12.7s)
+  ok 16 tests\e2e\art-direction.spec.ts:4:1 › dark first visit, self-hosted typography, glass and persistent motion control (2.6s)
+  ok 17 tests\e2e\art-direction.spec.ts:56:1 › blue project hover preserves geometry and animation phase, keyboard opens real workspace (5.9s)
+  ok 18 tests\e2e\art-direction.spec.ts:120:1 › touch preview is static and a single tap navigates without horizontal overflow (1.7s)
+  ok 19 tests\e2e\art-direction.spec.ts:151:1 › reduced motion and short-phone first content remain usable (3.4s)
+  ok 20 tests\e2e\art-direction.spec.ts:183:1 › light surfaces, scholarly error and composer preserve contrast and accessible controls (37.7s)
+  ok 21 tests\e2e\redesign.spec.ts:4:1 › Global search keeps focus while typing; discovery categories and clear actions work (2.8s)
+  ok 22 tests\e2e\redesign.spec.ts:29:1 › Topic navigation, question statuses, bookmarks and saved categories preserve real local state (2.8s)
+  ok 23 tests\e2e\redesign.spec.ts:69:1 › Post menus support keyboard dismissal, edit, report, and actual mute operations (6.3s)
+  ok 24 tests\e2e\redesign.spec.ts:127:1 › Mobile navigation and composer are accessible, focus trapped, and reachable above bottom navigation (3.7s)
+  x  25 tests\e2e\redesign.spec.ts:171:1 › Auth distinguishes demo phone status and review status, with accessible modal controls (6.4s)
+  ok 26 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 320px (11.3s)
+  ok 27 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 375px (10.4s)
+  ok 28 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 390px (10.5s)
+  ok 29 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 768px (11.4s)
+  ok 30 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 1024px (12.7s)
+  ok 31 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 1280px (12.6s)
+  ok 32 tests\e2e\redesign.spec.ts:195:3 › Every major route reflows at 1440px (11.6s)
+  ok 33 tests\e2e\redesign.spec.ts:227:1 › Native vertical feed scroll and back navigation restore the reading position (1.5s)
+  ok 34 tests\e2e\workbench.spec.ts:2:1 › desktop social navigation, publishing, save, reply and accepted-answer journey (6.8s)
+  ok 35 tests\e2e\workbench.spec.ts:87:1 › project creation, private workspace, log and archive (3.5s)
+  ok 36 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 320px (2.3s)
+  ok 37 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 375px (2.2s)
+  ok 38 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 390px (2.2s)
+  ok 39 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 430px (1.9s)
+  ok 40 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 768px (1.9s)
+  ok 41 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 1024px (1.8s)
+  ok 42 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 1280px (2.1s)
+  ok 43 tests\e2e\workbench.spec.ts:135:3 › responsive reflow and history at 1440px (2.4s)
+  ok 44 tests\e2e\workbench.spec.ts:164:1 › reduced motion, keyboard shortcuts, modal Escape and focus return (1.8s)
+  ok 45 tests\e2e\workbench.spec.ts:190:1 › trust console denied, provider failure honest and theme persists (4.1s)
+  ok 46 tests\e2e\workbench.spec.ts:218:1 › member routes, follow state and persisted notification categories (2.9s)
+  ok 47 tests\e2e\workbench.spec.ts:236:1 › local draft recovery and source selection never fabricate scholarly results (3.3s)
+
+
+  1) tests\e2e\redesign.spec.ts:171:1 › Auth distinguishes demo phone status and review status, with accessible modal controls 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Phone confirmation', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Phone confirmation', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Phone confirmation', { exact: true })
+
+
+      178 |   await expect(
+      179 |     page.getByText('Phone confirmation', { exact: true }),
+    > 180 |   ).toBeVisible()
+          |     ^
+      181 |   await expect(
+      182 |     page.getByText('Not verified · demo', { exact: false }),
+      183 |   ).toBeVisible()
+        at D:\personal_projects\my apps\biocircuit-source\biocircuit\tests\e2e\redesign.spec.ts:180:5
+
+    Error Context: test-results\redesign-Auth-distinguishe-37e43-h-accessible-modal-controls\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\redesign-Auth-distinguishe-37e43-h-accessible-modal-controls\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\redesign-Auth-distinguishe-37e43-h-accessible-modal-controls\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\redesign.spec.ts:171:1 › Auth distinguishes demo phone status and review status, with accessible modal controls 
+  46 passed (4.5m)

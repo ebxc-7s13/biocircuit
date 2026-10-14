@@ -1,0 +1,138 @@
+
+> biocircuit@0.1.0 test:db
+> node scripts/test-db.mjs
+
+PASS all versioned migrations execute on PostgreSQL (PGlite)
+PASS publish retries are idempotent
+PASS client cannot assign membership
+PASS client cannot assign administrative role
+PASS pending applicant cannot reply
+PASS pending applicant cannot read member post
+PASS other member cannot edit another author post
+PASS other member cannot accept answer
+PASS reply notification recorded for asker
+PASS accepted answer ledger deduplicated
+PASS accepted answer awards exactly 20
+PASS accepted answer notification deduplicated
+PASS self helpful vote rejected
+PASS self reaction rejected
+PASS bookmark retry does not toggle twice
+PASS other member cannot read private bookmarks
+PASS cross-account notifications hidden
+PASS guessing private post UUID does not reveal it
+PASS private post mutation denied across accounts
+PASS other member cannot read private application
+PASS member cannot review eligibility
+PASS reviewer reads application queue
+PASS review decision auditable
+PASS applicant observes real review state
+PASS private project hidden from other member
+PASS private project collaboration bypass denied
+PASS sender cannot accept own collaboration
+PASS accepted collaborator can read private project
+PASS removed collaborator loses project access
+PASS symmetric blocking excludes posts
+PASS blocked member cannot reply
+PASS moderator cannot access academic records
+PASS removed content excluded from published research after moderation
+PASS moderation invalidates contribution award
+PASS claimant can see scoped moderation reason
+PASS other member cannot appeal author content
+PASS academic reviewer does not inherit moderation appeal access
+PASS moderator can restore content through recorded appeal
+PASS appeal restoration does not silently restore invalidated reputation
+PASS notification categories constrained server-side
+PASS browser cannot access provider-wide budget
+PASS service role can reserve a distributed provider request slot
+PASS reviewer cannot suspend accounts
+PASS suspended member cannot mutate
+PASS unsafe URL rejected at database
+PASS body constraints enforced server-side
+PASS personal data export available without cross-account parameter
+PASS member cannot change taxonomy
+PASS member cannot read administrative aggregates
+PASS admin can adjust bounded future award rule
+PASS award rule cannot exceed 100
+PASS admin can read aggregate health
+PASS repeated asker-answerer pair cannot farm awards in 24 hours
+PASS post edit preserves prior version
+PASS subscriber receives reply notification
+PASS reply editing enforces author identity
+PASS bounded reply page returns visible replies
+PASS exhausted search entities never restart
+PASS indexed search finds edited content
+PASS milestone author cannot self-confirm
+PASS moderator cannot read private project log
+PASS moderator cannot mutate private project log
+PASS collaborator milestone confirmation is idempotent
+PASS project deletion requires exact confirmation
+PASS scholarly search rate limit enforced
+PASS suspended reviewer loses private queue access
+PASS client cannot forge another avatar storage record
+PASS multi-entity search returns all 65 records once across cursor pages
+PASS recommendation candidate window bounded to 30
+PASS anonymous caller cannot invoke mutation RPC
+PASS anonymous caller cannot read academic table
+PASS anonymous safe snapshot works
+PASS RLS enabled: membership_applications
+PASS RLS enabled: roles
+PASS RLS enabled: blocks
+PASS RLS enabled: follows
+PASS RLS enabled: collaborations
+PASS RLS enabled: paper_saves
+PASS RLS enabled: bookmarks
+PASS RLS enabled: preferences
+PASS RLS enabled: papers
+PASS RLS enabled: subscriptions
+PASS RLS enabled: notifications
+PASS RLS enabled: reports
+PASS RLS enabled: posts
+PASS RLS enabled: profiles
+PASS RLS enabled: comments
+PASS RLS enabled: projects
+PASS RLS enabled: project_members
+PASS RLS enabled: topics
+PASS RLS enabled: reactions
+PASS RLS enabled: contributions
+PASS RLS enabled: paper_reports
+PASS RLS enabled: helpful
+PASS RLS enabled: post_versions
+PASS RLS enabled: contribution_rules
+PASS RLS enabled: audit
+PASS RLS enabled: milestone_confirmations
+PASS RLS enabled: content_appeals
+PASS RLS enabled: avatars
+PASS RLS enabled: project_images
+PASS no exposed application table permits direct client writes
+PASS no unvalidated storage upload policy
+PASS paper save cannot forge provider metadata
+PASS unified search includes attributed scholarly records
+PASS academic reviewer has no source-report access
+PASS source reviewer records metadata report outcome
+PASS scholarly unsave removes only own relation
+PASS anonymous research feed has real bounded cursor pagination
+PASS browser cannot read privileged storage cleanup queue
+PASS active collaborator can read private project image metadata
+PASS moderator cannot read private project images
+PASS removing project member revokes image metadata access
+PASS upload commit rechecks membership after processor window
+PASS project image path cannot impersonate another uploader
+PASS image deletion queues private storage cleanup
+PASS service-only cleanup acknowledgement removes completed tombstone
+PASS sixth distinct daily award is denied
+PASS invalidating awards cannot reset daily abuse budget
+PASS service retention clears aged optional marks
+PASS owned project foreign key blocks identity deletion
+PASS identity cascade removes personal contribution records
+PASS private buckets refuse documents; project files accept processor PNG only
+PASS read-only reconciliation counts orphan, evidence and stale-queue storage drift
+PASS retention schedule is skipped where pg_cron is unavailable
+PASS an email identity alone never grants membership
+PASS a GitHub OAuth identity approves preview membership with an audit record
+PASS GitHub identity never overrides a staff rejection or a suspension
+PASS anon cannot create an Auth identity to self-approve
+PASS anon cannot call the approval trigger function
+PASS authenticated cannot create an Auth identity to self-approve
+PASS authenticated cannot call the approval trigger function
+PASS denied attempts left the email-only account unapproved
+Database authorization checks passed: 133 (Supabase Auth/Storage services are stubbed, not live integration).

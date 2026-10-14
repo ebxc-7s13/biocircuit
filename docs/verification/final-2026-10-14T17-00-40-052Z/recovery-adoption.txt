@@ -1,0 +1,5 @@
+
+> biocircuit@0.1.0 test:recovery-adoption
+> node scripts/test-recovery-adoption-staging.mjs
+
+{"file":"docs/verification/cloud/recovery-adoption-2026-10-14T17-08-54-305Z.json","passed":6,"failed":false}

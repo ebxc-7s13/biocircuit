@@ -1,0 +1,19 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "migration": "20261014000200_github_participation.sql",
+  "scope": "Owner-approved public preview: GitHub OAuth identity auto-approves membership",
+  "preview": [
+    "20261014000200_github_participation.sql"
+  ],
+  "upToDateAfter": true,
+  "readback": [
+    {
+      "anon_exec": false,
+      "auth_exec": false,
+      "definer": true,
+      "github_only": true,
+      "tgenabled": "O",
+      "tgname": "auth_github_participation"
+    }
+  ]
+}

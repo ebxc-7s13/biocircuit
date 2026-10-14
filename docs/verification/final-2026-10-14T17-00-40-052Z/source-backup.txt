@@ -1,0 +1,13 @@
+
+> biocircuit@0.1.0 cloud:preflight
+> node scripts/cloud-preflight.mjs
+
+{
+  "scope": "PASS — LOCAL ONLY: source/ignore/hash review; no cloud request, OTP or hosted RLS test",
+  "migrationCount": 22,
+  "environmentFiles": [
+    ".env.local"
+  ],
+  "filesCopied": 171,
+  "backup": ".cloud/backups/2026-10-14T17-09-56-078Z"
+}

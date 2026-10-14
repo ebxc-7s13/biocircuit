@@ -4,8 +4,10 @@ import App from './App'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import './styles.css'
 import { captureRecoveryArrival } from './domain/recovery'
+import { captureOAuthArrival } from './domain/oauth'
 
 captureRecoveryArrival(window.location, window.history)
+captureOAuthArrival(window.location, window.history)
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

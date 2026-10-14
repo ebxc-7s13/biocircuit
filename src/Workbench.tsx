@@ -38,6 +38,7 @@ const Member = lazy(() => import('./features/Member'))
 const Trust = lazy(() => import('./features/Trust'))
 const Explore = lazy(() => import('./features/Explore'))
 const Composer = lazy(() => import('./features/Composer'))
+const OAuthCallback = lazy(() => import('./features/OAuthCallback'))
 export default function App() {
   return (
     <BrowserRouter basename={basePath || undefined}>
@@ -177,6 +178,7 @@ function Workbench() {
     destinations.find((s) => s.path === base)?.label ??
     {
       '/account': 'Account recovery',
+      '/auth': 'Signing in',
       '/profile': 'Your profile',
       '/settings': 'Settings',
       '/post': 'Discussion',
@@ -212,6 +214,8 @@ function Workbench() {
   const content =
     location.pathname === '/account/recovery' ? (
       <Recovery />
+    ) : location.pathname === '/auth/callback' ? (
+      <OAuthCallback />
     ) : base === '/feed' || base === '/questions' ? (
       <Feed
         c={c}
@@ -322,9 +326,13 @@ function Workbench() {
                 </div>
               }
             >
-              {/* Recovery holds its one-time session in memory and needs no community
-                  data; never unmount it while a sign-in reloads that data. */}
-              {c.loading && location.pathname !== '/account/recovery' ? (
+              {/* Recovery and the OAuth callback hold one-time sessions in memory and
+                  need no community data; never unmount them while a sign-in
+                  reloads that data. */}
+              {c.loading &&
+              !['/account/recovery', '/auth/callback'].includes(
+                location.pathname,
+              ) ? (
                 <div className="skeleton" role="status">
                   Loading research…
                 </div>

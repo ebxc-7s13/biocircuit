@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Community } from '../data/useCommunity'
-import { isDemo, supabase } from '../data/gateway'
+import { getClient, isDemo, supabase } from '../data/gateway'
 import {
   applicationSchema,
   phoneSchema,
@@ -10,6 +10,7 @@ import { Dialog } from '../components/Dialog'
 import { topics } from '../domain/models'
 import EmailAuth from './EmailAuth'
 import { appPath } from '../domain/paths'
+import { startGithubSignIn } from '../domain/oauth'
 declare global {
   interface Window {
     hcaptcha?: {
@@ -154,7 +155,7 @@ export default function Auth({
   return (
     <Dialog title="Account & academic eligibility" onClose={onClose}>
       <ol className="auth-steps" aria-label="Account progress">
-        {['Phone confirmation', 'Academic details', 'Eligibility review'].map(
+        {['Identity check', 'Academic details', 'Eligibility review'].map(
           (step, index) => (
             <li
               key={step}
@@ -195,6 +196,35 @@ export default function Auth({
       )}
       {!c.userId && !isDemo && (
         <>
+          <div className="notice">
+            <b>Join with GitHub to participate.</b>
+            <p>
+              During this public preview, signing in with GitHub verifies your
+              identity and approves membership automatically, so you can post,
+              reply and collaborate. Email accounts can browse and edit their
+              profile; using the same email on GitHub links them.
+            </p>
+            <button
+              type="button"
+              className="primary"
+              disabled={busy}
+              onClick={() => {
+                setBusy(true)
+                setError('')
+                void (async () => {
+                  const client = await getClient().catch(() => null)
+                  const result = client ? await startGithubSignIn(client) : null
+                  // Success navigates away to GitHub; only failures return here.
+                  if (!result || result.error) {
+                    setBusy(false)
+                    setError('GitHub sign-in is unavailable right now.')
+                  }
+                })()
+              }}
+            >
+              Continue with GitHub
+            </button>
+          </div>
           <EmailAuth
             onAuthenticated={c.load}
             captchaToken={captcha}
@@ -305,10 +335,11 @@ export default function Auth({
             <div className="notice">
               <b>Signed in; phone verification still required.</b>
               <p>
-                You can edit your own profile in Settings. Academic submission
-                needs a genuinely confirmed phone; posting, replies, reactions,
-                bookmarks and projects need approved membership. Email
-                registration grants neither.
+                You can edit your own profile in Settings. Posting, replies,
+                reactions, bookmarks and projects need approved membership.
+                Email registration grants neither. During the public preview,
+                sign out and use <b>Continue with GitHub</b> (with the same
+                email) to verify and join.
               </p>
               <a href={appPath('settings')} onClick={onClose}>
                 Open profile and account settings

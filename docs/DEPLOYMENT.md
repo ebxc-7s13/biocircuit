@@ -66,3 +66,27 @@ Install it:
 - **Android/Chrome/Edge:** browser menu → *Install app* (or *Add to Home screen*).
 - **iPhone/iPad (Safari):** Share → *Add to Home Screen*.
 - **Desktop Chrome/Edge:** the install icon in the address bar.
+
+## Public participation via GitHub (owner decision 2026-10-14)
+
+Paid SMS cannot be used, so for this public preview a **GitHub OAuth identity** replaces phone verification as the participation check, and membership is **auto-approved** (no academic review). Owner decisions: "GitHub sign-in", "Auto-approve for now".
+
+- **Database: migration 22** `20261014000200_github_participation.sql`.
+  - A `security definer` trigger on `auth.identities` fires only for `provider = 'github'`. It sets `membership = 'approved'` for unsuspended profiles in `not_submitted/pending/needs_evidence/expired`, and writes an `audit` row (`membership_auto_github`).
+  - It never overrides rejected/appeal decisions or suspensions.
+  - Only hosted Auth can create identities; anon/authenticated can neither insert identities nor execute the function.
+  - Local SQL 133/133 (8 new checks).
+  - Applied to staging after a dry run showed exactly this migration (no seeds/roles). Read-back: trigger enabled, GitHub-only, definer, no client execute ([evidence](verification/cloud/github-participation-migration-2026-10-14T17-00-22-510Z.json)).
+  - Reversible: `drop trigger auth_github_participation on auth.identities`.
+- **Frontend.**
+  - The account dialog has "Continue with GitHub".
+  - `/auth/callback` captures the implicit-flow fragment before router startup and strips the URL.
+  - It adopts the session only if this browser started a sign-in in the last 10 minutes (login-CSRF guard), and only after hosted `getUser` verifies the token. Then it opens the feed.
+  - The GitHub provider token is discarded.
+  - Unit tests `tests/oauth-arrival.test.ts` 9/9.
+- **Owner configuration (GitHub has no API for OAuth apps).**
+  1. GitHub OAuth app with callback `https://ibxubsegrabpspopdgep.supabase.co/auth/v1/callback`.
+  2. Supabase GitHub provider enabled with its client ID/secret.
+  3. Redirect URLs `https://ebxc-7s13.github.io/biocircuit/auth/callback` and `http://127.0.0.1:5190/auth/callback`.
+
+  `node scripts/check-github-oauth.mjs` verifies provider and allowlist read-only.
