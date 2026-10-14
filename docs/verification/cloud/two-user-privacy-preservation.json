@@ -1,0 +1,11 @@
+{
+  "scope": "Conservative JSON privacy-pattern scan and original backend/package fingerprint comparison, not an exhaustive security or secret audit",
+  "filesScanned": 20,
+  "findings": [],
+  "backendAndPackageFiles": 30,
+  "changed": [],
+  "finalSourceBackup": ".cloud/backups/2026-10-13T02-11-27-645Z",
+  "finalSourceFilesCopied": 132,
+  "finalProtectedFingerprintFiles": 30,
+  "finalProtectedFingerprintChanges": []
+}

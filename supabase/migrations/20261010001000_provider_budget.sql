@@ -1,0 +1,4 @@
+create table private.provider_budget(id boolean primary key default true check(id),next_at timestamptz not null default now());insert into private.provider_budget values(true,now());
+grant select,update on private.provider_budget to service_role;
+create function public.reserve_scholarly_request()returns integer language plpgsql security invoker set search_path=''as $$declare slot timestamptz;wait_ms integer;begin select greatest(next_at,clock_timestamp())into slot from private.provider_budget where id for update;wait_ms:=greatest(0,ceil(extract(epoch from(slot-clock_timestamp()))*1000)::integer);if wait_ms>2000 then raise exception 'Provider capacity reached';end if;update private.provider_budget set next_at=slot+interval '500 milliseconds'where id;return wait_ms;end$$;
+revoke all on function public.reserve_scholarly_request()from public,anon,authenticated;grant execute on function public.reserve_scholarly_request()to service_role;

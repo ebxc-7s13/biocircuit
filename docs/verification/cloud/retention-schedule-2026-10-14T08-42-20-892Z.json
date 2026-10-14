@@ -1,0 +1,48 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "LIVE staging: schedule readback, eligible-row counts and rolled-back execution of the exact job command",
+  "checks": [
+    {
+      "name": "Retention job scheduled daily and active",
+      "status": "PASS - LIVE",
+      "observed": {
+        "schedule": "17 3 * * *",
+        "active": true,
+        "owner": "postgres"
+      }
+    },
+    {
+      "name": "Eligible-row inventory recorded (aggregate only)",
+      "status": "PASS - LIVE",
+      "observed": {
+        "aged_audit": 0,
+        "aged_marks": 0,
+        "aged_receipts": 0,
+        "expired_cache": 0
+      }
+    },
+    {
+      "name": "Exact job command executes on hosted Postgres (rolled back)",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "No failed scheduled runs recorded",
+      "status": "PASS - LIVE",
+      "observed": {
+        "runs": []
+      }
+    },
+    {
+      "name": "Clients cannot execute retention or use the cron schema",
+      "status": "PASS - LIVE",
+      "observed": {
+        "anon": false,
+        "authenticated": false,
+        "cron_anon": false,
+        "cron_authenticated": false
+      }
+    }
+  ],
+  "runHistory": []
+}

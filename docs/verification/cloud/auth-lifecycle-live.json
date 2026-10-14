@@ -1,0 +1,64 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Existing ordinary account, actual renewal and own export; one recovery request, no email delivery or successful password-reset claim",
+  "records": [
+    {
+      "name": "Ordinary existing sign-in",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Managed refresh returns renewed session for same actual identity",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "sameIdentity": true
+      }
+    },
+    {
+      "name": "Hosted own personal export matches current identity",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "ownProfile": true,
+        "ownPreferences": true,
+        "noPrivateContentRecorded": true
+      }
+    },
+    {
+      "name": "Immediate repeat export is rate-limited",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 400,
+        "code": "P0001"
+      }
+    },
+    {
+      "name": "Anonymous personal export denied",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Actual managed recovery request",
+      "status": "REQUEST ACCEPTED - DELIVERY UNVERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "delivered": false,
+        "passwordChanged": false
+      }
+    },
+    {
+      "name": "Renewal/export/recovery request leave identity boundaries unchanged",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "phoneVerified": false,
+        "academicallyApproved": false,
+        "staffRoleCount": 0
+      }
+    }
+  ]
+}

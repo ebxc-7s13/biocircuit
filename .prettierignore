@@ -1,0 +1,7 @@
+node_modules
+dist
+playwright-report
+test-results
+docs/baseline
+package-lock.json
+MASTER_IMPLEMENTATION_PROMPT.md

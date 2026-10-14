@@ -1,0 +1,14 @@
+
+> biocircuit@0.1.0 test:production
+> node scripts/smoke-production.mjs
+
+{
+  "scenario": "Production build with absent backend configuration; desktop unthrottled local preview. Not connected-feed or field performance.",
+  "setupRequired": true,
+  "syntheticFallback": false,
+  "remoteBackendRequests": 0,
+  "uncaughtErrors": 0,
+  "fcpMs": 328,
+  "lcpMs": 388,
+  "cls": 0.002377001444498698
+}

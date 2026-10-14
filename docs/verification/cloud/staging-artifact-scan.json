@@ -1,0 +1,5 @@
+{
+  "scope": "Conservative emitted-dist and required-report privileged-key/PAT/private-key/service-role-JWT pattern scan; public publishable keys are allowed; not exhaustive secret assurance",
+  "filesScanned": 16,
+  "findings": 0
+}

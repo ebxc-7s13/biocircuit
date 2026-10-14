@@ -1,0 +1,79 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual hosted A/B sessions and private rows, with deliberate delay of a genuine A snapshot response across B login. No mock service, replay trace or private response recorded.",
+  "records": [
+    {
+      "name": "Existing ordinary sign-in A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Own populated profile fixture A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Existing ordinary sign-in B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Own populated profile fixture B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Two managed identities differ",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Browser managed identity is A before delayed reload",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Delayed payload is a genuine hosted private A snapshot",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Normal UI sign-in changes actual managed identity to B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Late A response cannot replace B private workspace",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "managedIdentityStillB": true,
+        "workspaceMatchesB": true,
+        "oldAWorkspaceVisible": false
+      }
+    },
+    {
+      "name": "No browser exceptions or repeated signup",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "consoleErrors": 0,
+        "uncaughtErrors": 0,
+        "signupRequests": 0
+      }
+    }
+  ],
+  "browser": {
+    "consoleErrors": 0,
+    "uncaughtErrors": 0,
+    "signupRequests": 0
+  },
+  "delayedResponseCount": 3,
+  "delayedResponse": {
+    "status": 200,
+    "containsKnownPrivateA": true,
+    "containsPrivateB": false
+  }
+}

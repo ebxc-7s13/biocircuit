@@ -1,0 +1,40 @@
+# BioCircuit — product direction
+
+## Core idea
+
+A focused, member-verified professional community exclusively for biomedical engineering graduates and students in biomedical engineering degree pathways. Think of it as a research workbench, not a popularity network: help a member find the right person, method, paper, or collaborator for a real problem.
+
+## Primary jobs to be done
+
+- **Learn from peers:** ask narrowly scoped technical questions and receive useful, accountable responses.
+- **Show the process:** publish project logs, prototypes, experiments, failures, and reproducible assets—not only polished achievements.
+- **Read together:** discover research papers through specialist notes, method critiques, replication attempts, and practical implications.
+- **Find collaborators:** search by methods and tools (e.g. EEG, optical imaging, embedded systems, finite-element modelling, biomaterials), equipment access, and what help a project needs.
+- **Build a credible identity:** show education pathway, institution, research interests, contributions, and project evidence with clear verification states.
+
+## What should make it meaningfully different
+
+1. **Answer quality over engagement.** Mark accepted answers, let question authors summarize what worked, and reward a tested protocol or clear explanation more than a high-volume post.
+2. **A project is a living record.** Keep milestones, components, collaborators, methods, datasets, blockers, and reproducibility notes together.
+3. **Research objects have provenance.** A paper card should include DOI/PMID or a source URL, publication date, and retrieval timestamp. Separate the paper's claims from community commentary.
+4. **Contribution reputation, not popularity points.** Reputation should come from peer-endorsed answers, reusable methods, verified project milestones, and thoughtful review. Avoid rewards for daily posting or follower counts.
+5. **Biomedical-specific discovery.** Build the taxonomy around modalities, clinical domains, instrumentation, signal processing, AI/ML, biomaterials, biomechanics, rehabilitation, and regulatory/clinical translation.
+6. **Trust is explicit.** Phone verification is an anti-abuse measure; academic eligibility review is a separate process. A public mark/CGPA field is unnecessary. Keep grade data private, define retention/deletion rules, and do not grant a verified badge until the agreed evidence checks are complete.
+
+## Membership: safer design
+
+- Collect name, contact method, biomedical degree pathway, institution, enrollment/graduation status, and research interests needed for community use.
+- If eligibility evidence is needed, make the minimum acceptable evidence explicit and allow applicants to hide unrelated fields on documents.
+- Do not use grade thresholds to judge who is qualified to contribute. Marks can be awaited and should not become a public status signal.
+- Distinguish statuses such as `phone verified`, `institution review pending`, `community verified`, and `verification expired`.
+- Provide a human review/appeal path and an account deletion route.
+
+## MVP boundaries
+
+**Build first:** authentication, profile/eligibility review, text feed, posts, tags, search, questions and accepted answers, bookmarks, project pages, journal metadata links, basic reporting/moderation, and responsive layouts.
+
+**Do not build first:** algorithmic feed ranking, AI-generated scientific summaries without citations, video-first feeds, complex private messaging, public leaderboards based on volume, or heavy 3D/animated UI. These add cost and risk before the community has validated its core utility.
+
+## North-star signal
+
+Measure whether a member gets useful help or makes progress—not how long they scroll. Early indicators: proportion of questions receiving a helpful answer, time to first useful reply, projects finding a collaborator, saved papers later discussed, and repeat participation after a successful interaction.

@@ -1,0 +1,47 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Reviewed forward migration: private bucket MIME narrowing and pg_cron retention schedule only; no seed, roles, Vault, user data or reset",
+  "applyRequested": false,
+  "before": {
+    "buckets": [
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg",
+          "application/pdf"
+        ],
+        "file_size_limit": 5242880,
+        "id": "academic-evidence",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/webp"
+        ],
+        "file_size_limit": 524288,
+        "id": "avatars",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg",
+          "application/pdf"
+        ],
+        "file_size_limit": 5242880,
+        "id": "project-files",
+        "public": false
+      }
+    ],
+    "objects": 0,
+    "cronInstalled": 0
+  },
+  "preview": {
+    "dryRun": true,
+    "migrations": [
+      "20261014000100_storage_retention.sql"
+    ],
+    "seeds": [],
+    "roles": []
+  }
+}

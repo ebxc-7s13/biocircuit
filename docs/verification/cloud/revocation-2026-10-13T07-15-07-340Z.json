@@ -1,0 +1,29 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Real current-user refresh/global logout; existing controlled accounts only; no password, profile or role change",
+  "checks": [
+    {
+      "name": "Two independent A sessions and distinct B identity authenticated",
+      "passed": true
+    },
+    {
+      "name": "Managed A renewal returns same identity",
+      "passed": true
+    },
+    {
+      "name": "Actual global logout accepted and initiating session cleared",
+      "passed": true
+    },
+    {
+      "name": "Other A refresh rejected by hosted Auth after global logout",
+      "passed": true,
+      "httpStatus": 400,
+      "errorCode": "refresh_token_not_found"
+    },
+    {
+      "name": "B remains authenticated and renews after A global logout",
+      "passed": true
+    }
+  ],
+  "limit": "Existing signed access JWTs may remain valid until expiry per managed Auth design; this test proves refresh revocation, not immediate access-JWT invalidation."
+}

@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+
+playwright-report/
+test-results/
+*.tsbuildinfo
+.supabase/
+
+.verification-dist/
+
+# Local cloud targets, sessions, credential stores and secret-free recovery copies.
+.cloud/
+supabase/.temp/
+supabase/.branches/
+.netlify/
+secrets/
+credentials/
+*.pem
+*.key

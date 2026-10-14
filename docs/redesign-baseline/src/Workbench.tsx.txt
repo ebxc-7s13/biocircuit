@@ -1,0 +1,588 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { BrowserRouter, Link, useLocation, useNavigate } from 'react-router-dom'
+import {
+  Activity,
+  ArrowLeft,
+  ArrowRight,
+  Bell,
+  BookOpen,
+  CircleHelp,
+  Home,
+  Layers3,
+  Search,
+  Settings,
+  Users,
+  Bookmark,
+  ShieldCheck,
+  Plus,
+} from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
+import { useCommunity } from './data/useCommunity'
+import { isDemo, configured } from './data/gateway'
+import { Dialog } from './components/Dialog'
+import Feed from './features/Feed'
+import Auth from './features/Auth'
+const Projects = lazy(() => import('./features/Projects'))
+const Journal = lazy(() => import('./features/Journal'))
+const Account = lazy(() => import('./features/Account'))
+const Member = lazy(() => import('./features/Member'))
+const Trust = lazy(() => import('./features/Trust'))
+const Composer = lazy(() => import('./features/Composer'))
+const sections = [
+  { path: '/feed', label: 'Research feed', icon: Home },
+  { path: '/questions', label: 'Questions', icon: CircleHelp },
+  { path: '/projects', label: 'Projects', icon: Layers3 },
+  { path: '/journal', label: 'Journal club', icon: BookOpen },
+  { path: '/collaborators', label: 'Collaborators', icon: Users },
+  { path: '/profile', label: 'Workspace', icon: Activity },
+]
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Workbench />
+    </BrowserRouter>
+  )
+}
+function Workbench() {
+  const c = useCommunity()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const base = '/' + location.pathname.split('/')[1]
+  const index = sections.findIndex((s) => s.path === base)
+  const [compose, setCompose] = useState(false)
+  const [auth, setAuth] = useState(false)
+  const [help, setHelp] = useState(false)
+  const [query, setQuery] = useState('')
+  const [offline, setOffline] = useState(!navigator.onLine)
+  const search = useRef<HTMLInputElement>(null)
+  const canvas = useRef<HTMLDivElement>(null)
+  const reduced = useReducedMotion()
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('biocircuit-theme') ?? 'light'
+    } catch {
+      return 'light'
+    }
+  })
+  const [paused, setPaused] = useState(() => {
+    try {
+      return localStorage.getItem('biocircuit-motion') === 'off'
+    } catch {
+      return false
+    }
+  })
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try {
+      localStorage.setItem('biocircuit-theme', theme)
+    } catch {
+      /* optional preference */
+    }
+  }, [theme])
+  useEffect(() => {
+    document.documentElement.dataset.motion = paused || reduced ? 'off' : 'on'
+    try {
+      localStorage.setItem('biocircuit-motion', paused ? 'off' : 'on')
+    } catch {
+      /* optional preference */
+    }
+  }, [paused, reduced])
+  useEffect(() => {
+    const on = () => setOffline(!navigator.onLine)
+    window.addEventListener('online', on)
+    window.addEventListener('offline', on)
+    return () => {
+      window.removeEventListener('online', on)
+      window.removeEventListener('offline', on)
+    }
+  }, [])
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if (
+        (e.target as HTMLElement).closest(
+          'input,textarea,select,[contenteditable],dialog',
+        ) ||
+        e.altKey ||
+        e.ctrlKey ||
+        e.metaKey
+      )
+        return
+      if (e.key === '/') {
+        e.preventDefault()
+        search.current?.focus()
+      }
+      if (e.key.toLowerCase() === 'c') setCompose(true)
+      if (e.key === '?') setHelp(true)
+    }
+    window.addEventListener('keydown', key)
+    return () => window.removeEventListener('keydown', key)
+  }, [])
+  useEffect(() => {
+    if (index >= 0 && canvas.current) {
+      const width = canvas.current.clientWidth
+      canvas.current.scrollTo({
+        left: width * index,
+        behavior: reduced ? 'instant' : 'smooth',
+      })
+    }
+    document.title =
+      'BioCircuit · ' + (sections[index]?.label ?? base.slice(1) ?? 'Welcome')
+  }, [index, base, reduced, c.loading])
+  useEffect(() => {
+    if (c.loading) return
+    const controller = new AbortController()
+    if (base === '/post' || base === '/project')
+      void c.enrich(
+        base === '/post' ? 'post' : 'project',
+        location.pathname.split('/')[2],
+        controller.signal,
+      )
+    return () => {
+      controller.abort()
+      c.clearDetail()
+    }
+  }, [base, location.pathname, c.loading])
+  useEffect(() => {
+    const controller = new AbortController()
+    const timer = setTimeout(() => {
+      if (query.trim().length >= 2)
+        void c.search(query.trim(), controller.signal)
+    }, 300)
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
+    }
+  }, [query])
+  useEffect(() => {
+    if (!document.querySelector('dialog[open]'))
+      document.getElementById('main')?.focus({ preventScroll: true })
+  }, [location.pathname])
+  const scrollEnd = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(
+    () => () => {
+      if (scrollEnd.current) clearTimeout(scrollEnd.current)
+    },
+    [],
+  )
+  const syncScroll = () => {
+    if (scrollEnd.current) clearTimeout(scrollEnd.current)
+    scrollEnd.current = setTimeout(() => {
+      const el = canvas.current
+      if (el && !window.matchMedia('(max-width:900px)').matches) {
+        const next = Math.round(el.scrollLeft / el.clientWidth)
+        if (index >= 0 && next !== index && sections[next])
+          navigate(sections[next].path)
+      }
+    }, 180)
+  }
+  const unread = c.data.notifications.filter(
+    (n) => n.user_id === c.userId && !n.read,
+  ).length
+  const title =
+    sections[index]?.label ??
+    (base === '/post'
+      ? 'Discussion'
+      : base === '/project'
+        ? 'Project workspace'
+        : base === '/settings'
+          ? 'Settings'
+          : base === '/notifications'
+            ? 'Notifications'
+            : base === '/saved'
+              ? 'Reading desk'
+              : base === '/trust'
+                ? 'Trust console'
+                : 'BioCircuit')
+  const content = (p: string) =>
+    p === '/feed' || p === '/questions' ? (
+      <Feed c={c} query={query} questions={p === '/questions'} />
+    ) : p === '/projects' ? (
+      <Projects c={c} query={query} />
+    ) : p === '/journal' ? (
+      <Journal c={c} query={query} />
+    ) : (
+      <Account
+        c={c}
+        kind={p === '/collaborators' ? 'collaborators' : 'profile'}
+        query={query}
+        theme={theme}
+        setTheme={setTheme}
+        paused={paused}
+        setPaused={setPaused}
+      />
+    )
+  return (
+    <div className="workbench">
+      <a className="skip-link" href="#main">
+        Skip to research content
+      </a>
+      <div className="lab-field" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <svg viewBox="0 0 1200 800">
+          <path d="M0 520C250 200 350 720 600 380S900 550 1200 170" />
+          <circle cx="600" cy="380" r="68" />
+          <circle cx="600" cy="380" r="110" />
+        </svg>
+      </div>
+      <aside className="rail">
+        <Link to="/" className="brand">
+          <span className="brand-mark">
+            <Activity />
+          </span>
+          <span>
+            bio<b>circuit</b>
+          </span>
+        </Link>
+        <span className="eyebrow rail-note">Your research instrument</span>
+        <nav aria-label="Research destinations">
+          {sections.map((s, i) => (
+            <Link
+              key={s.path}
+              to={s.path}
+              className={index === i ? 'active' : ''}
+              aria-current={index === i ? 'page' : undefined}
+            >
+              <s.icon size={19} />
+              <span>{s.label}</span>
+              <small>0{i + 1}</small>
+            </Link>
+          ))}
+        </nav>
+        <div className="rail-bottom">
+          <Link to="/saved">
+            <Bookmark size={18} />
+            Reading desk
+          </Link>
+          <Link to="/settings">
+            <Settings size={18} />
+            Settings
+          </Link>
+          {c.data.roles.some((r) => r.user_id === c.userId) && (
+            <Link to="/trust">
+              <ShieldCheck size={18} />
+              Trust console
+            </Link>
+          )}
+          <Link to="/policies">Privacy & community rules</Link>
+          <button onClick={() => setAuth(true)}>
+            {c.user ? 'Account & eligibility' : 'Join / sign in'}
+          </button>
+        </div>
+      </aside>
+      <div className="workspace">
+        <header className="context-strip">
+          <span className="context-label">
+            Workbench / <b>{title}</b>
+          </span>
+          <label className="search">
+            <Search size={17} />
+            <input
+              ref={search}
+              list="research-topic-suggestions"
+              aria-label="Search community"
+              placeholder="Search research, methods, people…"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                if (index < 0) navigate('/feed')
+              }}
+            />
+            <datalist id="research-topic-suggestions">
+              {c.data.taxonomy.map((t) => (
+                <option key={t} value={t} />
+              ))}
+            </datalist>
+            <kbd>/</kbd>
+          </label>
+          <Link
+            className="utility"
+            to="/notifications"
+            aria-label={
+              'Notifications' + (unread ? ' · ' + unread + ' unread' : '')
+            }
+          >
+            <Bell size={19} />
+            {unread > 0 && <span>{unread}</span>}
+          </Link>
+          <button className="account-button" onClick={() => setAuth(true)}>
+            {c.user?.name ?? 'Join'}
+          </button>
+        </header>
+        <div className={'connection ' + (isDemo ? 'demo' : '')} role="status">
+          {isDemo
+            ? 'DEMO · synthetic research and local persistence · no SMS or academic verification'
+            : configured
+              ? 'Connected backend · membership review required'
+              : 'SETUP REQUIRED · production backend is not configured'}
+          {offline ? ' · Offline' : ''}
+        </div>
+        {c.error && (
+          <div role="alert" className="error">
+            <span>{c.error}</span>
+            <button onClick={() => void c.load()}>Retry load</button>
+            <button aria-label="Dismiss error" onClick={() => c.setError('')}>
+              ×
+            </button>
+          </div>
+        )}
+        <main id="main" tabIndex={-1} className="main-workspace">
+          <Suspense
+            fallback={
+              <div className="skeleton" role="status">
+                Opening workspace…
+              </div>
+            }
+          >
+            {c.loading ? (
+              <div className="skeleton" role="status">
+                Loading research…
+              </div>
+            ) : index >= 0 ? (
+              <div
+                className="canvas"
+                ref={canvas}
+                onScroll={syncScroll}
+                tabIndex={0}
+                aria-label="Horizontal research canvas"
+                onKeyDown={(e) => {
+                  if (e.target !== e.currentTarget) return
+                  if (e.key === 'ArrowRight' && index < 5) {
+                    e.preventDefault()
+                    navigate(sections[index + 1].path)
+                  }
+                  if (e.key === 'ArrowLeft' && index > 0) {
+                    e.preventDefault()
+                    navigate(sections[index - 1].path)
+                  }
+                }}
+              >
+                {sections.map((s, i) => (
+                  <section
+                    key={s.path}
+                    className={'scene ' + (index === i ? 'scene-current' : '')}
+                    inert={index !== i}
+                    aria-label={s.label}
+                  >
+                    <motion.div
+                      initial={false}
+                      animate={{ opacity: index === i ? 1 : 0.65 }}
+                      transition={{ duration: reduced ? 0 : 0.15 }}
+                    >
+                      {index === i ? (
+                        content(s.path)
+                      ) : (
+                        <div className="skeleton">{s.label}</div>
+                      )}
+                    </motion.div>
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <section className="single-scene">
+                {base === '/post' ? (
+                  <Feed
+                    c={c}
+                    query=""
+                    detailId={location.pathname.split('/')[2]}
+                  />
+                ) : base === '/project' ? (
+                  <Projects
+                    c={c}
+                    query=""
+                    detailId={location.pathname.split('/')[2]}
+                  />
+                ) : base === '/member' ? (
+                  <Member c={c} id={location.pathname.split('/')[2]} />
+                ) : base === '/trust' ? (
+                  <Trust c={c} />
+                ) : [
+                    '/settings',
+                    '/notifications',
+                    '/saved',
+                    '/policies',
+                  ].includes(base) ? (
+                  <Account
+                    c={c}
+                    kind={base.slice(1)}
+                    query={query}
+                    theme={theme}
+                    setTheme={setTheme}
+                    paused={paused}
+                    setPaused={setPaused}
+                  />
+                ) : location.pathname === '/' ? (
+                  <Landing onJoin={() => setAuth(true)} />
+                ) : (
+                  <>
+                    <h1>Workspace not found</h1>
+                    <Link to="/feed">Open research feed</Link>
+                  </>
+                )}
+              </section>
+            )}
+          </Suspense>
+        </main>
+        <footer className="dock">
+          <div className="progress-path" aria-label="Canvas progress">
+            {sections.map((s, i) => (
+              <Link
+                key={s.path}
+                to={s.path}
+                aria-label={'Open ' + s.label}
+                className={i === index ? 'selected' : ''}
+              >
+                {i + 1}
+              </Link>
+            ))}
+          </div>
+          <div className="actions">
+            <button
+              aria-label="Previous workspace"
+              disabled={index <= 0}
+              onClick={() => navigate(sections[index - 1].path)}
+            >
+              <ArrowLeft size={17} />
+            </button>
+            <button
+              aria-label="Next workspace"
+              disabled={index < 0 || index === 5}
+              onClick={() => navigate(sections[index + 1].path)}
+            >
+              <ArrowRight size={17} />
+            </button>
+            <button
+              className="primary"
+              onClick={() =>
+                index === 2 ? navigate('/projects?create=1') : setCompose(true)
+              }
+            >
+              <Plus size={17} />
+              {index === 1
+                ? 'Ask a question'
+                : index === 2
+                  ? 'Start a project'
+                  : index === 3
+                    ? 'Discuss a paper'
+                    : 'Contribute'}
+            </button>
+            <button
+              onClick={() => setHelp(true)}
+              aria-label="Keyboard shortcuts"
+            >
+              ?
+            </button>
+          </div>
+        </footer>
+      </div>
+      {c.message && (
+        <div className="toast" role="status">
+          {c.message}
+          <button aria-label="Dismiss message" onClick={() => c.setMessage('')}>
+            ×
+          </button>
+        </div>
+      )}
+      {compose && (
+        <Suspense fallback={<p>Opening composer…</p>}>
+          <Composer
+            c={c}
+            initialKind={
+              index === 1
+                ? 'question'
+                : index === 3
+                  ? 'paper_discussion'
+                  : 'discussion'
+            }
+            onClose={() => setCompose(false)}
+          />
+        </Suspense>
+      )}
+      {auth && <Auth c={c} onClose={() => setAuth(false)} />}{' '}
+      {help && (
+        <Dialog title="Keyboard & navigation" onClose={() => setHelp(false)}>
+          <p>
+            <kbd>/</kbd> Search · <kbd>C</kbd> Compose · <kbd>?</kbd> Shortcuts.
+            Shortcuts pause while typing.
+          </p>
+          <p>
+            Desktop: shift+wheel or trackpad moves the research canvas left.
+            Arrow keys work when the canvas itself has focus. Long content
+            scrolls vertically. Use previous/next buttons at any time.
+          </p>
+        </Dialog>
+      )}
+    </div>
+  )
+}
+function Landing({ onJoin }: { onJoin: () => void }) {
+  return (
+    <>
+      <span className="eyebrow">Biomedical engineering, together</span>
+      <h1>
+        Good science
+        <br />
+        rarely happens alone<span className="signal">.</span>
+      </h1>
+      <p className="lead">
+        A research workbench for technical questions, honest project logs,
+        papers with provenance and the people who help you move forward.
+      </p>
+      <div className="actions">
+        <button className="primary" onClick={onJoin}>
+          Join the community
+        </button>
+        <button onClick={onJoin}>Sign in</button>
+        <Link to="/feed">Explore research</Link>
+      </div>
+      <div className="editorial-grid">
+        <article>
+          <span className="figure-label">01 / Get unstuck</span>
+          <h2>Questions worth solving.</h2>
+          <p>
+            Describe methods, share what you tried, and close the loop with an
+            accepted answer.
+          </p>
+          <Link to="/questions">Explore questions →</Link>
+        </article>
+        <article>
+          <span className="figure-label">02 / Show the process</span>
+          <h2>Work in progress.</h2>
+          <p>
+            Milestones, blockers and lessons belong in a project’s evidence
+            trail.
+          </p>
+          <Link to="/projects">Open projects →</Link>
+        </article>
+        <article>
+          <span className="figure-label">03 / Read together</span>
+          <h2>Beyond the abstract.</h2>
+          <p>
+            Find sourced metadata and distinguish scientific claims from
+            community interpretation.
+          </p>
+          <Link to="/journal">Open journal club →</Link>
+        </article>
+      </div>
+      <h2>Across the biomedical engineering bench.</h2>
+      <p>
+        Explore biomedical imaging, bioinstrumentation, biosignal processing,
+        biomechanics, biomaterials, tissue engineering, rehabilitation
+        engineering, medical devices, computational biology and AI, clinical
+        engineering, and regulatory translation.
+      </p>
+      <h2>Eligibility is a process, not a badge.</h2>
+      <p>
+        For biomedical engineering undergraduate, postgraduate and doctoral
+        pathways, including current students and result-awaiting applicants.
+        Ambiguous and combined programs receive manual review. Phone access and
+        academic eligibility are separate. Marks are optional and private; no
+        grade threshold or institutional endorsement.
+      </p>
+      <Link to="/policies">
+        Read privacy, eligibility and community standards before joining →
+      </Link>
+    </>
+  )
+}

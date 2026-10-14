@@ -1,0 +1,25 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "request": {
+    "method": "POST",
+    "path": "/rest/v1/rpc/public_snapshot",
+    "parameter": "before_cursor"
+  },
+  "before": {
+    "status": 404,
+    "code": "PGRST202",
+    "evidence": "Prior accepted report and pre-migration empty native catalog"
+  },
+  "rootCause": "Expected public.public_snapshot(text) absent before the reviewed migration chain; endpoint and public client config were correct",
+  "after": {
+    "status": 200,
+    "code": null
+  },
+  "relatedGuestRequest": {
+    "path": "/rest/v1/rpc/recommended_page",
+    "status": 401,
+    "code": "42501",
+    "rootCause": "Invoker recommendation function reads member-only preference data; guest frontend must not query it"
+  },
+  "repair": "Applied original 19 migrations without seed; gated frontend preference ranking on actual session; no grants/RLS weakened"
+}

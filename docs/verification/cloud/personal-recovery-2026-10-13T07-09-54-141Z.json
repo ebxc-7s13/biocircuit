@@ -1,0 +1,63 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "records": [
+    {
+      "account": "A",
+      "name": "Hosted owner-scoped export accepted",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "account": "A",
+      "name": "Encrypted DPAPI export decrypts exactly; no plaintext file",
+      "passed": true
+    },
+    {
+      "account": "A",
+      "name": "Owner export core restored to independent local PostgreSQL",
+      "passed": true,
+      "result": {
+        "migrated": 20,
+        "restoredProfiles": 1,
+        "restoredPreferences": 1,
+        "exactReadback": true,
+        "scope": "ISOLATED LOCAL PostgreSQL core rows only; no hosted restore, Auth credentials, private media or other-user data"
+      }
+    },
+    {
+      "account": "A",
+      "name": "Invalid version, target and cross-owner restore inputs rejected locally",
+      "passed": true
+    },
+    {
+      "account": "B",
+      "name": "Hosted owner-scoped export accepted",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "account": "B",
+      "name": "Encrypted DPAPI export decrypts exactly; no plaintext file",
+      "passed": true
+    },
+    {
+      "account": "B",
+      "name": "Owner export core restored to independent local PostgreSQL",
+      "passed": true,
+      "result": {
+        "migrated": 20,
+        "restoredProfiles": 1,
+        "restoredPreferences": 1,
+        "exactReadback": true,
+        "scope": "ISOLATED LOCAL PostgreSQL core rows only; no hosted restore, Auth credentials, private media or other-user data"
+      }
+    },
+    {
+      "account": "B",
+      "name": "Invalid version, target and cross-owner restore inputs rejected locally",
+      "passed": true
+    }
+  ],
+  "remoteWrites": 0,
+  "remoteResets": 0
+}

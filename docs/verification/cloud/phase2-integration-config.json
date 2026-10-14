@@ -1,0 +1,8 @@
+﻿{
+    "projectRef":  "ibxubsegrabpspopdgep",
+    "cliExit":  0,
+    "requiredNamesPresent":  [
+                                 "ALLOWED_ORIGIN"
+                             ],
+    "note":  "Names only; no secret values or digests recorded. Presence is not validation of a value."
+}

@@ -1,0 +1,121 @@
+[
+  {
+    "name": "format",
+    "command": "npm.cmd run format:check",
+    "exitCode": 0,
+    "elapsedMs": 8641,
+    "outputWithheld": false
+  },
+  {
+    "name": "lint",
+    "command": "npm.cmd run lint",
+    "exitCode": 0,
+    "elapsedMs": 9025,
+    "outputWithheld": false
+  },
+  {
+    "name": "types",
+    "command": "npm.cmd run typecheck",
+    "exitCode": 0,
+    "elapsedMs": 33846,
+    "outputWithheld": false
+  },
+  {
+    "name": "unit",
+    "command": "npm.cmd test",
+    "exitCode": 0,
+    "elapsedMs": 39475,
+    "outputWithheld": false
+  },
+  {
+    "name": "database",
+    "command": "npm.cmd run test:db",
+    "exitCode": 0,
+    "elapsedMs": 8749,
+    "outputWithheld": false
+  },
+  {
+    "name": "catalog",
+    "command": "npm.cmd run test:cloud-catalog",
+    "exitCode": 0,
+    "elapsedMs": 6177,
+    "outputWithheld": false
+  },
+  {
+    "name": "rls-planner",
+    "command": "node scripts/test-rls-initplan.mjs",
+    "exitCode": 0,
+    "elapsedMs": 5802,
+    "outputWithheld": false
+  },
+  {
+    "name": "edge",
+    "command": "npm.cmd run test:edge",
+    "exitCode": 0,
+    "elapsedMs": 2296,
+    "outputWithheld": false
+  },
+  {
+    "name": "edge-types",
+    "command": "npm.cmd run typecheck:edge",
+    "exitCode": 0,
+    "elapsedMs": 2255,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-demo",
+    "command": "npm.cmd run test:e2e",
+    "exitCode": 0,
+    "elapsedMs": 296429,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-connected",
+    "command": "npm.cmd run test:staging-browser",
+    "exitCode": 0,
+    "elapsedMs": 35149,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-recovery",
+    "command": "node scripts/test-recovery-staging.mjs",
+    "exitCode": 0,
+    "elapsedMs": 22891,
+    "outputWithheld": false
+  },
+  {
+    "name": "build",
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "elapsedMs": 26802,
+    "outputWithheld": false
+  },
+  {
+    "name": "bundle",
+    "command": "npm.cmd run check:bundle",
+    "exitCode": 0,
+    "elapsedMs": 745,
+    "outputWithheld": false
+  },
+  {
+    "name": "audit",
+    "command": "npm.cmd audit --audit-level=moderate",
+    "exitCode": 0,
+    "elapsedMs": 1721,
+    "outputWithheld": false
+  },
+  {
+    "name": "production",
+    "command": "npm.cmd run test:production",
+    "exitCode": 0,
+    "elapsedMs": 16787,
+    "outputWithheld": false
+  },
+  {
+    "name": "source-backup",
+    "command": "npm.cmd run cloud:preflight",
+    "exitCode": 0,
+    "elapsedMs": 1217,
+    "outputWithheld": false
+  }
+]

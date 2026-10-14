@@ -1,0 +1,593 @@
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { matchesSearch } from '../domain/search'
+import { isDemo } from '../data/gateway'
+import type { Community } from '../data/useCommunity'
+import type { Project } from '../domain/models'
+import { projectSchema, safeUrl, tagsFrom } from '../domain/validation'
+import ProjectImages from './ProjectImages'
+import ProjectPreview from '../components/ProjectPreview'
+import { Dialog } from '../components/Dialog'
+const Composer = lazy(() => import('./Composer'))
+export default function Projects({
+  c,
+  query,
+  detailId,
+}: {
+  c: Community
+  query: string
+  detailId?: string
+}) {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [create, setCreate] = useState(false)
+  const [edit, setEdit] = useState<Project | undefined>()
+  const [help, setHelp] = useState(false)
+  const [log, setLog] = useState(false)
+  const [request, setRequest] = useState(false)
+  const [message, setMessage] = useState('')
+  const [expertise, setExpertise] = useState('')
+  const [availability, setAvailability] = useState('')
+  useEffect(() => {
+    if (location.search.includes('create=1')) {
+      setCreate(true)
+      navigate('/projects', { replace: true })
+    }
+  }, [location.search, navigate])
+  const readable = (p: Project) =>
+    p.visibility === 'public' ||
+    p.owner_id === c.userId ||
+    c.data.project_members.some(
+      (m) => m.project_id === p.id && m.user_id === c.userId,
+    )
+  const selected = c.data.projects.find((p) => p.id === detailId && readable(p))
+  const blocked = (id: string) =>
+    c.data.blocks.some(
+      (b) =>
+        (b.user_id === c.userId && b.target_id === id) ||
+        (b.target_id === c.userId && b.user_id === id),
+    )
+  const list = c.data.projects.filter(
+    (p) =>
+      readable(p) &&
+      !p.archived &&
+      !blocked(p.owner_id) &&
+      (!help || p.needs) &&
+      matchesSearch(
+        [p.title, p.problem, p.methods, p.equipment, p.needs, ...p.tags].join(
+          ' ',
+        ),
+        query,
+        p.id,
+        c.searchResults
+          ? { query: c.searchResults.query, ids: c.searchResults.projects }
+          : undefined,
+      ),
+  )
+  const owner = selected?.owner_id === c.userId
+  const member = c.data.project_members.some(
+    (m) => m.project_id === selected?.id && m.user_id === c.userId,
+  )
+  return (
+    <>
+      <header className="section-heading">
+        <span className="eyebrow">The evidence trail / Projects</span>
+        <h1>
+          {selected?.title ?? 'Projects with purpose'}
+          <span className="signal">.</span>
+        </h1>
+        <p>Real builds, honest progress, useful collaboration.</p>
+      </header>
+      {detailId ? (
+        selected && !blocked(selected.owner_id) ? (
+          <>
+            <Link to="/projects">← All projects</Link>
+            <p className="lead">{selected.problem}</p>
+            <dl className="project-facts">
+              <dt>Stage</dt>
+              <dd>
+                {selected.stage}
+                {selected.archived ? ' · Archived' : ''}
+              </dd>
+              <dt>Methods</dt>
+              <dd>{selected.methods || 'Not specified'}</dd>
+              <dt>Equipment</dt>
+              <dd>{selected.equipment || 'Not specified'}</dd>
+              <dt>Looking for</dt>
+              <dd>{selected.needs || 'No active request'}</dd>
+              <dt>Visibility</dt>
+              <dd>{selected.visibility}</dd>
+              <dt>License / IP</dt>
+              <dd>{selected.license || 'No reuse license granted'}</dd>
+              <dt>Data governance</dt>
+              <dd>{selected.governance}</dd>
+            </dl>
+            {safeUrl(selected.source_url) && (
+              <a
+                href={safeUrl(selected.source_url)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Repository / source ↗
+              </a>
+            )}
+            <div className="actions">
+              {member && (
+                <button className="primary" onClick={() => setLog(true)}>
+                  Add project log
+                </button>
+              )}
+              {owner ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setEdit(selected)
+                      setCreate(true)
+                    }}
+                  >
+                    Edit workspace
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (
+                        confirm(
+                          'Delete this project and all its logs and collaboration requests?',
+                        )
+                      ) {
+                        if (
+                          await c.action('delete_project', {
+                            project_id: selected.id,
+                            confirm: 'DELETE',
+                          })
+                        )
+                          navigate('/projects')
+                      }
+                    }}
+                  >
+                    Delete project
+                  </button>
+                  <button
+                    onClick={() =>
+                      void c.action('archive_project', {
+                        project_id: selected.id,
+                      })
+                    }
+                  >
+                    {selected.archived ? 'Restore' : 'Archive'} project
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="primary"
+                  disabled={
+                    c.user?.membership !== 'approved' ||
+                    member ||
+                    selected.archived
+                  }
+                  onClick={() => setRequest(true)}
+                >
+                  {member ? 'You are a collaborator' : 'Request collaboration'}
+                </button>
+              )}
+            </div>
+            <h2>People & roles</h2>
+            {c.data.project_members
+              .filter((m) => m.project_id === selected.id)
+              .map((m) => (
+                <div className="list-row" key={m.user_id}>
+                  <span>
+                    <Link to={'/member/' + m.user_id}>
+                      {c.data.profiles.find((p) => p.id === m.user_id)?.name ??
+                        'Member'}
+                    </Link>{' '}
+                    · {m.role}
+                    {m.user_id === selected.owner_id ? ' · Owner' : ''}
+                  </span>
+                  {owner && m.user_id !== c.userId && (
+                    <>
+                      <button
+                        onClick={() =>
+                          void c.action('remove_member', {
+                            project_id: selected.id,
+                            target_id: m.user_id,
+                          })
+                        }
+                      >
+                        Remove
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (
+                            confirm(
+                              'Transfer ownership to this collaborator? You will lose owner controls.',
+                            )
+                          )
+                            void c.action('transfer_project', {
+                              project_id: selected.id,
+                              target_id: m.user_id,
+                            })
+                        }}
+                      >
+                        Transfer ownership
+                      </button>
+                    </>
+                  )}
+                </div>
+              ))}
+            {owner && (
+              <>
+                <h2>Collaboration requests</h2>
+                {c.data.collaborations
+                  .filter((r) => r.project_id === selected.id)
+                  .map((r) => (
+                    <article key={r.id}>
+                      <b>
+                        {c.data.profiles.find((p) => p.id === r.sender_id)
+                          ?.name ?? 'Applicant'}{' '}
+                        · {r.status}
+                      </b>
+                      <p>{r.message}</p>
+                      <p>
+                        {r.expertise} · {r.availability}
+                      </p>
+                      {r.status === 'pending' && (
+                        <div className="actions">
+                          <button
+                            onClick={() =>
+                              void c.action('decide_collaboration', {
+                                project_id: selected.id,
+                                collaboration_id: r.id,
+                                accept: true,
+                              })
+                            }
+                          >
+                            Accept collaborator
+                          </button>
+                          <button
+                            onClick={() =>
+                              void c.action('decide_collaboration', {
+                                project_id: selected.id,
+                                collaboration_id: r.id,
+                                accept: false,
+                              })
+                            }
+                          >
+                            Decline
+                          </button>
+                        </div>
+                      )}
+                    </article>
+                  ))}
+              </>
+            )}
+            {member && <ProjectImages c={c} id={selected.id} owner={owner} />}
+            <h2>Project timeline</h2>
+            {c.data.posts
+              .filter(
+                (p) => p.project_id === selected.id && p.state === 'published',
+              )
+              .map((p) => (
+                <article className="timeline" key={p.id}>
+                  <small>
+                    {p.log_type ?? 'note'} ·{' '}
+                    {new Date(p.created_at).toLocaleString()}
+                  </small>
+                  {p.log_type === 'milestone' && (
+                    <div className="actions">
+                      <span className="status">
+                        {
+                          c.data.milestones.filter((m) => m.post_id === p.id)
+                            .length
+                        }{' '}
+                        collaborator confirmations
+                      </span>
+                      {member && p.author_id !== c.userId && (
+                        <button
+                          disabled={c.busy}
+                          onClick={() =>
+                            void c.action('confirm_milestone', {
+                              post_id: p.id,
+                            })
+                          }
+                        >
+                          Confirm milestone
+                        </button>
+                      )}
+                    </div>
+                  )}
+                  <h3>
+                    <Link to={'/post/' + p.id}>{p.title}</Link>
+                  </h3>
+                  <p>{p.body}</p>
+                </article>
+              ))}
+            {!c.data.posts.some((p) => p.project_id === selected.id) && (
+              <p className="empty">
+                No logs yet. Add a milestone, blocker, experiment or lesson.
+              </p>
+            )}
+            <p className="muted">
+              Private project image controls above retain member-scoped access.
+              PDF and document uploads remain disabled pending
+              validation/scanning.
+            </p>
+          </>
+        ) : (
+          <div className="empty">
+            <h2>Project unavailable</h2>
+            <p>It may be private, removed or inaccessible to this account.</p>
+          </div>
+        )
+      ) : (
+        <>
+          <div className="actions">
+            <button
+              className="primary"
+              onClick={() => {
+                setEdit(undefined)
+                setCreate(true)
+              }}
+            >
+              Start a project
+            </button>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={help}
+                onChange={(e) => setHelp(e.target.checked)}
+              />
+              Looking for help / collaborators
+            </label>
+          </div>
+          {query.length >= 2 && c.searchHasMore && (
+            <button
+              onClick={() =>
+                void c.search(query, new AbortController().signal, true)
+              }
+            >
+              More search results
+            </button>
+          )}
+          {!isDemo && query.length < 2 && c.discoveryHasMore.projects && (
+            <button
+              disabled={c.busy}
+              onClick={() => void c.discover('projects')}
+            >
+              Browse more project pages
+            </button>
+          )}
+          <div className="project-grid">
+            {list.map((p) => (
+              <article className="project-row" key={p.id}>
+                <span className="figure-label">
+                  {p.stage} / {p.visibility}
+                </span>
+                <h2>
+                  <Link to={'/project/' + p.id}>{p.title}</Link>
+                </h2>
+                <p>{p.problem}</p>
+                <ProjectPreview id={p.id} title={p.title} stage={p.stage} />
+                <dl className="project-card-facts">
+                  <dt>Methods</dt>
+                  <dd>{p.methods || 'Not specified'}</dd>
+                  <dt>Equipment</dt>
+                  <dd>{p.equipment || 'Not specified'}</dd>
+                </dl>
+                <div className="tags">
+                  {p.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+                <p className="muted">
+                  {p.needs
+                    ? 'Looking for: ' + p.needs
+                    : 'No collaborator request'}
+                </p>
+                <Link to={'/project/' + p.id}>View project & progress →</Link>
+              </article>
+            ))}
+          </div>
+          {!list.length && (
+            <div className="empty">No projects match this discovery view.</div>
+          )}
+        </>
+      )}
+      {create && (
+        <ProjectForm
+          c={c}
+          edit={edit}
+          onClose={() => {
+            setCreate(false)
+            setEdit(undefined)
+          }}
+        />
+      )}
+      {selected && log && (
+        <Suspense fallback={<p>Opening log composer…</p>}>
+          <Composer
+            c={c}
+            initialKind="project_update"
+            projectId={selected.id}
+            onClose={() => setLog(false)}
+          />
+        </Suspense>
+      )}
+      {selected && request && (
+        <Dialog title="Offer a collaboration" onClose={() => setRequest(false)}>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault()
+              if (
+                await c.action('collaborate', {
+                  project_id: selected.id,
+                  message,
+                  expertise,
+                  availability,
+                })
+              )
+                setRequest(false)
+            }}
+          >
+            <label>
+              Message
+              <textarea
+                required
+                minLength={10}
+                maxLength={2000}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+            </label>
+            <label>
+              Expertise offered
+              <input
+                maxLength={1000}
+                value={expertise}
+                onChange={(e) => setExpertise(e.target.value)}
+              />
+            </label>
+            <label>
+              Availability
+              <input
+                maxLength={200}
+                value={availability}
+                onChange={(e) => setAvailability(e.target.value)}
+              />
+            </label>
+            <p>Your phone number is never included in this request.</p>
+            <button className="primary" disabled={c.busy}>
+              Send collaboration request
+            </button>
+          </form>
+        </Dialog>
+      )}
+    </>
+  )
+}
+function ProjectForm({
+  c,
+  edit,
+  onClose,
+}: {
+  c: Community
+  edit?: Project
+  onClose: () => void
+}) {
+  const [f, setF] = useState(
+    edit
+      ? { ...edit, tags: edit.tags.join(', ') }
+      : {
+          title: '',
+          problem: '',
+          stage: 'Prototype',
+          methods: '',
+          equipment: '',
+          needs: '',
+          tags: '',
+          visibility: 'public',
+          source_url: '',
+          license: '',
+          governance:
+            'No patient-identifiable data. Synthetic or permission-cleared data only.',
+        },
+  )
+  const [error, setError] = useState('')
+  const [id] = useState(() => crypto.randomUUID())
+  return (
+    <Dialog
+      title={edit ? 'Edit project workspace' : 'Start a research project'}
+      onClose={onClose}
+    >
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault()
+          const p = projectSchema.safeParse({ ...f, tags: tagsFrom(f.tags) })
+          if (!p.success) {
+            setError(p.error.issues.map((i) => i.message).join('; '))
+            return
+          }
+          if (
+            await c.action(
+              edit ? 'edit_project' : 'project',
+              { ...p.data, ...(edit ? { project_id: edit.id } : {}) },
+              id,
+            )
+          )
+            onClose()
+        }}
+      >
+        {(
+          [
+            'title',
+            'problem',
+            'stage',
+            'methods',
+            'equipment',
+            'needs',
+            'tags',
+            'source_url',
+            'license',
+            'governance',
+          ] as const
+        ).map((key) => (
+          <label key={key}>
+            {
+              {
+                title: 'Project title',
+                problem: 'Problem statement',
+                stage: 'Project stage',
+                methods: 'Methods',
+                equipment: 'Equipment',
+                needs: 'Collaborator needs',
+                tags: 'Topics, separated by commas',
+                source_url: 'Repository / website (HTTPS)',
+                license: 'License / intellectual property',
+                governance: 'Data governance notes',
+              }[key]
+            }
+            {['problem', 'methods', 'governance'].includes(key) ? (
+              <textarea
+                value={f[key]}
+                maxLength={key === 'problem' ? 6000 : 3000}
+                onChange={(e) => setF((v) => ({ ...v, [key]: e.target.value }))}
+              />
+            ) : (
+              <input
+                value={f[key]}
+                maxLength={key === 'source_url' ? 2048 : 1000}
+                onChange={(e) => setF((v) => ({ ...v, [key]: e.target.value }))}
+              />
+            )}
+          </label>
+        ))}
+        <label>
+          Visibility
+          <select
+            aria-label="Visibility"
+            value={f.visibility}
+            onChange={(e) =>
+              setF((v) => ({
+                ...v,
+                visibility: e.target.value as Project['visibility'],
+              }))
+            }
+          >
+            <option value="public">Public</option>
+            <option value="private">Project members only</option>
+          </select>
+        </label>
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
+        <button
+          className="primary"
+          disabled={c.busy || c.user?.membership !== 'approved'}
+        >
+          Save project
+        </button>
+      </form>
+    </Dialog>
+  )
+}

@@ -1,0 +1,13 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "finalReport": "email-auth-diagnostic-2026-10-12T14-10-01-453Z.json",
+  "livePassed": 20,
+  "liveFailed": 0,
+  "originalBytePreserved": true,
+  "diagnosticFilesScanned": 4,
+  "forbiddenFields": 0,
+  "credentialOrPersonalIdentifierPatterns": 0,
+  "securityFilesCompared": 27,
+  "securityFilesChanged": [],
+  "note": "Conservative diagnostic schema/pattern and source comparison; not exhaustive security assurance. No private credential file scanned."
+}

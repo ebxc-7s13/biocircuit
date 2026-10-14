@@ -1,0 +1,12 @@
+create table private.storage_gc(id uuid primary key default gen_random_uuid(),bucket text not null check(bucket in('avatars','project-files')),path text not null,created_at timestamptz not null default now(),unique(bucket,path));
+grant select,insert,delete on private.storage_gc to service_role;
+create function private.queue_storage_delete()returns trigger language plpgsql security definer set search_path=''as $$begin if tg_op='DELETE'or old.path<>new.path then insert into private.storage_gc(bucket,path)values(case when tg_table_name='avatars'then'avatars'else'project-files'end,old.path)on conflict do nothing;end if;return old;end$$;
+revoke all on function private.queue_storage_delete()from public;
+create trigger avatar_gc after delete or update of path on public.avatars for each row execute function private.queue_storage_delete();
+create trigger project_image_gc after delete on public.project_images for each row execute function private.queue_storage_delete();
+create function public.storage_cleanup_batch()returns jsonb language sql security invoker set search_path=''as $$select coalesce(jsonb_agg(x),'[]')from(select *from private.storage_gc order by created_at,id limit 100)x$$;
+create function public.storage_cleanup_ack(ids uuid[])returns void language sql security invoker set search_path=''as $$delete from private.storage_gc where cardinality(ids)<=100 and id=any(ids)$$;
+revoke all on function public.storage_cleanup_batch(),public.storage_cleanup_ack(uuid[])from public,anon,authenticated;grant execute on function public.storage_cleanup_batch(),public.storage_cleanup_ack(uuid[])to service_role;
+drop function public.project_image_budget(uuid);
+create function public.project_image_budget(pid uuid,image_id uuid default null)returns void language plpgsql security definer set search_path=''as $$begin if not private.member()or not private.project_read(pid)or not exists(select 1 from public.project_members where project_id=pid and user_id=auth.uid())or exists(select 1 from private.storage_gc where bucket='project-files'and path=auth.uid()::text||'/'||image_id::text||'.png')then raise insufficient_privilege;end if;perform private.rate_limit('project_image',3);end$$;
+revoke all on function public.project_image_budget(uuid,uuid)from public,anon;grant execute on function public.project_image_budget(uuid,uuid)to authenticated;

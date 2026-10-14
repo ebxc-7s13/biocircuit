@@ -1,0 +1,31 @@
+{
+  "scope": "Local synthetic WASM benchmark only. Not hosted CPU/security/memory acceptance. Uniform-color images underrepresent worst cases.",
+  "version": "0.0.44",
+  "license": "Apache-2.0",
+  "rows": [
+    {
+      "width": 256,
+      "height": 256,
+      "inputBytes": 1409,
+      "outputBytes": 200,
+      "wallMs": 112,
+      "rssBytes": 120745984
+    },
+    {
+      "width": 2048,
+      "height": 2048,
+      "inputBytes": 60441,
+      "outputBytes": 200,
+      "wallMs": 656,
+      "rssBytes": 108990464
+    },
+    {
+      "width": 3000,
+      "height": 3000,
+      "inputBytes": 125131,
+      "outputBytes": 200,
+      "wallMs": 746,
+      "rssBytes": 124911616
+    }
+  ]
+}

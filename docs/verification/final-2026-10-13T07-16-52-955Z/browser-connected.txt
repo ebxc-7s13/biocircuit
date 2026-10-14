@@ -1,0 +1,126 @@
+
+> biocircuit@0.1.0 test:staging-browser
+> node scripts/test-connected-staging.mjs
+
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual connected anonymous SDK/browser only; no account, OTP, privileged role, write or success simulation.",
+  "snapshot": {
+    "status": 200,
+    "code": null,
+    "available": true
+  },
+  "managedAuthSettings": {
+    "status": 200,
+    "phoneEnabled": false,
+    "phoneAutoconfirm": false
+  },
+  "routes": [
+    {
+      "route": "/feed",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/explore",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/questions",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/projects",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/journal",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/collaborators",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/profile",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/saved",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/notifications",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/settings",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/trust",
+      "rendered": true,
+      "syntheticFallback": false
+    },
+    {
+      "route": "/policies",
+      "rendered": true,
+      "syntheticFallback": false
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "overflow": false,
+      "axeViolations": []
+    }
+  ],
+  "keyboardAndMotion": {
+    "searchFocus": true,
+    "modalEscapeAndFocusReturn": true,
+    "history": true,
+    "reducedBackgroundMotion": true
+  },
+  "browser": {
+    "uncaughtErrors": 0,
+    "consoleErrors": 0,
+    "resourceConsoleErrors": 0,
+    "stagingRequests": 34,
+    "unexpectedBackendRequests": 0,
+    "backendResponses": {
+      "200": 34
+    },
+    "backendResponsePaths": {
+      "/rest/v1/rpc/public_snapshot 200": 34
+    }
+  },
+  "applicationAcceptance": "Anonymous snapshot observed; authenticated/role/provider/Storage journeys still require separate acceptance."
+}

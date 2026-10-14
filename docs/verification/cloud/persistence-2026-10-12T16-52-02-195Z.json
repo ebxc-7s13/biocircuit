@@ -1,0 +1,64 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Real staging persistence; two independent ordinary identities only when controlled credentials supplied. No approval, phone flag, privileged role, admin Auth, delete or reset.",
+  "records": [
+    {
+      "name": "Ordinary managed existing-account sign-in",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Actual managed user has no phone confirmation",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Ordinary profile remains unverified, unapproved and unsuspended",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "No staff role assigned",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Own baseline preferences readable",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowPresent": false
+      }
+    },
+    {
+      "name": "profile-write-through-connected-ui",
+      "account": "A",
+      "status": "FAIL - REPAIR REQUIRED",
+      "observed": {
+        "errorClass": "TimeoutError",
+        "code": null,
+        "detail": "No raw exceptions, identities, payloads or credentials recorded"
+      }
+    }
+  ],
+  "browser": {
+    "uncaughtErrors": 0,
+    "consoleErrors": 0
+  },
+  "restoration": [],
+  "privateBaseline": ".cloud/phase2-baseline-2026-10-12T16-52-02-195Z.xml"
+}

@@ -1,0 +1,19 @@
+﻿{
+    "projectRef":  "ibxubsegrabpspopdgep",
+    "observedDate":  "2026-10-11",
+    "source":  "Authenticated user Dashboard visible DOM and accessibility state; no cookies or credential extraction",
+    "projectName":  "biocircuit-staging",
+    "canonicalDataApi":  "https://ibxubsegrabpspopdgep.supabase.co/rest/v1/",
+    "publicTableEditor":  "No tables or views",
+    "securityAdvisor":  {
+                            "suggestions":  0,
+                            "errors":  0,
+                            "warnings":  0
+                        },
+    "performanceAdvisor":  {
+                               "suggestions":  0,
+                               "errors":  0,
+                               "warnings":  0
+                           },
+    "scope":  "Read-only pre-migration observations. Not CLI authentication, native SQL catalog, production isolation or post-migration security assurance."
+}

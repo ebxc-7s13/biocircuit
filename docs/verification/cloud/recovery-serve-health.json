@@ -1,0 +1,28 @@
+{
+  "origin": "http://127.0.0.1:5190",
+  "callback": "http://127.0.0.1:5190/account/recovery",
+  "checks": [
+    {
+      "name": "Exact callback URL returns the app HTML",
+      "passed": true
+    },
+    {
+      "name": "Connected recovery form renders (not demo mode)",
+      "passed": true
+    },
+    {
+      "name": "Expired-link callback shows a safe retry message and no password editor",
+      "passed": true
+    },
+    {
+      "name": "Callback parameters are removed from the visible URL",
+      "passed": true
+    },
+    {
+      "name": "Health check made no Auth requests",
+      "passed": true
+    }
+  ],
+  "ready": true,
+  "checkedAt": "2026-10-14T04:47:58.020Z"
+}

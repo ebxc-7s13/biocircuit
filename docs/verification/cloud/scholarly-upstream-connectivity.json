@@ -1,0 +1,21 @@
+{
+  "scope": "Direct public upstream connectivity ONLY, not application Edge search/cache/approved-member acceptance. One public bibliographic request per source; no full text or private user data.",
+  "rows": [
+    {
+      "provider": "Crossref",
+      "status": 200,
+      "elapsedMs": 857,
+      "titlePresent": true,
+      "canonicalIdentifierPresent": true,
+      "paidCredentialUsed": false
+    },
+    {
+      "provider": "PubMed",
+      "status": 200,
+      "elapsedMs": 1140,
+      "titlePresent": true,
+      "canonicalIdentifierPresent": true,
+      "paidCredentialUsed": false
+    }
+  ]
+}

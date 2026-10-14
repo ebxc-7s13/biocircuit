@@ -1,0 +1,41 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Anonymous hosted platform ingress only; no API key or JWT supplied. Not project identity, hosted RLS, Auth/OTP, Storage permissions or deployed-handler acceptance.",
+  "results": [
+    {
+      "label": "Managed Auth health ingress",
+      "status": 401,
+      "observed": true
+    },
+    {
+      "label": "Data API ingress",
+      "status": 401,
+      "observed": true
+    },
+    {
+      "label": "Private Storage ingress",
+      "status": 400,
+      "observed": true
+    },
+    {
+      "label": "Edge ingress: scholarly-search",
+      "status": 401,
+      "observed": true
+    },
+    {
+      "label": "Edge ingress: account-delete",
+      "status": 401,
+      "observed": true
+    },
+    {
+      "label": "Edge ingress: avatar",
+      "status": 401,
+      "observed": true
+    },
+    {
+      "label": "Edge ingress: project-images",
+      "status": 401,
+      "observed": true
+    }
+  ]
+}

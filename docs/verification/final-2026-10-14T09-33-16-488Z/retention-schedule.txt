@@ -1,0 +1,5 @@
+
+> biocircuit@0.1.0 test:retention-schedule
+> node scripts/test-retention-schedule.mjs
+
+{"file":"docs/verification/cloud/retention-schedule-2026-10-14T09-40-31-813Z.json","failed":false,"checks":[{"name":"Retention job scheduled daily and active","status":"PASS - LIVE","observed":{"schedule":"17 3 * * *","active":true,"owner":"postgres"}},{"name":"Eligible-row inventory recorded (aggregate only)","status":"PASS - LIVE","observed":{"aged_audit":0,"aged_marks":0,"aged_receipts":0,"expired_cache":0}},{"name":"Exact job command executes on hosted Postgres (rolled back)","status":"PASS - LIVE","observed":{}},{"name":"No failed scheduled runs recorded","status":"PASS - LIVE","observed":{"runs":[]}},{"name":"Clients cannot execute retention or use the cron schema","status":"PASS - LIVE","observed":{"anon":false,"authenticated":false,"cron_anon":false,"cron_authenticated":false}}]}

@@ -1,0 +1,17 @@
+[
+    {
+        "assertion":  "ok 1 - every public application table has RLS"
+    },
+    {
+        "assertion":  "ok 2 - clients cannot assign roles"
+    },
+    {
+        "assertion":  "ok 3 - clients cannot assign academic flags"
+    },
+    {
+        "assertion":  "ok 4 - anonymous caller cannot read private academics"
+    },
+    {
+        "assertion":  "ok 5 - anonymous caller cannot invoke member mutations"
+    }
+]

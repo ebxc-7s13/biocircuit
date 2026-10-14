@@ -1,0 +1,12 @@
+{
+  "scope": "Conservative sanitized diagnostic pattern scan and protected-source hash comparison; not exhaustive security assurance",
+  "filesScanned": 19,
+  "findings": [],
+  "protectedFiles": 30,
+  "changed": [],
+  "sourceBackup": ".cloud/backups/2026-10-13T06-16-04-300Z",
+  "sourceFilesCopied": 140,
+  "originalProtectedBaseline": ".cloud/backups/2026-10-13T02-11-27-645Z",
+  "originalProtectedFileCount": 30,
+  "originalProtectedChanges": []
+}

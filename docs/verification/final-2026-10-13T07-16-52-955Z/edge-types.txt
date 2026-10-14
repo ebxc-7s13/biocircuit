@@ -1,0 +1,8 @@
+
+> biocircuit@0.1.0 typecheck:edge
+> deno check supabase/functions/scholarly-search/index.ts supabase/functions/account-delete/index.ts supabase/functions/avatar/index.ts supabase/functions/project-images/index.ts
+
+Check supabase/functions/scholarly-search/index.ts
+Check supabase/functions/account-delete/index.ts
+Check supabase/functions/avatar/index.ts
+Check supabase/functions/project-images/index.ts

@@ -1,0 +1,17 @@
+
+> biocircuit@0.1.0 test:edge
+> deno test --allow-env=ALLOWED_ORIGIN,SUPABASE_URL,SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY,NCBI_API_KEY supabase/functions/http_test.ts supabase/functions/pubmed_test.ts
+
+Check supabase/functions/http_test.ts
+Check supabase/functions/pubmed_test.ts
+running 3 tests from ./supabase/functions/http_test.ts
+strict origin and no private cache ... ok (42ms)
+streaming JSON limit rejects spoofed body length ... ok (3ms)
+anonymous authentication is never simulated ... ok (438µs)
+running 3 tests from ./supabase/functions/pubmed_test.ts
+PubMed fixture: bounded pagination, year, provenance and reserve per call ... ok (13ms)
+PubMed fixture: exact identifiers avoid search and invalid cursor does no network work ... ok (18ms)
+PubMed fixture: budget denial, upstream rate limit and malformed data fail honestly ... ok (2ms)
+
+ok | 6 passed | 0 failed (152ms)
+

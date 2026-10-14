@@ -1,0 +1,8 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Explicit operator-supplied actual mailbox receipt, normal managed recovery UI and own-password rotation; no administrative APIs or signup",
+  "records": [],
+  "privateReceiptInputPresent": false,
+  "preflightOnly": true,
+  "blocked": "Actual mailbox receipt is not configured; no reset or credential write attempted"
+}

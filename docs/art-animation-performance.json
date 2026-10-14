@@ -1,0 +1,25 @@
+{
+  "scenario": "Unthrottled local Chromium, 1440x900 project hover plus ambient field; ~2.2s observation, not physical-device/field performance",
+  "layoutCountDelta": 0,
+  "layoutDurationDelta": 0,
+  "scriptDurationDelta": 0,
+  "taskDurationDelta": 0.001774,
+  "animatedElements": [
+    {
+      "target": "",
+      "playState": "running"
+    },
+    {
+      "target": "",
+      "playState": "running"
+    },
+    {
+      "target": "",
+      "playState": "running"
+    },
+    {
+      "target": "preview-marquee",
+      "playState": "running"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Explicit operator-supplied actual mailbox receipt, normal managed recovery UI and own-password rotation; no administrative APIs or signup",
+  "records": [
+    {
+      "name": "Existing original password signs in before actual reset",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Real recovery session belongs to the selected controlled account before any password change",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Real recovery artifact establishes a password editor through managed Auth",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Actual reset artifacts stripped from URL",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Actual hosted Auth password update succeeded",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Rotated credential protected locally after actual reset",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Old password rejected after real reset",
+      "status": "PASS - LIVE",
+      "observed": {
+        "httpStatus": 400
+      }
+    },
+    {
+      "name": "New password signs into the same actual identity",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Phone, membership, suspension and roles unchanged by reset",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Reused actual artifact cannot expose password editor",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "No uncaught application exception or sensitive console output",
+      "status": "PASS - LIVE",
+      "observed": {}
+    }
+  ],
+  "authStatuses": [
+    {
+      "path": "/auth/v1/verify",
+      "status": 303
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/user",
+      "status": 200
+    },
+    {
+      "path": "/auth/v1/logout",
+      "status": 204
+    }
+  ],
+  "linkArrival": {
+    "verifyHttpStatus": 303,
+    "queryKeys": [],
+    "fragmentKeys": [
+      "access_token",
+      "expires_at",
+      "expires_in",
+      "refresh_token",
+      "sb",
+      "token_type",
+      "type"
+    ],
+    "continueOffered": true,
+    "alertShown": false
+  },
+  "expiredRealLink": "UNVERIFIED: requires a separate genuinely expired artifact; expiry was not changed"
+}

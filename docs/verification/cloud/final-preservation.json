@@ -1,0 +1,18 @@
+{
+  "baseline": ".cloud/backups/2026-10-13T06-16-04-300Z",
+  "compared": 140,
+  "changed": [
+    "package.json",
+    "scripts/avatar-processor.mjs",
+    "scripts/cleanup-storage.mjs",
+    "scripts/cloud-preflight.mjs",
+    "scripts/staging-private.mjs",
+    "scripts/test-cloud-catalog.mjs",
+    "tests/avatar.test.ts"
+  ],
+  "visualSourceUnchanged": true,
+  "originalMigrationsUnchanged": true,
+  "originalEdgeHandlersUnchanged": true,
+  "lockfileUnchanged": true,
+  "gitRepositoryPresent": false
+}

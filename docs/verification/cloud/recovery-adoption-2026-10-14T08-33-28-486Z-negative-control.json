@@ -1,0 +1,30 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "LIVE hosted Auth; ordinary session of A as recovery fragment; AMR check stubbed in the test browser only for the adoption leg; no password update, signup or admin API",
+  "records": [
+    {
+      "name": "Unmodified app refuses an ordinary password session as recovery",
+      "status": "PASS - LIVE",
+      "observed": {
+        "authStatuses": [
+          200
+        ]
+      }
+    },
+    {
+      "name": "Real hosted session adoption survives SIGNED_IN and the app-shell reload and opens the editor",
+      "status": "FAIL",
+      "observed": {
+        "authStatuses": [
+          200,
+          200,
+          200,
+          200,
+          204
+        ]
+      }
+    }
+  ],
+  "failed": true,
+  "errorClass": "AssertionError"
+}

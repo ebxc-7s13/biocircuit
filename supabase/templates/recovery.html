@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reset your BioCircuit password</title></head>
+<body style="margin:0;padding:24px 12px;background:#0b0d12;color:#edf1fa;font-family:Arial,sans-serif;line-height:1.6">
+  <table role="presentation" style="width:100%;max-width:560px;margin:0 auto;border-collapse:collapse;background:#161a24;border:1px solid #30394d">
+    <tr><td style="padding:28px 24px">
+      <p style="margin:0 0 24px;color:#8ab6ff;font-size:13px;letter-spacing:2px">BIOCIRCUIT / ACCOUNT SECURITY</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;color:#ffffff">Reset your password</h1>
+      <p>Open your single-use recovery link, then select <strong>Continue recovery</strong> to verify it before choosing a new password.</p>
+      <p style="margin:24px 0"><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&amp;type=recovery" style="display:inline-block;padding:12px 20px;background:#225dff;color:#ffffff;font-weight:bold;text-decoration:none;border-radius:6px">Recover your account</a></p>
+      <p>Alternatively, enter this one-time code on the recovery page where you requested the email:</p>
+      <p style="font-size:26px;letter-spacing:4px;color:#ffffff"><strong>{{ .Token }}</strong></p>
+      <p style="font-size:14px;color:#c2cbdd">The link and code expire according to the Auth settings and are usable once. Never forward this message or share either with anyone.</p>
+      <p style="font-size:14px;color:#c2cbdd">If you did not request this reset, ignore the message. Your password remains unchanged.</p>
+      <p style="margin-bottom:0;font-size:13px;color:#c2cbdd">Recovery does not verify your phone, approve academic membership or assign a trusted role.</p>
+    </td></tr>
+  </table>
+</body>
+</html>

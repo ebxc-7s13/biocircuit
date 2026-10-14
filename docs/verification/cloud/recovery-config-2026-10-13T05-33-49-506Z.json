@@ -1,0 +1,98 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Supported CLI selective Auth template/redirect configuration; no SMTP credentials, delivery or reset evidence",
+  "applyRequested": true,
+  "redirectOnly": true,
+  "templateSha256": "c59579f7858bc110813af80ef1a1001db9038318602f25c525c718477f408db5",
+  "redirect": "http://127.0.0.1:5190/account/recovery",
+  "identityVerified": true,
+  "customSmtpEnabled": false,
+  "reviewedDeclaredPaths": [
+    "auth.additional_redirect_urls"
+  ],
+  "push": {
+    "keys": [
+      "schema_version",
+      "project_ref",
+      "services",
+      "unsupported",
+      "unencodable",
+      "forced",
+      "unmanaged",
+      "secrets",
+      "declined_addons",
+      "remote_only",
+      "scope",
+      "is_branch",
+      "message"
+    ],
+    "services": [
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      },
+      {
+        "status": "updated",
+        "changes": [
+          [
+            "auth",
+            "additional_redirect_urls"
+          ]
+        ]
+      },
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      }
+    ]
+  },
+  "remainingDeclaredChanges": [],
+  "contentReadback": {
+    "services": [
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      },
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "up_to_date",
+        "changes": []
+      },
+      {
+        "status": "disabled",
+        "changes": []
+      }
+    ]
+  }
+}

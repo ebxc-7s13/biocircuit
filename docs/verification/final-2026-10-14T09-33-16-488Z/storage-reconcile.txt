@@ -1,0 +1,5 @@
+
+> biocircuit@0.1.0 storage:reconcile
+> node scripts/storage-reconcile.mjs
+
+{"file":"docs/verification/cloud/storage-reconcile-2026-10-14T09-40-34-938Z.json","projectRef":"ibxubsegrabpspopdgep","scope":"LIVE staging read-only reconciliation of Storage objects, owning records and the deletion queue; aggregate counts only","counts":{"evidence_objects":0,"missing_objects":0,"objects":0,"orphan_objects":0,"queued":0,"records":0,"stale_queue":0},"drift":false,"status":"PASS - LIVE"}

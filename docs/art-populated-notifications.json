@@ -1,0 +1,5 @@
+{
+  "scenario": "Isolated demo: actual reply operation; loading screenshots use an explicitly delayed local lazy-module request, not fake backend data",
+  "notifications": 1,
+  "axeViolations": []
+}

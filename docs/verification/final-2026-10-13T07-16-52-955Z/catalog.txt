@@ -1,0 +1,5 @@
+
+> biocircuit@0.1.0 test:cloud-catalog
+> node scripts/test-cloud-catalog.mjs
+
+PASS — LOCAL ONLY: 26 hosted-catalog assertions execute against 20 migrations in PGlite; Auth/Storage stubs, not live cloud verification.

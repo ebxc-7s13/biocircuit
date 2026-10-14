@@ -1,0 +1,11 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "account": "A",
+  "scope": "Single recovery request through the normal connected UI; no reset, signup or password change",
+  "step": "recorded",
+  "httpStatus": 200,
+  "allowlistedCode": null,
+  "requestedAt": "2026-10-14T04:36:29.676Z",
+  "useBefore": "2026-10-14T05:36:29.676Z",
+  "deliveryVerified": false
+}

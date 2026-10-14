@@ -1,0 +1,305 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { FormEvent } from 'react'
+import {
+  Activity, ArrowDownRight, ArrowRight, Bell, Bookmark, BookOpen, Check, CheckCircle2,
+  ChevronDown, CircleHelp, FileText, FlaskConical, Heart, Home, Layers3, MessageCircle,
+  MoreHorizontal, Plus, Search, Send, ShieldCheck, TrendingUp, Users, X, Zap, ArrowUpRight,
+  Microscope, GraduationCap, SlidersHorizontal, Menu, Clock3, Atom, CircleDot, Filter,
+} from 'lucide-react'
+
+type Section = 'Feed' | 'Questions' | 'Projects' | 'Journal club' | 'Saved'
+type Kind = 'Discussion' | 'Question' | 'Project' | 'Journal'
+
+type Post = {
+  id: number
+  author: string
+  initials: string
+  role: string
+  institution: string
+  verified: boolean
+  time: string
+  kind: Kind
+  title: string
+  body: string
+  tags: string[]
+  likes: number
+  replies: number
+  saves: number
+  liked?: boolean
+  saved?: boolean
+  accent: string
+  journal?: string
+  citation?: string
+  imageLabel?: string
+  accepted?: boolean
+}
+
+const initialPosts: Post[] = [
+  {
+    id: 1, author: 'Dr. Meera Nair', initials: 'MN', role: 'Research scientist · Biomedical imaging', institution: 'IIT Madras', verified: true, time: '18 min ago', kind: 'Journal',
+    title: 'Can label-free fluorescence become a reliable first-line screening tool?',
+    body: 'A useful paper on autofluorescence lifetime imaging for oral epithelial dysplasia. The part I keep coming back to is how much the acquisition protocol changes the signal before the model even sees it. What controls do you consider non-negotiable?',
+    tags: ['Biomedical imaging', 'Optical diagnostics', 'Oral cancer'], likes: 48, replies: 12, saves: 31, accent: 'plum', journal: 'SAMPLE JOURNAL DISCUSSION', citation: 'Demo entry · attach DOI/PMID in production', imageLabel: 'ADD DOI / PMID',
+  },
+  {
+    id: 2, author: 'Arjun Menon', initials: 'AM', role: 'PhD scholar · Medical AI', institution: 'IISc Bengaluru', verified: true, time: '42 min ago', kind: 'Question',
+    title: 'How are you validating models when patient-level splits leave you with very few samples?',
+    body: 'I’m working with small cytology image cohorts. Image-level random splitting gives great metrics and I don’t trust them. I’d like to compare patient-level grouped CV, bootstrap confidence intervals, and external validation. What would you report in a paper?',
+    tags: ['Machine learning', 'Clinical validation', 'Small datasets'], likes: 26, replies: 19, saves: 14, accent: 'blue', accepted: false,
+  },
+  {
+    id: 3, author: 'Nikita Rao', initials: 'NR', role: 'M.Tech · Biomedical instrumentation', institution: 'IIEST Shibpur', verified: true, time: '1 hr ago', kind: 'Project',
+    title: 'Open build log: an affordable, modular fluorescence microscope',
+    body: 'Sharing the current optical path, LED driver notes, filter choices and a few lessons from alignment. The next milestone is repeatability across sessions—not another prettier image. Repo and bill of materials are in the project notes.',
+    tags: ['Open hardware', 'Optics', 'Build log'], likes: 63, replies: 8, saves: 45, accent: 'green', imageLabel: 'OPEN HARDWARE / REV 03',
+  },
+  {
+    id: 4, author: 'Prof. K. Srinivas', initials: 'KS', role: 'Faculty · Biomedical signal processing', institution: 'NIT Rourkela', verified: true, time: '2 hr ago', kind: 'Discussion',
+    title: 'A small challenge for the EEG community: show your failure cases',
+    body: 'Leaderboard metrics hide a lot. I’m collecting examples where a model breaks under electrode shift, motion artifact, or a new recording setup. Post one failure mode and the experiment that exposed it. Let’s make reproducibility a habit, not a paragraph.',
+    tags: ['EEG', 'Reproducibility', 'Signal processing'], likes: 37, replies: 23, saves: 18, accent: 'amber',
+  },
+  {
+    id: 5, author: 'Ishita Banerjee', initials: 'IB', role: 'Research assistant · Biomaterials', institution: 'Jadavpur University', verified: true, time: '3 hr ago', kind: 'Question',
+    title: 'Which characterization tests actually changed your hydrogel design?',
+    body: 'I’m comparing swelling ratio, compressive modulus and degradation profiles for a wound-dressing hydrogel. Which characterization result changed a decision in your project, rather than simply ending up in a table?',
+    tags: ['Biomaterials', 'Tissue engineering', 'Lab methods'], likes: 19, replies: 11, saves: 9, accent: 'rose',
+  },
+]
+
+const navItems: { label: Section; icon: typeof Home; helper: string }[] = [
+  { label: 'Feed', icon: Home, helper: 'Your research circle' },
+  { label: 'Questions', icon: CircleHelp, helper: 'Get unstuck together' },
+  { label: 'Projects', icon: Layers3, helper: 'Work in progress' },
+  { label: 'Journal club', icon: BookOpen, helper: 'Papers worth your time' },
+  { label: 'Saved', icon: Bookmark, helper: 'Your reading desk' },
+]
+
+function App() {
+  const [section, setSection] = useState<Section>('Feed')
+  const [feedFilter, setFeedFilter] = useState('For you')
+  const [posts, setPosts] = useState<Post[]>(() => {
+    try {
+      const saved = localStorage.getItem('biocircuit-posts')
+      return saved ? JSON.parse(saved) as Post[] : initialPosts
+    } catch { return initialPosts }
+  })
+  const [query, setQuery] = useState('')
+  const [showComposer, setShowComposer] = useState(false)
+  const [showJoin, setShowJoin] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
+  const [showProfileMenu, setShowProfileMenu] = useState(false)
+  const [showMobileNav, setShowMobileNav] = useState(false)
+  const [showMobileSearch, setShowMobileSearch] = useState(false)
+  const desktopSearchRef = useRef<HTMLInputElement>(null)
+  const mobileSearchRef = useRef<HTMLInputElement>(null)
+  const [toast, setToast] = useState('')
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
+  const [user, setUser] = useState({ name: 'Nikita Rao', initials: 'NR', institution: 'IIEST Shibpur', degree: 'M.Tech · Biomedical Engineering', verified: true })
+
+  useEffect(() => {
+    try { localStorage.setItem('biocircuit-posts', JSON.stringify(posts)) } catch { /* local persistence is best-effort in this demo */ }
+  }, [posts])
+
+  useEffect(() => {
+    const handleShortcut = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        if (window.matchMedia('(max-width: 720px)').matches) { setShowMobileSearch(true); window.setTimeout(() => mobileSearchRef.current?.focus(), 0) }
+        else desktopSearchRef.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', handleShortcut)
+    return () => window.removeEventListener('keydown', handleShortcut)
+  }, [])
+
+  useEffect(() => {
+    if (!toast) return
+    const timer = window.setTimeout(() => setToast(''), 2800)
+    return () => window.clearTimeout(timer)
+  }, [toast])
+
+  const visiblePosts = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return posts.filter((post) => {
+      const matchesSection = section === 'Saved' ? post.saved : section === 'Questions' ? post.kind === 'Question' : section === 'Projects' ? post.kind === 'Project' : section === 'Journal club' ? post.kind === 'Journal' : true
+      const matchesQuery = !q || [post.title, post.body, post.author, post.institution, post.tags.join(' ')].join(' ').toLowerCase().includes(q)
+      const matchesFilter = feedFilter !== 'Following' || ['Dr. Meera Nair', 'Prof. K. Srinivas', 'Nikita Rao'].includes(post.author)
+      return matchesSection && matchesQuery && matchesFilter
+    })
+  }, [posts, query, section, feedFilter])
+
+  const updatePost = (id: number, patch: Partial<Post>) => setPosts((prev) => prev.map((post) => post.id === id ? { ...post, ...patch } : post))
+
+  const toggleLike = (post: Post) => updatePost(post.id, { liked: !post.liked, likes: Math.max(0, post.likes + (post.liked ? -1 : 1)) })
+  const toggleSave = (post: Post) => {
+    updatePost(post.id, { saved: !post.saved, saves: Math.max(0, post.saves + (post.saved ? -1 : 1)) })
+    setToast(post.saved ? 'Removed from your reading desk' : 'Saved to your reading desk')
+  }
+
+  const addPost = (post: Omit<Post, 'id' | 'author' | 'initials' | 'role' | 'institution' | 'verified' | 'time' | 'likes' | 'replies' | 'saves' | 'accent'>) => {
+    const newPost: Post = { ...post, id: Date.now(), author: user.name, initials: user.initials, role: user.degree, institution: user.institution, verified: user.verified, time: 'Just now', likes: 0, replies: 0, saves: 0, accent: 'teal' }
+    setPosts((prev) => [newPost, ...prev])
+    setSection(newPost.kind === 'Question' ? 'Questions' : newPost.kind === 'Project' ? 'Projects' : newPost.kind === 'Journal' ? 'Journal club' : 'Feed')
+    setFeedFilter('For you')
+    setShowComposer(false)
+    setToast('Your post is live in the community')
+  }
+
+  const selectSection = (target: Section) => {
+    setSection(target)
+    setFeedFilter('For you')
+    setShowMobileNav(false)
+  }
+
+  return (
+    <div className="app-shell">
+      <header className="topbar">
+        <button className="mobile-menu icon-button" aria-label="Open navigation" onClick={() => setShowMobileNav(!showMobileNav)}><Menu size={19} /></button>
+        <button className="brand" onClick={() => selectSection('Feed')} aria-label="BioCircuit home">
+          <span className="brand-mark"><Activity size={21} strokeWidth={2.2} /></span>
+          <span className="brand-type">bio<span>circuit</span><small>BUILT BY BIOMEDICAL ENGINEERS</small></span>
+        </button>
+        <div className="global-search">
+          <Search size={17} />
+          <input ref={desktopSearchRef} aria-label="Search community" placeholder="Search people, topics, projects…" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <kbd>⌘ K</kbd>
+          {query && <button className="clear-search" onClick={() => setQuery('')} aria-label="Clear search"><X size={14} /></button>}
+        </div>
+        <div className="top-actions">
+          <button className={`icon-button mobile-search-trigger ${showMobileSearch ? 'selected' : ''}`} aria-label="Search community" onClick={() => { setShowMobileSearch(!showMobileSearch); if (!showMobileSearch) window.setTimeout(() => mobileSearchRef.current?.focus(), 0) }}><Search size={18}/></button>
+          <button className="compose-top" onClick={() => setShowComposer(true)}><Plus size={17} /><span>New post</span></button>
+          <div className="popover-wrap">
+            <button className={`icon-button notification-button ${showNotifications ? 'selected' : ''}`} aria-label="Notifications" onClick={() => setShowNotifications(!showNotifications)}><Bell size={19} /><i /></button>
+            {showNotifications && <div className="popover notification-popover"><div className="popover-head">You're in the loop <span className="unread-pill">3 new</span></div><div className="notification-item"><span className="mini-avatar lilac">AM</span><p><b>Arjun Menon</b> mentioned your work in a discussion.<small>12 minutes ago</small></p></div><div className="notification-item"><span className="mini-avatar peach">IB</span><p><b>Ishita Banerjee</b> replied to a biomaterials thread.<small>1 hour ago</small></p></div><div className="notification-item"><span className="mini-avatar mint">KS</span><p>A new answer was added to a question you saved.<small>Yesterday</small></p></div><button className="popover-footer" onClick={() => { setShowNotifications(false); setToast('You’re all caught up') }}>Mark all as read <Check size={14} /></button></div>}
+          </div>
+          <div className="popover-wrap">
+            <button className="user-trigger" onClick={() => setShowProfileMenu(!showProfileMenu)} aria-label="Open your profile menu"><span className="avatar avatar-you">{user.initials}</span><ChevronDown size={14} /></button>
+            {showProfileMenu && <div className="popover profile-popover"><div className="profile-popover-top"><span className="avatar avatar-you">{user.initials}</span><div><b>{user.name}</b><small>{user.institution}</small></div></div><div className={`profile-status ${user.verified ? '' : 'profile-pending'}`}><ShieldCheck size={14} /> {user.verified ? 'Biomedical engineer verified' : 'Institutional review pending'}</div><button onClick={() => { setShowProfileMenu(false); setToast('Profile editing is on the build roadmap') }}>Edit profile <ArrowRight size={14} /></button><button onClick={() => { setShowProfileMenu(false); setShowJoin(true) }}>Account & verification <ArrowRight size={14} /></button></div>}
+          </div>
+        </div>
+        <div className={`mobile-search-panel ${showMobileSearch ? 'open' : ''}`}><Search size={16}/><input ref={mobileSearchRef} aria-label="Search people, topics, projects" placeholder="Search people, topics, projects…" value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => { if (e.key === 'Escape') setShowMobileSearch(false) }}/>{query && <button onClick={() => setQuery('')} aria-label="Clear search"><X size={14}/></button>}<button className="mobile-search-close" onClick={() => setShowMobileSearch(false)} aria-label="Close search"><X size={16}/></button></div>
+      </header>
+
+      <div className="layout-grid">
+        <aside className={`left-sidebar ${showMobileNav ? 'mobile-open' : ''}`}>
+          <div className="sidebar-welcome"><span className="eyebrow">YOUR WORKBENCH</span><p>A place for your<br /><em>kind of curious.</em></p></div>
+          <nav className="main-nav" aria-label="Main navigation">
+            {navItems.map(({ label, icon: Icon, helper }) => (
+              <button key={label} onClick={() => selectSection(label)} className={`nav-item ${section === label ? 'active' : ''}`}>
+                <span className="nav-icon"><Icon size={18} strokeWidth={section === label ? 2.25 : 1.8} /></span>
+                <span className="nav-copy"><b>{label}</b><small>{helper}</small></span>
+                {label === 'Questions' && <span className="nav-count">8</span>}
+              </button>
+            ))}
+          </nav>
+          <div className="sidebar-divider" />
+          <div className="sidebar-section-head"><span>YOUR FIELD NOTES</span><button aria-label="Edit interests" onClick={() => setToast('Interest editing will be available in your full profile')}><SlidersHorizontal size={14} /></button></div>
+          <div className="interest-list"><button onClick={() => { setQuery('Biomedical imaging'); selectSection('Feed') }}><span className="interest-dot dot-plum" />Biomedical imaging</button><button onClick={() => { setQuery('Machine learning'); selectSection('Feed') }}><span className="interest-dot dot-blue" />Machine learning</button><button onClick={() => { setQuery('Open hardware'); selectSection('Feed') }}><span className="interest-dot dot-green" />Open hardware</button><button onClick={() => { setQuery('Biomaterials'); selectSection('Feed') }}><span className="interest-dot dot-rose" />Biomaterials</button></div>
+          <button className="add-interest" onClick={() => setToast('You can personalize interests after completing your profile')}><Plus size={14} /> Add an interest</button>
+          <div className="sidebar-bottom-note"><div className="tiny-orbit"><Atom size={19} /></div><p><b>Science moves faster together.</b><span>Meet the people building what comes next.</span></p><button onClick={() => setShowJoin(true)}>Your membership <ArrowUpRight size={14} /></button></div>
+          <div className="sidebar-legal">A community for biomedical engineers <span>·</span> <button onClick={() => setToast('Community guidelines: be curious, cite sources, share credit.')}>Guidelines</button></div>
+        </aside>
+
+        <main className="main-content">
+          <div className="feed-heading">
+            <div><div className="breadcrumb"><span>COMMUNITY</span><span className="crumb-slash">/</span><span>{section.toUpperCase()}</span></div><h1>{section === 'Feed' ? 'Your research circle' : section === 'Questions' ? 'Questions worth solving' : section === 'Projects' ? 'Work in progress' : section === 'Journal club' ? 'Read beyond the abstract' : 'Your reading desk'}<span className="heading-period">.</span></h1><p>{section === 'Feed' ? 'Good science rarely happens alone.' : section === 'Questions' ? 'Share a blocker. Leave with a better experiment.' : section === 'Projects' ? 'Real builds, honest progress, useful collaboration.' : section === 'Journal club' ? 'Papers selected by people who actually read them.' : 'The ideas and threads you want to come back to.'}</p></div>
+            <button className="round-create" onClick={() => setShowComposer(true)} aria-label="Create a post"><Plus size={21} /></button>
+          </div>
+
+          {section === 'Feed' && !query && <section className="field-note-banner"><div className="banner-symbol"><Microscope size={23} /></div><div className="banner-copy"><span className="eyebrow">A NOTE FROM THE BENCH</span><h2>Make the work visible. <em>Make the learning shared.</em></h2><p>From an experiment that failed to a device that finally works—this is the place to show the process, not just the result.</p></div><button onClick={() => setShowComposer(true)} className="banner-link">Share your work <ArrowRight size={15} /></button><div className="banner-decoration decoration-one"/><div className="banner-decoration decoration-two"/></section>}
+
+          <div className="feed-toolbar"><div className="feed-tabs" role="tablist" aria-label="Feed sort"><button role="tab" aria-selected={feedFilter === 'For you'} className={feedFilter === 'For you' ? 'chosen' : ''} onClick={() => setFeedFilter('For you')}>For you</button><button role="tab" aria-selected={feedFilter === 'Following'} className={feedFilter === 'Following' ? 'chosen' : ''} onClick={() => setFeedFilter('Following')}>Following <span className="following-dot" /></button><button role="tab" aria-selected={feedFilter === 'Recent'} className={feedFilter === 'Recent' ? 'chosen' : ''} onClick={() => setFeedFilter('Recent')}>Recent</button></div><button className="filter-button" onClick={() => setToast('Filters: Research area · Post type · Career stage')}><Filter size={14} /><span>Filter</span></button></div>
+
+          {visiblePosts.length === 0 ? <div className="empty-state"><div className="empty-icon"><Search size={23} /></div><h3>Nothing on this bench yet.</h3><p>Try a different search, switch sections, or start a new discussion.</p><button className="primary-button" onClick={() => { setQuery(''); setSection('Feed') }}>Back to your feed <ArrowRight size={15} /></button></div> : <div className="post-list">{visiblePosts.map((post) => <PostCard key={post.id} post={post} onLike={() => toggleLike(post)} onSave={() => toggleSave(post)} onOpen={() => setSelectedPost(post)} onToast={setToast} />)}</div>}
+
+          <div className="feed-end"><span className="end-line"/><span><CircleDot size={12} /> YOU'RE AT THE EDGE OF YOUR FEED</span><span className="end-line"/></div>
+          <div className="more-to-explore"><span className="eyebrow">KEEP THE CURIOSITY GOING</span><h3>The best question is the one<br />you haven't asked yet.</h3><button onClick={() => setShowComposer(true)}>Start a conversation <ArrowRight size={15} /></button></div>
+        </main>
+
+        <aside className="right-sidebar">
+          <section className="member-card"><div className="member-card-top"><div className="member-avatar avatar-you">{user.initials}</div><span className={`verified-badge ${user.verified ? '' : 'pending'}`}><ShieldCheck size={12} /> {user.verified ? 'VERIFIED MEMBER' : 'REVIEW PENDING'}</span></div><h3>{user.name}</h3><p className="member-degree">{user.degree}</p><p className="member-inst"><GraduationCap size={14} /> {user.institution}</p><div className="member-divider"/><div className="member-stats"><div><strong>128</strong><span>Community pts</span></div><div><strong>06</strong><span>Contributions</span></div><div><strong>03</strong><span>Collaborators</span></div></div><button className="profile-link" onClick={() => setToast('Profile page is part of the next build phase')}>View your profile <ArrowRight size={14} /></button></section>
+
+          <section className="right-section trend-section"><div className="right-section-head"><div><span className="eyebrow">IN THE LAB THIS WEEK</span><h3>Conversations gaining signal</h3></div><TrendingUp size={18} /></div><button className="trend-row" onClick={() => { setQuery('clinical validation'); selectSection('Feed') }}><span className="trend-number">01</span><span><b>Clinical validation</b><small>42 contributions · +18%</small></span><ArrowUpRight size={14} /></button><button className="trend-row" onClick={() => { setQuery('open hardware'); selectSection('Feed') }}><span className="trend-number">02</span><span><b>Open hardware</b><small>28 contributions · +12%</small></span><ArrowUpRight size={14} /></button><button className="trend-row" onClick={() => { setQuery('biosensors'); selectSection('Feed') }}><span className="trend-number">03</span><span><b>Wearable biosensors</b><small>19 contributions · +9%</small></span><ArrowUpRight size={14} /></button><button className="text-link" onClick={() => { setQuery(''); setSection('Feed'); setToast('Showing all community conversations') }}>Explore all topics <ArrowRight size={14} /></button></section>
+
+          <section className="right-section journal-pick"><div className="right-section-head"><div><span className="eyebrow">THE PAPER TRAIL</span><h3>This week’s journal pick</h3></div><BookOpen size={18} /></div><div className="paper-cover"><div className="paper-cover-top"><span>BC / 006</span><span>OPEN NOTE</span></div><div className="paper-lines"><span/><span/><span/></div><div className="paper-art"><div className="paper-circle circle-a"/><div className="paper-circle circle-b"/><div className="paper-circle circle-c"/><div className="paper-cross cross-a"/><div className="paper-cross cross-b"/></div><span className="paper-cover-bottom">METHODS OVER HYPE</span></div><div className="journal-pick-copy"><span className="paper-category">DEMO CARD · IMAGING</span><h4>When image enhancement changes the evidence</h4><p>Example journal-club card. Production entries need a DOI/PMID or source link.</p><button onClick={() => { setSection('Journal club'); setQuery('') }}>Open journal club <ArrowRight size={14} /></button></div></section>
+
+          <section className="collab-card"><div className="collab-icon"><Users size={18} /></div><span className="eyebrow">BETTER TOGETHER</span><h3>Find your missing piece.</h3><p>Meet collaborators by the tools they use, not just the titles on their profile.</p><button onClick={() => setToast('Collaborator matching is planned for the next build phase')}>Explore collaborators <ArrowRight size={14} /></button><div className="collab-orbit orbit-a"/><div className="collab-orbit orbit-b"/></section>
+
+          <div className="right-footer"><button onClick={() => setToast('Community guidelines: be constructive, cite evidence, disclose limitations.')}>Guidelines</button><button onClick={() => setToast('Privacy-first verification is part of the production build plan.')}>Privacy</button><button onClick={() => setToast('BioCircuit prototype v0.1 · Built for biomedical engineers.')}>About</button><span>© 2026 BioCircuit</span></div>
+        </aside>
+      </div>
+
+      {showComposer && <Composer onClose={() => setShowComposer(false)} onSubmit={addPost} />}
+      {showJoin && <JoinModal user={user} setUser={setUser} onClose={() => setShowJoin(false)} onToast={setToast} />}
+      {selectedPost && <DiscussionModal post={selectedPost} onClose={() => setSelectedPost(null)} onToast={setToast} />}
+      {toast && <div className="toast" role="status"><CheckCircle2 size={17} />{toast}<button onClick={() => setToast('')} aria-label="Dismiss"><X size={14} /></button></div>}
+    </div>
+  )
+}
+
+function PostCard({ post, onLike, onSave, onOpen, onToast }: { post: Post; onLike: () => void; onSave: () => void; onOpen: () => void; onToast: (message: string) => void }) {
+  const copyPostLink = async () => {
+    const shareUrl = new URL(window.location.href)
+    shareUrl.hash = `post-${post.id}`
+    try { await navigator.clipboard.writeText(shareUrl.toString()); onToast('Post link copied to clipboard') }
+    catch { onToast(`Clipboard unavailable · post reference ${post.id}`) }
+  }
+  const kindLabels: Record<Kind, string> = { Discussion: 'FIELD NOTE', Question: 'ASK THE COMMUNITY', Project: 'PROJECT LOG', Journal: 'PAPER DISCUSSION' }
+  return (
+    <article className="post-card" id={`post-${post.id}`}>
+      <div className="post-author-row"><div className={`avatar avatar-${post.accent}`}>{post.initials}</div><div className="author-text"><div className="author-name-line"><b>{post.author}</b>{post.verified && <span className="tiny-verified" title="Community verified"><ShieldCheck size={13} /></span>}<span className="author-separator">·</span><span className="post-time">{post.time}</span></div><p>{post.role} <span>·</span> {post.institution}</p></div><button className="more-button" aria-label="More post options" onClick={() => onToast('Post options: report, copy link, or mute topic')}><MoreHorizontal size={19} /></button></div>
+      <div className="post-kind-row"><span className={`post-kind kind-${post.kind.toLowerCase()}`}><span className="kind-dot" />{kindLabels[post.kind]}</span>{post.kind === 'Question' && post.accepted && <span className="answered-label"><CheckCircle2 size={12} /> ANSWERED</span>}</div>
+      <button className="post-title-button" onClick={onOpen}><h2>{post.title}</h2></button>
+      <p className="post-body">{post.body}</p>
+      {post.kind === 'Journal' && <div className="journal-attachment"><div className="journal-attachment-art"><div className="attachment-orb orb-one"/><div className="attachment-orb orb-two"/><div className="attachment-orb orb-three"/><span>λ / 405</span></div><div className="journal-attachment-copy"><span>{post.journal ?? 'JOURNAL CLUB NOTE'}</span><b>{post.imageLabel ?? 'RESEARCH ARTICLE'}</b><small>{post.citation ?? 'Community reading note · 2026'}</small></div><button className="attachment-open" onClick={onOpen} aria-label="Open journal discussion"><ArrowUpRight size={16}/></button></div>}
+      {post.kind === 'Project' && <div className="project-attachment"><div className="project-schematic"><div className="schematic-node node-a"><Microscope size={18}/></div><span className="schematic-link link-a"/><span className="schematic-link link-b"/><div className="schematic-node node-b"><Zap size={16}/></div><div className="schematic-node node-c"><Activity size={16}/></div><span className="schematic-caption">OPTICAL PATH / REV 03</span></div><div className="project-attachment-copy"><span>BUILD LOG · OPEN HARDWARE</span><b>Prototype notes &amp; component choices</b><small>Updated by the project team</small></div><button className="attachment-open" onClick={onOpen} aria-label="Open project"><ArrowUpRight size={16}/></button></div>}
+      <div className="post-tags">{post.tags.map((tag) => <button key={tag} onClick={() => onToast(`Filtering by “${tag}” is available through search`)}>{tag}</button>)}</div>
+      <div className="post-actions"><div className="post-action-group"><button onClick={onLike} className={post.liked ? 'action-liked' : ''} aria-label={post.liked ? 'Unlike post' : 'Like post'}><Heart size={17} fill={post.liked ? 'currentColor' : 'none'} /><span>{post.likes}</span></button><button onClick={onOpen} aria-label="Open replies"><MessageCircle size={17}/><span>{post.replies} replies</span></button></div><div className="post-action-group"><button className={post.saved ? 'action-saved' : ''} onClick={onSave} aria-label={post.saved ? 'Unsave post' : 'Save post'}><Bookmark size={17} fill={post.saved ? 'currentColor' : 'none'}/><span>{post.saves > 0 ? post.saves : 'Save'}</span></button><button aria-label="Share post" onClick={() => { void copyPostLink() }}><Send size={16}/></button></div></div>
+    </article>
+  )
+}
+
+function Composer({ onClose, onSubmit }: { onClose: () => void; onSubmit: (post: Omit<Post, 'id' | 'author' | 'initials' | 'role' | 'institution' | 'verified' | 'time' | 'likes' | 'replies' | 'saves' | 'accent'>) => void }) {
+  const [kind, setKind] = useState<Kind>('Discussion')
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+  const [tags, setTags] = useState('')
+  const [includeCitation, setIncludeCitation] = useState(false)
+  const [error, setError] = useState('')
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    if (title.trim().length < 8 || body.trim().length < 20) { setError('Add a clearer title (8+ characters) and enough context (20+ characters).'); return }
+    const parsedTags = tags.split(',').map((tag) => tag.trim()).filter(Boolean).slice(0, 4)
+    onSubmit({ kind, title: title.trim(), body: body.trim(), tags: parsedTags.length ? parsedTags : ['Biomedical engineering'], citation: includeCitation ? 'Citation supplied by author · please verify before reuse' : undefined, journal: kind === 'Journal' ? 'COMMUNITY PAPER NOTE' : undefined, imageLabel: kind === 'Journal' ? 'READING NOTE / AUTHOR ADDED' : undefined, accepted: false })
+  }
+  return <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}><form className="modal composer-modal" onSubmit={handleSubmit}><div className="modal-header"><div><span className="eyebrow">CONTRIBUTE TO THE CIRCUIT</span><h2>Put an idea on the table<span className="heading-period">.</span></h2></div><button type="button" className="icon-button" aria-label="Close" onClick={onClose}><X size={19}/></button></div><div className="composer-kind-grid">{([{value:'Discussion',label:'Field note',desc:'Share a learning',icon:FileText},{value:'Question',label:'Ask',desc:'Get expert input',icon:CircleHelp},{value:'Project',label:'Project log',desc:'Show your build',icon:FlaskConical},{value:'Journal',label:'Paper note',desc:'Discuss a paper',icon:BookOpen}] as const).map(({value,label,desc,icon:Icon}) => <button type="button" key={value} className={kind === value ? 'composer-kind active' : 'composer-kind'} onClick={() => setKind(value)}><Icon size={17}/><b>{label}</b><small>{desc}</small></button>)}</div><label className="field-label" htmlFor="post-title">Title <span>Be specific. Help the right people find it.</span></label><input id="post-title" className="form-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. What changed your segmentation results?" maxLength={150} autoFocus/><label className="field-label" htmlFor="post-body">Context <span>What have you tried? What would help?</span></label><textarea id="post-body" className="form-textarea" value={body} onChange={(e) => setBody(e.target.value)} placeholder="Share the details another biomedical engineer would need to respond usefully…" rows={5} maxLength={1800}/><label className="field-label" htmlFor="post-tags">Topics <span>Separate with commas · up to 4</span></label><input id="post-tags" className="form-input" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="e.g. medical imaging, Python, validation"/><label className="checkbox-line"><input type="checkbox" checked={includeCitation} onChange={(e) => setIncludeCitation(e.target.checked)}/><span>I'm sharing a reference that others may want to verify.</span></label>{error && <p className="form-error">{error}</p>}<div className="composer-footer"><span><ShieldCheck size={14}/> Keep patient data anonymous. Cite sources. Share limitations.</span><button className="primary-button" type="submit">Publish post <ArrowRight size={15}/></button></div></form></div>
+}
+
+function JoinModal({ user, setUser, onClose, onToast }: { user: { name: string; initials: string; institution: string; degree: string; verified: boolean }; setUser: (user: { name: string; initials: string; institution: string; degree: string; verified: boolean }) => void; onClose: () => void; onToast: (message: string) => void }) {
+  const [step, setStep] = useState(1)
+  const [name, setName] = useState(user.name)
+  const [institution, setInstitution] = useState(user.institution)
+  const [degree, setDegree] = useState('M.Tech')
+  const [status, setStatus] = useState('Awarded')
+  const [score, setScore] = useState('')
+  const [phone, setPhone] = useState('')
+  const [otp, setOtp] = useState('')
+  const [error, setError] = useState('')
+  const finish = () => {
+    if (otp !== '123456') { setError('For this prototype, use demo OTP 123456. Real SMS is not connected.'); return }
+    setUser({ name: name.trim() || user.name, initials: (name.trim() || user.name).split(/\s+/).map((x) => x[0]).slice(0, 2).join('').toUpperCase(), institution: institution.trim() || user.institution, degree: `${degree} · Biomedical Engineering${status === 'Awarded' ? '' : status === 'Awaited' ? ' · Result awaited' : ' · Currently enrolled'}`, verified: false })
+    onClose()
+    onToast('Demo application submitted · institutional review is still required')
+  }
+  return <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}><div className="modal join-modal"><div className="modal-header"><div><span className="eyebrow">BIOMEDICAL ENGINEERS, BY DESIGN</span><h2>Make your membership count<span className="heading-period">.</span></h2></div><button className="icon-button" aria-label="Close" onClick={onClose}><X size={19}/></button></div><div className="join-progress"><span className={step >= 1 ? 'done' : ''}/><span className={step >= 2 ? 'done' : ''}/><span className={step >= 3 ? 'done' : ''}/></div>{step === 1 && <><p className="join-intro">BioCircuit is a community for people with a formal biomedical engineering education. Tell us where your journey began.</p><label className="field-label" htmlFor="join-name">Full name</label><input id="join-name" className="form-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="As you'd like it displayed"/><label className="field-label" htmlFor="join-institution">Institution</label><input id="join-institution" className="form-input" value={institution} onChange={(e) => setInstitution(e.target.value)} placeholder="University or institute name"/><div className="two-fields"><div><label className="field-label" htmlFor="join-degree">Biomedical degree</label><select id="join-degree" className="form-input" value={degree} onChange={(e) => setDegree(e.target.value)}><option>B.Tech</option><option>B.E.</option><option>B.Sc.</option><option>M.Tech</option><option>M.E.</option><option>M.Sc.</option><option>PhD</option></select></div><div><label className="field-label" htmlFor="join-status">Result status</label><select id="join-status" className="form-input" value={status} onChange={(e) => setStatus(e.target.value)}><option>Awarded</option><option>Awaited</option><option>Currently enrolled</option></select></div></div><label className="field-label" htmlFor="join-score">Marks / CGPA <span>Private · not shown on your profile</span></label><input id="join-score" className="form-input" value={score} onChange={(e) => setScore(e.target.value)} placeholder="e.g. 8.6 CGPA or awaited"/><p className="privacy-note"><ShieldCheck size={15}/> Marks are not proof of identity. A production version must verify institutional affiliation separately and should avoid collecting more personal data than needed.</p><button className="primary-button full-width" onClick={() => { if (!name.trim() || !institution.trim()) { setError('Add your name and institution to continue.'); return } setError(''); setStep(2) }}>Continue to mobile verification <ArrowRight size={15}/></button>{error && <p className="form-error">{error}</p>}</>}{step === 2 && <><p className="join-intro">Use a number you control. This demo illustrates the flow; it does not send a real SMS.</p><label className="field-label" htmlFor="join-phone">Mobile number</label><input id="join-phone" className="form-input" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" inputMode="tel"/><div className="demo-callout"><span className="demo-pill">DEMO MODE</span><p>Use any phone number, then enter <b>123456</b> on the next screen.</p></div><div className="modal-button-row"><button className="secondary-button" onClick={() => setStep(1)}>Back</button><button className="primary-button" onClick={() => { if (phone.replace(/\D/g, '').length < 10) { setError('Enter a valid-looking mobile number to continue.'); return } setError(''); setStep(3) }}>Send code <ArrowRight size={15}/></button></div>{error && <p className="form-error">{error}</p>}</>}{step === 3 && <><p className="join-intro">Enter the demo code to complete the interaction. In a real service, a trusted SMS provider should handle this securely.</p><label className="field-label" htmlFor="join-otp">Six-digit code</label><input id="join-otp" className="form-input otp-input" value={otp} onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))} placeholder="123456" inputMode="numeric" maxLength={6}/><div className="verification-status"><Clock3 size={16}/><div><b>Institutional review is separate</b><p>Your phone can be verified now. Your degree and institution still require a review before you receive a verified badge.</p></div></div><div className="modal-button-row"><button className="secondary-button" onClick={() => setStep(2)}>Back</button><button className="primary-button" onClick={finish}>Submit application <ArrowRight size={15}/></button></div>{error && <p className="form-error">{error}</p>}</>}</div></div>
+}
+
+function DiscussionModal({ post, onClose, onToast }: { post: Post; onClose: () => void; onToast: (message: string) => void }) {
+  const [reply, setReply] = useState('')
+  const [replies, setReplies] = useState<string[]>(post.kind === 'Question' ? ['Patient-level splitting is the right starting point. If more than one image belongs to a patient, keep every image from that patient in the same fold.'] : ['This is a useful angle. What did you use as your negative control?', 'I would love to see a protocol or a reproducible example attached here.'])
+  const sendReply = (e: FormEvent) => { e.preventDefault(); if (reply.trim().length < 5) return; setReplies((items) => [...items, reply.trim()]); setReply(''); onToast('Reply added to this demo discussion') }
+  return <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}><div className="modal discussion-modal"><div className="modal-header"><div><span className="eyebrow">COMMUNITY DISCUSSION</span><h2>Follow the thread<span className="heading-period">.</span></h2></div><button className="icon-button" aria-label="Close" onClick={onClose}><X size={19}/></button></div><div className="discussion-post-author"><span className={`avatar avatar-${post.accent}`}>{post.initials}</span><div><b>{post.author}</b><small>{post.institution} · {post.time}</small></div><span className={`post-kind kind-${post.kind.toLowerCase()}`}>{post.kind}</span></div><h3 className="discussion-title">{post.title}</h3><p className="discussion-body">{post.body}</p><div className="post-tags discussion-tags">{post.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><div className="replies-heading"><h3>Replies</h3><span>{replies.length} contributions</span></div><div className="reply-list">{replies.map((text, i) => <div className="reply-item" key={`${i}-${text.slice(0, 10)}`}><span className={`mini-avatar ${i === 0 ? 'lilac' : i === 1 ? 'mint' : 'peach'}`}>{i === 0 ? 'AM' : i === 1 ? 'KS' : 'YOU'}</span><div><div className="reply-author-line"><b>{i === 0 ? 'Arjun Menon' : i === 1 ? 'Prof. K. Srinivas' : 'You'}</b>{i === 0 && <span className="tiny-verified"><ShieldCheck size={12}/></span>}<small>{i === 0 ? '12 min ago' : i === 1 ? '38 min ago' : 'just now'}</small></div><p>{text}</p><button onClick={() => onToast('Reply upvoting will be available in a later build')}><ArrowDownRight size={13}/> Helpful</button></div></div>)}</div><form className="reply-composer" onSubmit={sendReply}><span className="avatar avatar-you">NR</span><input aria-label="Write a reply" value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Add something useful to the discussion…"/><button type="submit" disabled={reply.trim().length < 5} aria-label="Send reply"><Send size={17}/></button></form></div></div>
+}
+
+export default App

@@ -1,0 +1,11 @@
+{
+  "environment": "Isolated browser demo",
+  "reactionPersisted": true,
+  "canonicalShareURLMatched": true,
+  "clipboardRestored": true,
+  "feedback": {
+    "toast": "Discussion link copied×",
+    "error": null
+  },
+  "createdContributionRemovalPersisted": true
+}

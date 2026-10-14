@@ -1,0 +1,115 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Real staging persistence; two independent ordinary identities only when controlled credentials supplied. No approval, phone flag, privileged role, admin Auth, delete or reset.",
+  "mode": "full-persistence",
+  "records": [
+    {
+      "name": "Ordinary managed existing-account sign-in",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Actual managed user has no phone confirmation",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Ordinary profile remains unverified, unapproved and unsuspended",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "No staff role assigned",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Own baseline preferences readable",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowPresent": true
+      }
+    },
+    {
+      "name": "Ordinary managed existing-account sign-in",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Actual managed user has no phone confirmation",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Ordinary profile remains unverified, unapproved and unsuspended",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "No staff role assigned",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Own baseline preferences readable",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowPresent": true
+      }
+    },
+    {
+      "name": "Independent actual Auth identities differ",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "encrypt-baseline-before-writes",
+      "account": "B",
+      "status": "FAIL - REPAIR REQUIRED",
+      "observed": {
+        "errorClass": "Error",
+        "code": null,
+        "detail": "No raw exceptions, identities, payloads or credentials recorded",
+        "browserState": null
+      }
+    }
+  ],
+  "browser": {
+    "uncaughtErrors": 0,
+    "consoleErrors": 0,
+    "signupRequests": 0
+  },
+  "restoration": [],
+  "privateBaseline": ".cloud/phase2-baseline-2026-10-14T07-10-41-924Z.xml"
+}

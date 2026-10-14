@@ -1,0 +1,332 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual anonymous HTTP/SQL/Storage gateway checks. No account, OTP, academic approval, real JWT role, source success, processor or deletion simulation.",
+  "records": [
+    {
+      "name": "Expected public snapshot RPC exists and returns a bounded, private-data-free page",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "path": "/rest/v1/rpc/public_snapshot",
+        "status": 200,
+        "code": null
+      }
+    },
+    {
+      "name": "Anonymous private read denied: membership_applications",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: notifications",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: preferences",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: bookmarks",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: roles",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: avatars",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous private read denied: project_images",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: community_action",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: trust_action",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: export_personal_data",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: community_health",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: storage_cleanup_batch",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: prune_retained_data",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: reserve_scholarly_request",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous privileged/member RPC denied: avatar_budget",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous attempt to write eligibility/phone flags denied",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Anonymous role escalation denied by privilege boundary",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Real anonymous search returns bounded RLS-filtered results",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null
+      }
+    },
+    {
+      "name": "Managed Auth rejects an invalid bearer",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 403
+      }
+    },
+    {
+      "name": "Private schema is not exposed through PostgREST",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 406,
+        "code": "PGRST106"
+      }
+    },
+    {
+      "name": "scholarly-search allowed-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "exactAllowedOrigin": true,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "scholarly-search denied-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "exactAllowedOrigin": false,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "scholarly-search missing JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "scholarly-search invalid JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "account-delete allowed-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "exactAllowedOrigin": true,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "account-delete denied-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "exactAllowedOrigin": false,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "account-delete missing JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "account-delete invalid JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "avatar allowed-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "exactAllowedOrigin": true,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "avatar denied-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "exactAllowedOrigin": false,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "avatar missing JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "avatar invalid JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "project-images allowed-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "exactAllowedOrigin": true,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "project-images denied-origin preflight",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "exactAllowedOrigin": false,
+        "wildcardOrigin": false
+      }
+    },
+    {
+      "name": "project-images missing JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "project-images invalid JWT denied at gateway",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "scope": "JWT gateway, not a successful current-user handler journey"
+      }
+    },
+    {
+      "name": "Anonymous direct valid-image upload denied: avatars",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": "403",
+        "uploaded": false
+      }
+    },
+    {
+      "name": "Anonymous direct valid-image upload denied: project-files",
+      "status": "PASS — LIVE VERIFIED",
+      "observed": {
+        "status": "403",
+        "uploaded": false
+      }
+    }
+  ],
+  "managedAuth": {
+    "status": 200,
+    "phoneEnabled": false,
+    "phoneAutoconfirm": false
+  },
+  "remaining": "Actual phone provider/CAPTCHA, managed-user role separation and authenticated source/Storage/export/delete journeys require external configuration."
+}

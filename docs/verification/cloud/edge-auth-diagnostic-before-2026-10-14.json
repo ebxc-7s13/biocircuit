@@ -1,0 +1,25 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "algorithm": "ES256",
+  "probes": [
+    {
+      "function": "scholarly-search",
+      "status": 429,
+      "classification": "HANDLER_SEARCH_RESTRICTED",
+      "exactCors": true
+    },
+    {
+      "function": "avatar",
+      "status": 400,
+      "classification": "OTHER_RESPONSE_REDACTED",
+      "exactCors": true
+    },
+    {
+      "function": "project-images",
+      "status": 503,
+      "classification": "OTHER_RESPONSE_REDACTED",
+      "exactCors": true
+    }
+  ],
+  "globalHeaderCurrentUserAccepted": true
+}

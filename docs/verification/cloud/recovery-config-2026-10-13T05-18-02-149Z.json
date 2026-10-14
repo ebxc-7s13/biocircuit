@@ -1,0 +1,14 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Supported CLI selective Auth template/redirect configuration; no SMTP credentials, delivery or reset evidence",
+  "applyRequested": true,
+  "templateSha256": "c59579f7858bc110813af80ef1a1001db9038318602f25c525c718477f408db5",
+  "redirect": "http://127.0.0.1:5190/account/recovery",
+  "identityVerified": true,
+  "customSmtpEnabled": false,
+  "reviewedDeclaredPaths": [
+    "auth.additional_redirect_urls",
+    "auth.email.template.recovery.subject"
+  ],
+  "failed": true
+}

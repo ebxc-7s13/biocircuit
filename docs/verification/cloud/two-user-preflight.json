@@ -1,0 +1,21 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Final existing-account-only managed sign-in evidence, original pre-registration failure preserved separately",
+  "accounts": [
+    {
+      "account": "A",
+      "credentialsReadable": true,
+      "signInSucceeded": true,
+      "status": 200
+    },
+    {
+      "account": "B",
+      "credentialsReadable": true,
+      "signInSucceeded": true,
+      "status": 200
+    }
+  ],
+  "differentControlledAddresses": true,
+  "differentManagedIdentities": true,
+  "evidence": "persistence-2026-10-13T01-44-23-179Z.json"
+}

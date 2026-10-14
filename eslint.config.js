@@ -1,0 +1,51 @@
+import js from '@eslint/js'
+import ts from 'typescript-eslint'
+export default ts.config(
+  { ignores: ['dist/**', 'docs/baseline/**', 'node_modules/**'] },
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  {
+    files: ['**/*.{ts,tsx,js,mjs}'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        location: 'readonly',
+        URL: 'readonly',
+        Blob: 'readonly',
+        queueMicrotask: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        crypto: 'readonly',
+        console: 'readonly',
+        confirm: 'readonly',
+        structuredClone: 'readonly',
+        TextDecoder: 'readonly',
+        AbortController: 'readonly',
+        AbortSignal: 'readonly',
+        fetch: 'readonly',
+        Uint8Array: 'readonly',
+        React: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLDialogElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        HTMLScriptElement: 'readonly',
+        KeyboardEvent: 'readonly',
+        PerformanceObserver: 'readonly',
+        performance: 'readonly',
+        Buffer: 'readonly',
+        process: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
+    },
+  },
+)

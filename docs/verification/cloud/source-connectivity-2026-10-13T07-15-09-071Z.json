@@ -1,0 +1,19 @@
+{
+  "scope": "LIVE upstream public metadata connectivity only; no application cache, authenticated member search, full text or synthetic hits",
+  "checks": [
+    {
+      "source": "Crossref",
+      "httpStatus": 200,
+      "canonicalMetadataPresent": true,
+      "passed": true,
+      "elapsedMs": 813
+    },
+    {
+      "source": "PubMed",
+      "httpStatus": 200,
+      "canonicalMetadataPresent": true,
+      "passed": true,
+      "elapsedMs": 827
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "New non-destructive A safeguards only; no B impersonation, account creation, elevated flag or deletion",
+  "records": [
+    {
+      "name": "Existing account A ordinary sign-in",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Managed current-user authentication before boundary probes",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Account remains phone-unverified and academically unapproved",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Identity flag direct write denied (same-value probe)",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "noElevatedValueAttempted": true
+      }
+    },
+    {
+      "name": "Role insertion denied before constraint; no valid staff role attempted",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Restricted project direct DML denied",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "populatedProjectIsolationProven": false
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied application RPC",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied project RPC",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied review RPC",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied suspend RPC",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Hosted personal export contains only caller profile/preferences",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "otherIdentityExported": false
+      }
+    },
+    {
+      "name": "Export RPC rejects caller-selected identity parameter",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 404,
+        "code": "PGRST202"
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: avatars",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": false
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: project-files",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": false
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: academic-evidence",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": false
+      }
+    },
+    {
+      "name": "Deletion rejects missing final confirmation and forged target",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 400,
+        "destructiveConfirmationSent": false
+      }
+    },
+    {
+      "name": "Safety probes leave real identity and restrictions unchanged",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sameIdentity": true,
+        "phoneVerified": false,
+        "academicallyApproved": false,
+        "staffRoleCount": 0
+      }
+    },
+    {
+      "status": "LIMITED - NOT DESTRUCTIVE ACCEPTANCE",
+      "detail": "Account deletion final confirmation, owner-project conflict and Storage cleanup require separately authorized disposable identity/fixtures. No account was deleted."
+    }
+  ]
+}

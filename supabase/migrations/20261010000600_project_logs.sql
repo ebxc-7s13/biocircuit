@@ -1,0 +1,15 @@
+alter table public.posts add column log_type text not null default 'note'check(log_type in('note','milestone','blocker','experiment','lesson'));
+create table public.milestone_confirmations(post_id uuid references public.posts(id)on delete cascade,user_id uuid references public.profiles(id)on delete cascade,primary key(post_id,user_id));
+alter table public.milestone_confirmations enable row level security;
+revoke all on public.milestone_confirmations from anon,authenticated;
+grant select on public.milestone_confirmations to authenticated;grant all on public.milestone_confirmations to service_role;
+create policy milestone_read on public.milestone_confirmations for select to authenticated using(private.post_read(post_id));
+create function public.confirm_milestone(pid uuid)returns void language plpgsql security definer set search_path=''as $$declare uid uuid:=auth.uid();p public.posts%rowtype;begin select *into p from public.posts where id=pid;if not private.member()or not private.post_read(pid)or p.log_type<>'milestone'or p.author_id=uid or not exists(select 1 from public.project_members where project_id=p.project_id and user_id=uid)then raise insufficient_privilege;end if;perform private.rate_limit('all',60);insert into public.milestone_confirmations values(pid,uid)on conflict do nothing;end$$;
+revoke all on function public.confirm_milestone(uuid)from public,anon;grant execute on function public.confirm_milestone(uuid)to authenticated;
+alter table public.posts add column search_vector tsvector not null default '';
+create function private.refresh_post_search()returns trigger language plpgsql set search_path=''as $$begin new.search_vector:=to_tsvector('english',new.title||' '||new.body||' '||array_to_string(new.tags,' '));return new;end$$;
+revoke all on function private.refresh_post_search()from public;
+create trigger post_search before insert or update of title,body,tags on public.posts for each row execute function private.refresh_post_search();
+update public.posts set search_vector=to_tsvector('english',title||' '||body||' '||array_to_string(tags,' '));
+drop index public.posts_search_idx;
+create index posts_combined_search_idx on public.posts using gin(search_vector);

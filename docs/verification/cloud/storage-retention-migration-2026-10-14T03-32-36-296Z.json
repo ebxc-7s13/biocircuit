@@ -1,0 +1,7 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Reviewed forward migration: private bucket MIME narrowing and pg_cron retention schedule only; no seed, roles, Vault, user data or reset",
+  "applyRequested": true,
+  "failed": true,
+  "failure": "cli"
+}

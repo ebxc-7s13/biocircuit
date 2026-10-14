@@ -1,0 +1,25 @@
+﻿{
+    "projectRef":  "ibxubsegrabpspopdgep",
+    "functions":  [
+                      {
+                          "name":  "scholarly-search",
+                          "status":  "ACTIVE",
+                          "verifyJwt":  true
+                      },
+                      {
+                          "name":  "account-delete",
+                          "status":  "ACTIVE",
+                          "verifyJwt":  true
+                      },
+                      {
+                          "name":  "avatar",
+                          "status":  "ACTIVE",
+                          "verifyJwt":  true
+                      },
+                      {
+                          "name":  "project-images",
+                          "status":  "ACTIVE",
+                          "verifyJwt":  true
+                      }
+                  ]
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "Isolated local install from existing lockfile, offline cache, lifecycle scripts disabled; main node_modules untouched",
+  "command": "npm.cmd ci --offline --ignore-scripts --no-audit --no-fund",
+  "exitCode": 0,
+  "elapsedMs": 45186,
+  "lockUnchanged": true,
+  "directory": ".cloud/repro-2026-10-13T07-17-05-353Z"
+}

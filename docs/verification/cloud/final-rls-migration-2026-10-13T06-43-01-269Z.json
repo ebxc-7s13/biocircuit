@@ -1,0 +1,26 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Reviewed forward RLS planner migration only; no seed, roles, Vault, user data or reset",
+  "applyRequested": true,
+  "preview": {
+    "dryRun": true,
+    "migrations": [
+      "20261013000100_rls_initplan.sql"
+    ],
+    "seeds": [],
+    "roles": []
+  },
+  "result": {
+    "upToDate": false,
+    "dryRun": false,
+    "migrations": [
+      "20261013000100_rls_initplan.sql"
+    ],
+    "seeds": [],
+    "roles": []
+  },
+  "readback": {
+    "upToDate": true,
+    "migrations": []
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "scope": "Conservative privacy-pattern scan of new sanitized JSON and source fingerprint comparison; not exhaustive secret/security assurance",
+  "preservedSourceFiles": 30,
+  "changed": [],
+  "newReportsScanned": 13,
+  "findings": []
+}

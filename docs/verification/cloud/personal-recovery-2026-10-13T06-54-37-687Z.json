@@ -1,0 +1,20 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "records": [
+    {
+      "account": "A",
+      "name": "Hosted owner-scoped export accepted",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "account": "A",
+      "name": "Encrypted DPAPI export decrypts exactly; no plaintext file",
+      "passed": true
+    }
+  ],
+  "remoteWrites": 0,
+  "remoteResets": 0,
+  "failed": true,
+  "failureStep": "A:local-restore"
+}

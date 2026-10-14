@@ -1,0 +1,18 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "rlsTables": 29,
+  "exposedTables": 29,
+  "clientDmlGrantViolations": 0,
+  "definerPathViolations": 0,
+  "privateBuckets": 3,
+  "unvalidatedUploadPolicies": 0,
+  "privilegedClientExecution": false,
+  "authTriggers": 2,
+  "migrations": 19,
+  "advisorIssues": 28,
+  "advisorCounts": {
+    "WARN:authenticated_security_definer_function_executable": 10,
+    "WARN:auth_leaked_password_protection": 1,
+    "WARN:auth_rls_initplan": 17
+  }
+}

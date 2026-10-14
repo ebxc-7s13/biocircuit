@@ -1,0 +1,21 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "accounts": [
+    {
+      "account": "A",
+      "credentialsReadable": true,
+      "signInSucceeded": true,
+      "status": 200,
+      "errorCode": null
+    },
+    {
+      "account": "B",
+      "credentialsReadable": true,
+      "signInSucceeded": false,
+      "status": 400,
+      "errorCode": "invalid_credentials"
+    }
+  ],
+  "differentControlledAddresses": true,
+  "differentManagedIdentities": false
+}

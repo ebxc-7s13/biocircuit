@@ -1,0 +1,27 @@
+{
+  "scope": "Local synthetic WASM benchmark only. Not hosted CPU/security/memory acceptance. Synthetic high-entropy 9MP JPEG. Wall time is not hosted CPU time.",
+  "version": "0.0.44",
+  "license": "Apache-2.0",
+  "rows": [
+    {
+      "inputWidth": 3000,
+      "inputHeight": 3000,
+      "outputWidth": 256,
+      "outputHeight": 256,
+      "inputBytes": 3202362,
+      "outputBytes": 314,
+      "wallMs": 1882,
+      "rssBytes": 126996480
+    },
+    {
+      "inputWidth": 3000,
+      "inputHeight": 3000,
+      "outputWidth": 2048,
+      "outputHeight": 2048,
+      "inputBytes": 3202362,
+      "outputBytes": 11477025,
+      "wallMs": 5195,
+      "rssBytes": 163422208
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual connected anonymous email form UI and client validation. No valid signup/login request, account, password or session simulation.",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "overflow": false,
+      "axeViolations": [],
+      "invalidFieldsBlocked": true,
+      "visibilityToggle": true,
+      "loginRegisterNavigation": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflow": false,
+      "axeViolations": [],
+      "invalidFieldsBlocked": true,
+      "visibilityToggle": true,
+      "loginRegisterNavigation": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "axeViolations": [],
+      "invalidFieldsBlocked": true,
+      "visibilityToggle": true,
+      "loginRegisterNavigation": true
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "overflow": false,
+      "axeViolations": [],
+      "invalidFieldsBlocked": true,
+      "visibilityToggle": true,
+      "loginRegisterNavigation": true
+    }
+  ],
+  "authRequests": 0,
+  "consoleErrors": 0,
+  "uncaughtErrors": 0,
+  "backendResponses": {
+    "/rest/v1/rpc/public_snapshot 200": 16
+  },
+  "status": "PASS - LIVE CONNECTED ANONYMOUS UI; real-account acceptance separate"
+}

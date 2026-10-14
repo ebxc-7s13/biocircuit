@@ -1,0 +1,53 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Real connected anonymous recovery UI, validation and public snapshot only; no recovery delivery or successful password reset claimed",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "routeLoaded": true,
+      "publicSnapshotStatus": 200,
+      "invalidInputBlocked": true,
+      "axeViolations": 0,
+      "overflow": false,
+      "allRecoveryActionsReachable": true,
+      "screenshot": "docs/screenshots/staging/recovery/1440x900.png"
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "routeLoaded": true,
+      "publicSnapshotStatus": 200,
+      "invalidInputBlocked": true,
+      "axeViolations": 0,
+      "overflow": false,
+      "allRecoveryActionsReachable": true,
+      "screenshot": "docs/screenshots/staging/recovery/1024x768.png"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "routeLoaded": true,
+      "publicSnapshotStatus": 200,
+      "invalidInputBlocked": true,
+      "axeViolations": 0,
+      "overflow": false,
+      "allRecoveryActionsReachable": true,
+      "screenshot": "docs/screenshots/staging/recovery/390x844.png"
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "routeLoaded": true,
+      "publicSnapshotStatus": 200,
+      "invalidInputBlocked": true,
+      "axeViolations": 0,
+      "overflow": false,
+      "allRecoveryActionsReachable": true,
+      "screenshot": "docs/screenshots/staging/recovery/320x700.png"
+    }
+  ],
+  "consoleErrors": 0,
+  "uncaughtErrors": 0,
+  "authRequests": 0
+}

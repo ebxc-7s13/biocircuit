@@ -1,0 +1,722 @@
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Heart, Bookmark, MessageCircle, Share2 } from 'lucide-react'
+import { matchesSearch } from '../domain/search'
+import { isDemo } from '../data/gateway'
+import type { Community } from '../data/useCommunity'
+import type { Post } from '../domain/models'
+import { ranked, rankPost, visiblePost } from '../domain/ranking'
+import { safeUrl } from '../domain/validation'
+import { Dialog } from '../components/Dialog'
+const Composer = lazy(() => import('./Composer'))
+export default function Feed({
+  c,
+  query,
+  questions = false,
+  detailId,
+  saved = false,
+}: {
+  c: Community
+  query: string
+  questions?: boolean
+  detailId?: string
+  saved?: boolean
+}) {
+  const navigate = useNavigate()
+  const [mode, setMode] = useState(() => {
+    try {
+      return sessionStorage.getItem('biocircuit-feed-mode') ?? 'For you'
+    } catch {
+      return 'For you'
+    }
+  })
+  const [topic, setTopic] = useState('')
+  const [kind, setKind] = useState('')
+  const [unanswered, setUnanswered] = useState(false)
+  const [debounced, setDebounced] = useState(query)
+  const [limit, setLimit] = useState(15)
+  const [edit, setEdit] = useState<Post | null>(null)
+  const [report, setReport] = useState<Post | null>(null)
+  const [reason, setReason] = useState('')
+  const [reply, setReply] = useState('')
+  const [resolution, setResolution] = useState('')
+  const [sort, setSort] = useState('Newest')
+  const [editingReply, setEditingReply] = useState<{
+    id: string
+    body: string
+  } | null>(null)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setDebounced(query.trim().toLowerCase())
+      setLimit(15)
+    }, 250)
+    return () => clearTimeout(t)
+  }, [query])
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('biocircuit-feed-mode', mode)
+    } catch {
+      /* optional */
+    }
+  }, [mode])
+  const pref = c.data.preferences.find((x) => x.user_id === c.userId)
+  const interests = pref?.interests ?? c.user?.interests ?? []
+  const list = useMemo(() => {
+    let p = c.data.posts.filter(
+      (p) =>
+        visiblePost(p, c.user, c.data) &&
+        (!questions || p.kind === 'question') &&
+        (!saved ||
+          c.data.bookmarks.some(
+            (b) => b.user_id === c.userId && b.post_id === p.id,
+          )) &&
+        (!topic || p.tags.includes(topic)) &&
+        (!kind || p.kind === kind) &&
+        (!unanswered || (!p.accepted_answer_id && !p.resolution)) &&
+        !p.tags.some((t) => pref?.muted.includes(t)) &&
+        (!debounced ||
+          matchesSearch(
+            [
+              p.title,
+              p.body,
+              ...p.tags,
+              c.data.profiles.find((u) => u.id === p.author_id)?.name,
+            ].join(' '),
+            debounced,
+            p.id,
+            c.searchResults
+              ? { query: c.searchResults.query, ids: c.searchResults.posts }
+              : undefined,
+          )),
+    )
+    if (mode === 'Following')
+      p = p.filter((p) =>
+        c.data.follows.some(
+          (f) => f.user_id === c.userId && f.target_id === p.author_id,
+        ),
+      )
+    if (mode === 'For you' && sort !== 'Active') return ranked(p, interests)
+    return p.sort((a, b) =>
+      sort === 'Active'
+        ? (b.reply_count ??
+            c.data.comments.filter((x) => x.post_id === b.id).length) -
+          (a.reply_count ??
+            c.data.comments.filter((x) => x.post_id === a.id).length)
+        : Date.parse(b.created_at) - Date.parse(a.created_at),
+    )
+  }, [
+    c.data,
+    c.searchResults,
+    c.user,
+    c.userId,
+    questions,
+    saved,
+    topic,
+    kind,
+    unanswered,
+    debounced,
+    pref,
+    mode,
+    interests,
+    sort,
+  ])
+  const selected = detailId
+    ? c.data.posts.find(
+        (p) => p.id === detailId && visiblePost(p, c.user, c.data),
+      )
+    : null
+  const share = async (p: Post) => {
+    try {
+      await navigator.clipboard.writeText(
+        window.location.origin + '/post/' + p.id,
+      )
+      c.setMessage('Discussion link copied')
+    } catch {
+      c.setError(
+        'Clipboard unavailable. Copy the URL from this discussion’s address bar.',
+      )
+    }
+  }
+  const mute = async (p: Post) => {
+    if (!p.tags[0]) return
+    await c.action('preferences', {
+      muted: [...new Set([...(pref?.muted ?? []), p.tags[0]])],
+      interests,
+      in_app: pref?.in_app ?? true,
+      email: pref?.email ?? false,
+      digest: pref?.digest ?? 'none',
+    })
+  }
+  const card = (p: Post, detail = false) => {
+    const author = c.data.profiles.find((u) => u.id === p.author_id)
+    const liked = c.data.reactions.some(
+      (r) => r.user_id === c.userId && r.post_id === p.id,
+    )
+    const marked = c.data.bookmarks.some(
+      (r) => r.user_id === c.userId && r.post_id === p.id,
+    )
+    return (
+      <article className={'post post-' + p.kind} key={p.id}>
+        <div className="post-meta">
+          <span className="avatar">
+            {author?.name.slice(0, 2).toUpperCase() ?? 'BC'}
+          </span>
+          <div>
+            <b>
+              {author ? (
+                <Link to={'/member/' + author.id}>{author.name}</Link>
+              ) : (
+                'Researcher'
+              )}
+            </b>
+            <small>
+              {author?.institution} ·{' '}
+              {new Date(p.created_at).toLocaleDateString()}
+            </small>
+          </div>
+          {author?.membership === 'approved' && (
+            <span className="status">
+              {isDemo ? 'Demo participant' : 'Eligibility reviewed'}
+            </span>
+          )}
+        </div>
+        <span className="figure-label">
+          {p.kind.replaceAll('_', ' ')}
+          {p.accepted_answer_id || p.resolution ? ' · Resolved' : ''}
+        </span>
+        {detail ? (
+          <h1>{p.title}</h1>
+        ) : (
+          <h2>
+            <Link to={'/post/' + p.id}>{p.title}</Link>
+          </h2>
+        )}
+        <p className="body-text">{p.body}</p>
+        {p.methods && (
+          <>
+            <h3>Methods / environment</h3>
+            <p className="body-text">{p.methods}</p>
+          </>
+        )}
+        {p.tried && (
+          <>
+            <h3>What was tried</h3>
+            <p className="body-text">{p.tried}</p>
+          </>
+        )}
+        {p.resolution && (
+          <div className="notice">
+            <b>Resolution summary</b>
+            <p>{p.resolution}</p>
+          </div>
+        )}
+        {safeUrl(p.source_url) && (
+          <a
+            href={safeUrl(p.source_url)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Source / reference ↗
+          </a>
+        )}
+        {p.project_id && (
+          <p>
+            <Link to={'/project/' + p.project_id}>
+              Open project workspace →
+            </Link>
+          </p>
+        )}
+        <div className="tags">
+          {p.tags.map((t) => (
+            <button
+              key={t}
+              onClick={() => {
+                setTopic(t)
+                if (detail) navigate('/feed')
+              }}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <div className="post-actions">
+          <button
+            aria-label={liked ? 'Unlike post' : 'Like post'}
+            aria-pressed={liked}
+            disabled={c.busy || p.author_id === c.userId}
+            title={
+              p.author_id === c.userId
+                ? 'Self reactions are disabled'
+                : undefined
+            }
+            onClick={() => void c.action('reaction', { post_id: p.id })}
+          >
+            <Heart size={17} />
+            {p.reaction_count ??
+              c.data.reactions.filter((r) => r.post_id === p.id).length}
+          </button>
+          <Link to={'/post/' + p.id}>
+            <MessageCircle size={17} />
+            {p.reply_count ??
+              c.data.comments.filter((r) => r.post_id === p.id).length}{' '}
+            replies
+          </Link>
+          <button
+            aria-label={marked ? 'Unsave post' : 'Save post'}
+            aria-pressed={marked}
+            disabled={c.busy}
+            onClick={() => void c.action('bookmark', { post_id: p.id })}
+          >
+            <Bookmark size={17} />
+            {marked ? 'Saved' : 'Save'}
+          </button>
+          <button
+            aria-label="Copy discussion link"
+            onClick={() => void share(p)}
+          >
+            <Share2 size={17} />
+          </button>
+        </div>
+        <details>
+          <summary>Contribution controls</summary>
+          <div className="actions">
+            <button
+              onClick={() => void c.action('subscribe', { post_id: p.id })}
+            >
+              {c.data.subscriptions.some(
+                (s) => s.user_id === c.userId && s.post_id === p.id,
+              )
+                ? 'Unsubscribe'
+                : 'Subscribe to replies'}
+            </button>
+            <button
+              onClick={() => {
+                setReport(p)
+                setReason('')
+              }}
+            >
+              Report
+            </button>
+            <button onClick={() => void mute(p)}>Mute {p.tags[0]}</button>
+            {p.author_id !== c.userId && (
+              <>
+                <button
+                  onClick={() =>
+                    void c.action('follow', { target_id: p.author_id })
+                  }
+                >
+                  {c.data.follows.some(
+                    (f) =>
+                      f.user_id === c.userId && f.target_id === p.author_id,
+                  )
+                    ? 'Unfollow'
+                    : 'Follow'}{' '}
+                  author
+                </button>
+                <button
+                  onClick={() =>
+                    void c.action('block', { target_id: p.author_id })
+                  }
+                >
+                  Block author
+                </button>
+              </>
+            )}
+            {p.author_id === c.userId && (
+              <>
+                <button onClick={() => setEdit(p)}>Edit</button>
+                <button
+                  onClick={() =>
+                    void c.action('delete_post', { post_id: p.id })
+                  }
+                >
+                  Remove contribution
+                </button>
+              </>
+            )}
+          </div>
+        </details>
+        {mode === 'For you' && !detail && (
+          <details className="why">
+            <summary>Why am I seeing this?</summary>
+            <p>
+              {rankPost(p, interests).reason}. Topics, sources and freshness
+              contribute; private and blocked content is excluded first.
+            </p>
+            <Link to="/settings">Tune interests and muted topics</Link>
+          </details>
+        )}
+      </article>
+    )
+  }
+  return (
+    <>
+      <header className="section-heading">
+        <span className="eyebrow">
+          Community /{' '}
+          {questions
+            ? 'technical questions'
+            : saved
+              ? 'saved research'
+              : 'research feed'}
+        </span>
+        {!detailId && (
+          <>
+            <h1>
+              {questions
+                ? 'Questions worth solving'
+                : saved
+                  ? 'Your reading desk'
+                  : 'Your research circle'}
+              <span className="signal">.</span>
+            </h1>
+            <p>
+              {questions
+                ? 'Share a blocker. Leave with a better experiment.'
+                : 'Make the work visible. Make the learning shared.'}
+            </p>
+          </>
+        )}
+      </header>
+      {detailId ? (
+        selected ? (
+          <>
+            <Link to="/questions">← Back to research</Link>
+            {card(selected, true)}
+            <details>
+              <summary>Contribution history</summary>
+              {c.data.versions
+                .filter((v) => v.post_id === selected.id)
+                .map((v) => (
+                  <article key={v.id}>
+                    <small>{new Date(v.created_at).toLocaleString()}</small>
+                    <h3>{v.title}</h3>
+                    <p className="body-text">{v.body}</p>
+                  </article>
+                ))}
+            </details>
+            <h2>Replies & answers</h2>
+            {c.data.comments
+              .filter((x) => x.post_id === selected.id)
+              .map((comment) => (
+                <article key={comment.id} className="reply">
+                  <b>
+                    <Link to={'/member/' + comment.author_id}>
+                      {c.data.profiles.find((p) => p.id === comment.author_id)
+                        ?.name ?? 'Researcher'}
+                    </Link>
+                  </b>
+                  <small>{new Date(comment.created_at).toLocaleString()}</small>
+                  <p className="body-text">{comment.body}</p>
+                  {selected.accepted_answer_id === comment.id && (
+                    <span className="status">✓ Accepted answer</span>
+                  )}
+                  <div className="actions">
+                    <button
+                      disabled={c.busy || comment.author_id === c.userId}
+                      aria-pressed={c.data.helpful.some(
+                        (v) =>
+                          v.user_id === c.userId && v.comment_id === comment.id,
+                      )}
+                      onClick={() =>
+                        void c.action('helpful', {
+                          comment_id: comment.id,
+                          post_id: selected.id,
+                        })
+                      }
+                    >
+                      Helpful ·{' '}
+                      {comment.helpful_count ??
+                        c.data.helpful.filter(
+                          (v) => v.comment_id === comment.id,
+                        ).length}
+                    </button>
+                    {selected.kind === 'question' &&
+                      (selected.author_id === c.userId ||
+                        c.data.roles.some(
+                          (r) =>
+                            r.user_id === c.userId &&
+                            ['admin', 'moderator'].includes(r.role),
+                        )) &&
+                      comment.author_id !== c.userId &&
+                      comment.author_id !== selected.author_id && (
+                        <button
+                          disabled={c.busy}
+                          onClick={() =>
+                            void c.action('accept', {
+                              post_id: selected.id,
+                              comment_id: comment.id,
+                            })
+                          }
+                        >
+                          Accept answer
+                        </button>
+                      )}
+                    {comment.author_id === c.userId && (
+                      <button
+                        onClick={() =>
+                          setEditingReply({
+                            id: comment.id,
+                            body: comment.body,
+                          })
+                        }
+                      >
+                        Edit reply
+                      </button>
+                    )}
+                    {comment.author_id === c.userId && (
+                      <button
+                        onClick={() =>
+                          void c.action('delete_comment', {
+                            post_id: selected.id,
+                            comment_id: comment.id,
+                          })
+                        }
+                      >
+                        Delete reply
+                      </button>
+                    )}
+                  </div>
+                </article>
+              ))}
+            {c.replyHasMore && (
+              <button
+                disabled={c.busy}
+                onClick={() => void c.replies(selected.id)}
+              >
+                Load more replies
+              </button>
+            )}
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault()
+                if (
+                  await c.action('comment', {
+                    post_id: selected.id,
+                    body: reply,
+                  })
+                )
+                  setReply('')
+              }}
+            >
+              <label>
+                Write a reply
+                <textarea
+                  minLength={5}
+                  maxLength={6000}
+                  required
+                  rows={4}
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
+                />
+              </label>
+              <button
+                className="primary"
+                disabled={
+                  c.busy ||
+                  c.user?.membership !== 'approved' ||
+                  c.user.suspended
+                }
+              >
+                Add reply
+              </button>
+            </form>
+            {selected.author_id === c.userId &&
+              selected.kind === 'question' && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    void c.action('resolve', {
+                      post_id: selected.id,
+                      resolution,
+                    })
+                  }}
+                >
+                  <label>
+                    Resolution summary (clear to reopen)
+                    <textarea
+                      maxLength={3000}
+                      value={resolution}
+                      onChange={(e) => setResolution(e.target.value)}
+                    />
+                  </label>
+                  <button disabled={c.busy}>Save resolution</button>
+                </form>
+              )}
+          </>
+        ) : (
+          <div className="empty">
+            <h2>Discussion unavailable</h2>
+            <p>This URL may refer to removed, private or older content.</p>
+            <Link to="/feed">Return to feed</Link>
+          </div>
+        )
+      ) : (
+        <>
+          <div className="filters">
+            <label>
+              Feed mode
+              <select value={mode} onChange={(e) => setMode(e.target.value)}>
+                {['For you', 'Following', 'Latest'].map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Topic
+              <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+                <option value="">All topics</option>
+                {c.data.taxonomy.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Post type
+              <select value={kind} onChange={(e) => setKind(e.target.value)}>
+                <option value="">All types</option>
+                {[
+                  'discussion',
+                  'question',
+                  'project_update',
+                  'paper_discussion',
+                  'resource',
+                ].map((k) => (
+                  <option key={k} value={k}>
+                    {k.replaceAll('_', ' ')}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Sort
+              <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                <option>Newest</option>
+                <option>Active</option>
+              </select>
+            </label>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={unanswered}
+                onChange={(e) => setUnanswered(e.target.checked)}
+              />
+              Unanswered
+            </label>
+            <button
+              onClick={() => {
+                setTopic('')
+                setKind('')
+                setUnanswered(false)
+                setMode('For you')
+                setSort('Newest')
+              }}
+            >
+              Reset filters
+            </button>
+            <button onClick={() => void c.load()}>Refresh</button>
+          </div>
+          {query.length >= 2 && c.searchHasMore && (
+            <button
+              onClick={() =>
+                void c.search(query, new AbortController().signal, true)
+              }
+            >
+              More search results
+            </button>
+          )}
+          <p className="muted">
+            {list.length} matches in loaded research
+            {c.hasMore ? ' · more available' : ''}
+          </p>
+          {list.slice(0, limit).map((p) => card(p))}
+          {!list.length && (
+            <div className="empty">
+              <h2>Nothing on this bench yet.</h2>
+              <p>
+                Change a filter, search another topic or contribute a useful
+                question.
+              </p>
+            </div>
+          )}
+          {list.length > limit && (
+            <button onClick={() => setLimit(limit + 15)}>
+              Show more loaded contributions
+            </button>
+          )}
+          {c.hasMore && (
+            <button disabled={c.busy} onClick={() => void c.more()}>
+              Load next research page
+            </button>
+          )}
+        </>
+      )}
+      {editingReply && (
+        <Dialog title="Edit your reply" onClose={() => setEditingReply(null)}>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault()
+              if (
+                await c.action('edit_comment', {
+                  comment_id: editingReply.id,
+                  body: editingReply.body,
+                })
+              )
+                setEditingReply(null)
+            }}
+          >
+            <label>
+              Reply text
+              <textarea
+                required
+                minLength={5}
+                maxLength={6000}
+                value={editingReply.body}
+                onChange={(e) =>
+                  setEditingReply((v) =>
+                    v ? { ...v, body: e.target.value } : null,
+                  )
+                }
+              />
+            </label>
+            <button disabled={c.busy}>Save reply</button>
+          </form>
+        </Dialog>
+      )}
+      {edit && (
+        <Suspense fallback={<p>Opening editor…</p>}>
+          <Composer edit={edit} c={c} onClose={() => setEdit(null)} />
+        </Suspense>
+      )}
+      {report && (
+        <Dialog title="Report a contribution" onClose={() => setReport(null)}>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault()
+              if (await c.action('report', { post_id: report.id, reason }))
+                setReport(null)
+            }}
+          >
+            <label>
+              Reason
+              <textarea
+                required
+                minLength={5}
+                maxLength={1000}
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+              />
+            </label>
+            <p>
+              Include harassment, patient data, credential fraud, IP concerns or
+              source corrections. Do not add private evidence.
+            </p>
+            <button className="primary" disabled={c.busy}>
+              Submit report
+            </button>
+          </form>
+        </Dialog>
+      )}
+    </>
+  )
+}

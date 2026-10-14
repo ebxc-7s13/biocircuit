@@ -1,0 +1,30 @@
+[
+    {
+        "slug":  "scholarly-search",
+        "name":  "scholarly-search",
+        "status":  "ACTIVE",
+        "version":  1,
+        "verify_jwt":  true
+    },
+    {
+        "slug":  "account-delete",
+        "name":  "account-delete",
+        "status":  "ACTIVE",
+        "version":  1,
+        "verify_jwt":  true
+    },
+    {
+        "slug":  "avatar",
+        "name":  "avatar",
+        "status":  "ACTIVE",
+        "version":  1,
+        "verify_jwt":  true
+    },
+    {
+        "slug":  "project-images",
+        "name":  "project-images",
+        "status":  "ACTIVE",
+        "version":  1,
+        "verify_jwt":  true
+    }
+]

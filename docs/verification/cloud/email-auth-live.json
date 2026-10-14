@@ -1,0 +1,90 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual email UI/Auth/current-user API acceptance; no phone verification, academic approval, privileged roles or deletion.",
+  "records": [
+    {
+      "name": "Actual Email provider enabled, confirmation disabled; phone remains disabled/unconfirmed",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "emailEnabled": true,
+        "emailAutoconfirm": true,
+        "phoneEnabled": false,
+        "phoneAutoconfirm": false
+      }
+    },
+    {
+      "name": "Registration returns an actual managed session with confirmation disabled",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Email session has no phone or phone-confirmed timestamp",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "phonePresent": false,
+        "phoneConfirmed": false
+      }
+    },
+    {
+      "name": "Actual trigger-created profile has no phone verification/academic approval/suspension",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "phoneVerified": false,
+        "membership": "not_submitted",
+        "suspended": false
+      }
+    },
+    {
+      "name": "No staff roles were assigned",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Connected authenticated route/session: /feed",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Connected authenticated route/session: /explore",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Connected authenticated route/session: /questions",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Connected authenticated route/session: /projects",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Connected authenticated route/session: /journal",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Connected authenticated route/session: /collaborators",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Reload/session restoration and signed-in routes",
+      "status": "FAIL - REPAIR REQUIRED",
+      "observed": {
+        "detail": "Sanitized failure; no credentials, session, account IDs, raw browser payload or private records printed."
+      }
+    }
+  ],
+  "browser": {},
+  "remaining": "No delivered SMS/phone flags/academic approval or member/staff positive tests. Real approved accounts, separate controlled private account, sources/processor and recovery remain external gates."
+}

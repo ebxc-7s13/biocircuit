@@ -1,0 +1,40 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "variant": "already-used",
+  "scope": "Actual delivered recovery link that is already used, or older than the hosted 3600 s expiry (and superseded by later requests); normal browser UI; no password change",
+  "records": [
+    {
+      "name": "Delivered link targets hosted staging verify with exact redirect",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Hosted Auth did not return a session for the expired link",
+      "status": "PASS - LIVE",
+      "observed": {
+        "verifyHttpStatus": 303,
+        "errorCode": "otp_expired"
+      }
+    },
+    {
+      "name": "Expired link shows a safe error and no password editor",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Error parameters are stripped from the visible URL",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "Existing password still works: expired link changed nothing",
+      "status": "PASS - LIVE",
+      "observed": {}
+    },
+    {
+      "name": "No uncaught application exception",
+      "status": "PASS - LIVE",
+      "observed": {}
+    }
+  ]
+}

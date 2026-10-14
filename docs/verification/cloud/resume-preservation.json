@@ -1,0 +1,17 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Comparison with the source recovery manifest taken before the reviewed cloud push; no secrets or hosted data",
+  "compared": 115,
+  "changed": [
+    "src/data/gateway.ts",
+    "scripts/cloud-plan.mjs",
+    "scripts/test-cloud-catalog.mjs",
+    "scripts/test-connected-staging.mjs",
+    "tests/gateway.test.ts",
+    "supabase/tests/rls.test.sql"
+  ],
+  "migrationsUnchanged": true,
+  "migrationCount": 19,
+  "edgeFilesCompared": 8,
+  "edgeChanged": []
+}

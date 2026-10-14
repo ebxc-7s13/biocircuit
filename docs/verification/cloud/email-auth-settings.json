@@ -1,0 +1,9 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "httpStatus": 200,
+  "emailEnabled": true,
+  "emailAutoconfirm": true,
+  "phoneEnabled": false,
+  "phoneAutoconfirm": false,
+  "signupDisabled": false
+}

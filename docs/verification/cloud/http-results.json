@@ -1,0 +1,82 @@
+{
+  "projectName": "biocircuit-staging",
+  "projectRef": "ibxubsegrabpspopdgep",
+  "records": [
+    {
+      "name": "Anonymous public snapshot is bounded and omits private data",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "Anonymous member mutation is denied by PostgreSQL privileges",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "Anonymous academic records are denied by PostgreSQL privileges",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "memberA real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "memberB real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "pending real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "reviewer real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "moderator real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "admin real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "suspended real JWT identity",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    },
+    {
+      "name": "scholarly-search rejects calls without a real user JWT",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "account-delete rejects calls without a real user JWT",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "avatar rejects calls without a real user JWT",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "project-images rejects calls without a real user JWT",
+      "status": "PASS — LIVE VERIFIED",
+      "scope": "LIVE HTTP"
+    },
+    {
+      "name": "Cross-account privacy and community tests require two real approved member JWTs",
+      "status": "BLOCKED — USER CONFIGURATION",
+      "scope": "Not executed"
+    }
+  ],
+  "notCovered": "Real SMS/CAPTCHA, full operational role matrix, source success/cache/adverse upstream, private processor/Storage round trips, export/deletion/global sign-out and connected browser require separate live acceptance evidence."
+}

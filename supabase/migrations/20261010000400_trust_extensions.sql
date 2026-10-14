@@ -1,0 +1,33 @@
+create table public.subscriptions(user_id uuid references public.profiles(id)on delete cascade,post_id uuid references public.posts(id)on delete cascade,primary key(user_id,post_id));
+create table public.post_versions(id uuid primary key default gen_random_uuid(),post_id uuid not null references public.posts(id)on delete cascade,editor_id uuid references public.profiles(id)on delete set null,title text not null,body text not null,created_at timestamptz not null default now());
+create table public.contribution_rules(kind text primary key,points integer not null check(points between 0 and 100));
+insert into public.contribution_rules values('accepted_answer',20);
+alter table public.subscriptions enable row level security;alter table public.post_versions enable row level security;alter table public.contribution_rules enable row level security;
+revoke all on public.subscriptions,public.post_versions,public.contribution_rules from anon,authenticated;
+grant select on public.subscriptions,public.post_versions,public.contribution_rules to authenticated;
+grant all on public.subscriptions,public.post_versions,public.contribution_rules to service_role;
+create policy subscriptions_read on public.subscriptions for select to authenticated using(user_id=auth.uid()and private.post_read(post_id));
+create policy versions_read on public.post_versions for select to authenticated using(private.post_read(post_id));
+create policy contribution_rules_read on public.contribution_rules for select to authenticated using(true);
+create function private.record_version()returns trigger language plpgsql security definer set search_path=''as $$begin if old.body<>new.body or old.title<>new.title then insert into public.post_versions(post_id,editor_id,title,body)values(old.id,auth.uid(),old.title,old.body);end if;return new;end$$;
+revoke all on function private.record_version()from public;
+create trigger post_version before update on public.posts for each row execute function private.record_version();
+create function public.trust_action(action_type text,payload jsonb,request_id uuid)returns void language plpgsql security definer set search_path=''as $$declare uid uuid:=auth.uid();pid uuid:=(payload->>'post_id')::uuid;cid uuid:=(payload->>'comment_id')::uuid;prid uuid:=(payload->>'project_id')::uuid;begin
+ if uid is null or not private.member()then raise insufficient_privilege;end if;if pg_column_size(payload)>12000 then raise exception 'Payload too large';end if;
+ insert into private.action_receipts(user_id,request_id,action)values(uid,request_id,'trust:'||action_type)on conflict do nothing;if not found then return;end if;perform private.rate_limit('all',60);
+ if action_type='subscribe'then if not private.post_read(pid)then raise insufficient_privilege;end if;delete from public.subscriptions where user_id=uid and post_id=pid;if not found then insert into public.subscriptions values(uid,pid);end if;
+ elsif action_type='edit_comment'then if not exists(select 1 from public.comments c where c.id=cid and c.author_id=uid and private.post_read(c.post_id))then raise insufficient_privilege;end if;update public.comments set body=trim(payload->>'body')where id=cid;
+ elsif action_type='delete_project'then if not exists(select 1 from public.projects p where p.id=prid and p.owner_id=uid)or payload->>'confirm'<>'DELETE'then raise insufficient_privilege;end if;delete from public.projects where id=prid;
+ elsif action_type='taxonomy'then if not private.has_role('admin')then raise insufficient_privilege;end if;insert into public.topics(name)values(trim(payload->>'name'))on conflict do nothing;insert into public.audit(actor_id,action,target_id,reason)values(uid,'taxonomy',payload->>'name',payload->>'reason');
+ elsif action_type='point_rule'then if not private.has_role('admin')then raise insufficient_privilege;end if;update public.contribution_rules set points=(payload->>'points')::integer where kind='accepted_answer';insert into public.audit(actor_id,action,target_id,reason)values(uid,'point_rule','accepted_answer',payload->>'reason');
+ else raise exception 'Unsupported trust action';end if;
+end$$;
+revoke all on function public.trust_action(text,jsonb,uuid)from public,anon;grant execute on function public.trust_action(text,jsonb,uuid)to authenticated;
+create function public.detail_extras(pid uuid)returns jsonb language sql stable security invoker set search_path=''as $$select jsonb_build_object('subscriptions',(select coalesce(jsonb_agg(x),'[]')from public.subscriptions x where post_id=pid),'versions',(select coalesce(jsonb_agg(x),'[]')from(select *from public.post_versions where post_id=pid order by created_at desc limit 20)x))$$;
+revoke all on function public.detail_extras(uuid)from public,anon;grant execute on function public.detail_extras(uuid)to authenticated;
+create function public.trust_metadata()returns jsonb language sql stable security invoker set search_path=''as $$select jsonb_build_object('topics',(select coalesce(jsonb_agg(name order by name),'[]')from public.topics),'point_rules',(select coalesce(jsonb_agg(x),'[]')from public.contribution_rules x),'subscriptions',(select coalesce(jsonb_agg(x),'[]')from(select *from public.subscriptions limit 100)x))$$;
+revoke all on function public.trust_metadata()from public,anon;grant execute on function public.trust_metadata()to authenticated;
+-- Only service role schedules retention. No client has execution privilege.
+create function public.prune_retained_data()returns void language plpgsql security invoker set search_path=''as $$begin update public.membership_applications set private_marks=''where decided_at<now()-interval '90 days';delete from public.audit where created_at<now()-interval '365 days';delete from private.action_receipts where created_at<now()-interval '30 days';delete from private.scholarly_cache where expires_at<now();end$$;
+revoke all on function public.prune_retained_data()from public,anon,authenticated;grant execute on function public.prune_retained_data()to service_role;
+grant all on public.audit,public.membership_applications to service_role;grant all on private.action_receipts to service_role;

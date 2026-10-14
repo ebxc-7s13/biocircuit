@@ -1,0 +1,29 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Explicit operator-supplied actual mailbox receipt, normal managed recovery UI and own-password rotation; no administrative APIs or signup",
+  "records": [
+    {
+      "name": "Existing original password signs in before actual reset",
+      "status": "PASS - LIVE",
+      "observed": {}
+    }
+  ],
+  "linkArrival": {
+    "verifyHttpStatus": 303,
+    "queryKeys": [],
+    "fragmentKeys": [
+      "access_token",
+      "expires_at",
+      "expires_in",
+      "refresh_token",
+      "sb",
+      "token_type",
+      "type"
+    ],
+    "continueOffered": true,
+    "alertShown": false
+  },
+  "failed": true,
+  "currentStep": "actual-delivered-link-continue",
+  "errorClass": "TimeoutError"
+}

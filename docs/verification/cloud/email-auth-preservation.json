@@ -1,0 +1,7 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Original SQL migrations and all Edge source/config/test files compared with prior preflight; no credentials or hosted records read.",
+  "migrationCount": 19,
+  "edgeSourceFiles": 8,
+  "changed": []
+}

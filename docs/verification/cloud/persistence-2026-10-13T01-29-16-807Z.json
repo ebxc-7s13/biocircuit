@@ -1,0 +1,1522 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Real staging persistence; two independent ordinary identities only when controlled credentials supplied. No approval, phone flag, privileged role, admin Auth, delete or reset.",
+  "mode": "cross-user-only",
+  "records": [
+    {
+      "name": "Ordinary managed existing-account sign-in",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Actual managed user has no phone confirmation",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Ordinary profile remains unverified, unapproved and unsuspended",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "No staff role assigned",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Own baseline preferences readable",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowPresent": true
+      }
+    },
+    {
+      "name": "Ordinary managed existing-account sign-in",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "code": null,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Actual managed user has no phone confirmation",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Ordinary profile remains unverified, unapproved and unsuspended",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "No staff role assigned",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Own baseline preferences readable",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowPresent": true
+      }
+    },
+    {
+      "name": "Independent actual Auth identities differ",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Minimum private profile fixture accepted",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "code": null
+      }
+    },
+    {
+      "name": "Minimum own fixtures verified by independent hosted reads",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "populatedProfile": true,
+        "populatedPreferences": true
+      }
+    },
+    {
+      "name": "Minimum private profile fixture accepted",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "code": null
+      }
+    },
+    {
+      "name": "Minimum own fixtures verified by independent hosted reads",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "populatedProfile": true,
+        "populatedPreferences": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: simultaneous-sign-in",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Profile fixture persists through two-independent-contexts",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through two-independent-contexts",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after two-independent-contexts",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Known private foreign member URL returns no profile in browser",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "populatedFixture": true,
+        "expectedUnavailableContent": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: foreign-member-route",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Profile fixture persists through foreign-member-route-return",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through foreign-member-route-return",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after foreign-member-route-return",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: simultaneous-sign-in",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Profile fixture persists through two-independent-contexts",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through two-independent-contexts",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after two-independent-contexts",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Known private foreign member URL returns no profile in browser",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "populatedFixture": true,
+        "expectedUnavailableContent": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: foreign-member-route",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Profile fixture persists through foreign-member-route-return",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through foreign-member-route-return",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after foreign-member-route-return",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Accounts use distinct browser contexts",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Browser retains its own managed identity: direct-settings-refresh",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: direct-settings-refresh",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "A logout remains signed out after refresh",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Profile fixture persists through other-account-logout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through other-account-logout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after other-account-logout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: other-account-logout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Profile fixture persists through subsequent-login",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Preference toggle persists through subsequent-login",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent hosted profile/preferences read matches after subsequent-login",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "databaseReadMatched": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: subsequent-login",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Browser retains its own managed identity: other-account-subsequent-login",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "ownIdentity": true
+      }
+    },
+    {
+      "name": "Independent browser final logout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Independent browser final logout",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Fresh ordinary SDK session after browser global signout",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Fresh ordinary SDK session after browser global signout",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Browser signup was never repeated",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "requests": 0
+      }
+    },
+    {
+      "name": "Anonymous cannot see known populated private profile A",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Anonymous cannot see known populated private profile B",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Owner fixture inventory for profiles",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 1
+      }
+    },
+    {
+      "name": "Other known user profiles populated rows hidden by RLS",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 1,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Other known user profiles direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for preferences",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 1
+      }
+    },
+    {
+      "name": "Other known user preferences populated rows hidden by RLS",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 1,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Other known user preferences direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for notifications",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user notifications read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user notifications direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for bookmarks",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user bookmarks read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user bookmarks direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for membership_applications",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user membership_applications read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user membership_applications direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for roles",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user roles read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user roles direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for avatars",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user avatars read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user avatars direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for project_images",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user project_images read has no populated fixture",
+      "account": "A",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user project_images direct write denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Snapshot includes caller private rows and excludes known peer rows",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "ownPopulatedRowsPresent": true,
+        "peerPrivateRowsVisible": false
+      }
+    },
+    {
+      "name": "Hosted search excludes known peer private profile",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "populatedPrivateProfileReference": true,
+        "peerProfileVisible": false
+      }
+    },
+    {
+      "name": "Profile RPC derives caller; foreign identity cannot change victim",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "otherUnchanged": true,
+        "targetIgnored": true
+      }
+    },
+    {
+      "name": "Preference RPC derives caller; victim remains unchanged",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "otherUnchanged": true
+      }
+    },
+    {
+      "name": "Owner fixture inventory for profiles",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 1
+      }
+    },
+    {
+      "name": "Other known user profiles populated rows hidden by RLS",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 1,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Other known user profiles direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for preferences",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 1
+      }
+    },
+    {
+      "name": "Other known user preferences populated rows hidden by RLS",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 1,
+        "populatedFixture": true
+      }
+    },
+    {
+      "name": "Other known user preferences direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for notifications",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user notifications read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user notifications direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for bookmarks",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user bookmarks read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user bookmarks direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for membership_applications",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user membership_applications read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user membership_applications direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for roles",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user roles read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user roles direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for avatars",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user avatars read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user avatars direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Owner fixture inventory for project_images",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "rowCount": 0
+      }
+    },
+    {
+      "name": "Other-user project_images read has no populated fixture",
+      "account": "B",
+      "status": "LIMITED - EMPTY FIXTURE",
+      "observed": {
+        "status": 200,
+        "rowCount": 0,
+        "ownerFixtureRows": 0,
+        "populatedFixture": false,
+        "isolationProven": false
+      }
+    },
+    {
+      "name": "Other known user project_images direct write denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Snapshot includes caller private rows and excludes known peer rows",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "ownPopulatedRowsPresent": true,
+        "peerPrivateRowsVisible": false
+      }
+    },
+    {
+      "name": "Hosted search excludes known peer private profile",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "populatedPrivateProfileReference": true,
+        "peerProfileVisible": false
+      }
+    },
+    {
+      "name": "Profile RPC derives caller; foreign identity cannot change victim",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "otherUnchanged": true,
+        "targetIgnored": true
+      }
+    },
+    {
+      "name": "Preference RPC derives caller; victim remains unchanged",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 204,
+        "otherUnchanged": true
+      }
+    },
+    {
+      "name": "SDK identity following browser global logout",
+      "account": "A",
+      "status": "OBSERVED - LIVE DIAGNOSTIC",
+      "observed": {
+        "userAccepted": true,
+        "status": 200
+      }
+    },
+    {
+      "name": "Fresh ordinary sign-in restores current-user Edge authentication",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "sameIdentity": true
+      }
+    },
+    {
+      "name": "Managed current-user authentication before boundary probes",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Account remains phone-unverified and academically unapproved",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Other-account identity flag direct write denied (same-value probe)",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "noElevatedValueAttempted": true
+      }
+    },
+    {
+      "name": "Role insertion denied before constraint; no valid staff role attempted",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Restricted project direct DML denied",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "populatedProjectIsolationProven": false
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied post RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied comment RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied reaction RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied bookmark RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied application RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied project RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied review RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied suspend RPC",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Hosted personal export contains only caller profile/preferences",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "otherIdentityExported": false
+      }
+    },
+    {
+      "name": "Export RPC rejects caller-selected identity parameter",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 404,
+        "code": "PGRST202"
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: avatars",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: project-files",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: academic-evidence",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Tampered identity/privileged-role JWT rejected",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "validStaffTokenCreated": false
+      }
+    },
+    {
+      "name": "Deletion rejects missing final confirmation and forged target",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 400,
+        "destructiveConfirmationSent": false
+      }
+    },
+    {
+      "name": "Safety probes leave real identity and restrictions unchanged",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sameIdentity": true,
+        "phoneVerified": false,
+        "academicallyApproved": false,
+        "staffRoleCount": 0
+      }
+    },
+    {
+      "account": "A",
+      "status": "LIMITED - NOT DESTRUCTIVE ACCEPTANCE",
+      "detail": "Account deletion final confirmation, owner-project conflict and Storage cleanup require separately authorized disposable identity/fixtures. No account was deleted."
+    },
+    {
+      "name": "Scholarly Crossref enforces approved-member gate",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 429,
+        "scope": "Handler maps denied search_budget to429; this does not prove provider success or real rate exhaustion"
+      }
+    },
+    {
+      "name": "Scholarly PubMed enforces approved-member gate",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 429,
+        "scope": "Handler maps denied search_budget to429; this does not prove provider success or real rate exhaustion"
+      }
+    },
+    {
+      "name": "Missing processor returns honest unavailable response",
+      "account": "A",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 503,
+        "noUploadSuccess": true
+      }
+    },
+    {
+      "name": "SDK identity following browser global logout",
+      "account": "B",
+      "status": "OBSERVED - LIVE DIAGNOSTIC",
+      "observed": {
+        "userAccepted": true,
+        "status": 200
+      }
+    },
+    {
+      "name": "Fresh ordinary sign-in restores current-user Edge authentication",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sessionPresent": true,
+        "sameIdentity": true
+      }
+    },
+    {
+      "name": "Managed current-user authentication before boundary probes",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {}
+    },
+    {
+      "name": "Account remains phone-unverified and academically unapproved",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "Other-account identity flag direct write denied (same-value probe)",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "noElevatedValueAttempted": true
+      }
+    },
+    {
+      "name": "Role insertion denied before constraint; no valid staff role attempted",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Restricted project direct DML denied",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501",
+        "populatedProjectIsolationProven": false
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied post RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied comment RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied reaction RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied bookmark RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied application RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied project RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied review RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Unverified ordinary account denied suspend RPC",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 403,
+        "code": "42501"
+      }
+    },
+    {
+      "name": "Hosted personal export contains only caller profile/preferences",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "otherIdentityExported": false
+      }
+    },
+    {
+      "name": "Export RPC rejects caller-selected identity parameter",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 404,
+        "code": "PGRST202"
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: avatars",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: project-files",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Direct valid synthetic upload denied: academic-evidence",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "statusCode": 403,
+        "validSyntheticImage": true,
+        "noExistingObjectOverwritten": true,
+        "foreignPrefix": true
+      }
+    },
+    {
+      "name": "Tampered identity/privileged-role JWT rejected",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 401,
+        "validStaffTokenCreated": false
+      }
+    },
+    {
+      "name": "Deletion rejects missing final confirmation and forged target",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 400,
+        "destructiveConfirmationSent": false
+      }
+    },
+    {
+      "name": "Safety probes leave real identity and restrictions unchanged",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "sameIdentity": true,
+        "phoneVerified": false,
+        "academicallyApproved": false,
+        "staffRoleCount": 0
+      }
+    },
+    {
+      "account": "B",
+      "status": "LIMITED - NOT DESTRUCTIVE ACCEPTANCE",
+      "detail": "Account deletion final confirmation, owner-project conflict and Storage cleanup require separately authorized disposable identity/fixtures. No account was deleted."
+    },
+    {
+      "name": "Scholarly Crossref enforces approved-member gate",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 429,
+        "scope": "Handler maps denied search_budget to429; this does not prove provider success or real rate exhaustion"
+      }
+    },
+    {
+      "name": "Scholarly PubMed enforces approved-member gate",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 429,
+        "scope": "Handler maps denied search_budget to429; this does not prove provider success or real rate exhaustion"
+      }
+    },
+    {
+      "name": "Missing processor returns honest unavailable response",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 503,
+        "noUploadSuccess": true
+      }
+    },
+    {
+      "name": "Connected browser has no console or uncaught exceptions",
+      "account": "B",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "uncaughtErrors": 0,
+        "consoleErrors": 0,
+        "signupRequests": 0
+      }
+    },
+    {
+      "name": "Populated applications/marks/roles/bookmarks/notifications/private projects/images",
+      "status": "BLOCKED - EXTERNAL DEPENDENCY",
+      "observed": {
+        "detail": "Current accounts cannot legitimately create these protected fixtures. Empty reads/direct-DML denials are limited; no fake verification or seed inserted."
+      }
+    },
+    {
+      "name": "Authorized member contributions and scholarly positive acceptance",
+      "status": "BLOCKED - EXTERNAL DEPENDENCY",
+      "observed": {
+        "detail": "Genuine phone verification/human academic approval required; contacts and image processor separately required."
+      }
+    }
+  ],
+  "browser": {
+    "uncaughtErrors": 0,
+    "consoleErrors": 0,
+    "signupRequests": 0
+  },
+  "restoration": [
+    {
+      "account": "A",
+      "profileRestored": true,
+      "verifiedByHostedRead": true
+    },
+    {
+      "account": "A",
+      "preferencesRestored": true,
+      "verifiedByHostedRead": true,
+      "newDefaultRowRetained": false
+    },
+    {
+      "account": "B",
+      "profileRestored": true,
+      "verifiedByHostedRead": true
+    },
+    {
+      "account": "B",
+      "preferencesRestored": true,
+      "verifiedByHostedRead": true,
+      "newDefaultRowRetained": false
+    }
+  ],
+  "privateBaseline": ".cloud/phase2-baseline-2026-10-13T01-29-16-807Z.xml"
+}

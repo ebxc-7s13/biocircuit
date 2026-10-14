@@ -1,0 +1,216 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Actual email UI/Auth/current-user API acceptance; no phone verification, academic approval, privileged roles or deletion.",
+  "mode": "resume-existing-account",
+  "waitStrategy": "networkidle-diagnostic",
+  "originalEvidence": "email-auth-live-initial-registration-failure.json",
+  "navigation": [],
+  "records": [
+    {
+      "name": "Actual Email provider enabled, confirmation disabled; phone remains disabled/unconfirmed",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "emailEnabled": true,
+        "emailAutoconfirm": true,
+        "phoneEnabled": false,
+        "phoneAutoconfirm": false
+      }
+    },
+    {
+      "name": "Existing-account UI sign-in returns an actual managed session",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "sessionPresent": true
+      }
+    },
+    {
+      "name": "Email session has no phone or phone-confirmed timestamp",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "phonePresent": false,
+        "phoneConfirmed": false
+      }
+    },
+    {
+      "name": "Actual trigger-created profile has no phone verification/academic approval/suspension",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "phoneVerified": false,
+        "membership": "not_submitted",
+        "suspended": false
+      }
+    },
+    {
+      "name": "No staff roles were assigned",
+      "status": "PASS - LIVE VERIFIED",
+      "observed": {
+        "status": 200,
+        "roleCount": 0
+      }
+    },
+    {
+      "name": "Reload/session restoration and signed-in routes",
+      "status": "FAIL - REPAIR REQUIRED",
+      "observed": {
+        "currentRoute": "/profile",
+        "currentStep": "wait-for-networkidle",
+        "errorClass": "TimeoutError",
+        "errorCode": null,
+        "sessionBeforeNavigation": true,
+        "sessionAfterNavigation": true,
+        "expectedRouteContent": true,
+        "http": [
+          {
+            "path": "/rest/v1/rpc/community_snapshot",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/community_snapshot",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/community_snapshot",
+            "status": 200
+          },
+          {
+            "path": "/auth/v1/user",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/recommended_page",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/recommended_page",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/recommended_page",
+            "status": 200
+          },
+          {
+            "path": "/auth/v1/user",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/trust_metadata",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/trust_metadata",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/rpc/trust_metadata",
+            "status": 200
+          },
+          {
+            "path": "/auth/v1/user",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/milestone_confirmations",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/milestone_confirmations",
+            "status": 200
+          },
+          {
+            "path": "/rest/v1/milestone_confirmations",
+            "status": 200
+          },
+          {
+            "path": "/functions/v1/avatar",
+            "status": 404
+          },
+          {
+            "path": "/functions/v1/avatar",
+            "status": 404
+          }
+        ],
+        "detail": "Allowlisted class/code and route/status/boolean diagnostics only; no raw exception or private payload."
+      }
+    }
+  ],
+  "browser": {
+    "uncaughtErrors": 0,
+    "consoleErrors": 2,
+    "exceptionClasses": [],
+    "signupRequests": 0,
+    "http": [
+      {
+        "path": "/rest/v1/rpc/community_snapshot",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/community_snapshot",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/community_snapshot",
+        "status": 200
+      },
+      {
+        "path": "/auth/v1/user",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/recommended_page",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/recommended_page",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/recommended_page",
+        "status": 200
+      },
+      {
+        "path": "/auth/v1/user",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/trust_metadata",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/trust_metadata",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/rpc/trust_metadata",
+        "status": 200
+      },
+      {
+        "path": "/auth/v1/user",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/milestone_confirmations",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/milestone_confirmations",
+        "status": 200
+      },
+      {
+        "path": "/rest/v1/milestone_confirmations",
+        "status": 200
+      },
+      {
+        "path": "/functions/v1/avatar",
+        "status": 404
+      },
+      {
+        "path": "/functions/v1/avatar",
+        "status": 404
+      }
+    ]
+  },
+  "remaining": "No delivered SMS/phone flags/academic approval or member/staff positive tests. Real approved accounts, separate controlled private account, sources/processor and recovery remain external gates."
+}

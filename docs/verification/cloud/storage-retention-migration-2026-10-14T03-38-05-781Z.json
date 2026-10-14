@@ -1,0 +1,96 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Reviewed forward migration: private bucket MIME narrowing and pg_cron retention schedule only; no seed, roles, Vault, user data or reset",
+  "applyRequested": true,
+  "before": {
+    "buckets": [
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg",
+          "application/pdf"
+        ],
+        "file_size_limit": 5242880,
+        "id": "academic-evidence",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/webp"
+        ],
+        "file_size_limit": 524288,
+        "id": "avatars",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg",
+          "application/pdf"
+        ],
+        "file_size_limit": 5242880,
+        "id": "project-files",
+        "public": false
+      }
+    ],
+    "objects": 0,
+    "cronInstalled": 0
+  },
+  "preview": {
+    "dryRun": true,
+    "migrations": [
+      "20261014000100_storage_retention.sql"
+    ],
+    "seeds": [],
+    "roles": []
+  },
+  "result": {
+    "migrations": [
+      "20261014000100_storage_retention.sql"
+    ],
+    "upToDate": false
+  },
+  "readback": {
+    "upToDate": true,
+    "migrations": []
+  },
+  "after": {
+    "buckets": [
+      {
+        "allowed_mime_types": [
+          "image/png",
+          "image/jpeg"
+        ],
+        "file_size_limit": 5242880,
+        "id": "academic-evidence",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/webp"
+        ],
+        "file_size_limit": 524288,
+        "id": "avatars",
+        "public": false
+      },
+      {
+        "allowed_mime_types": [
+          "image/png"
+        ],
+        "file_size_limit": 5242880,
+        "id": "project-files",
+        "public": false
+      }
+    ],
+    "objects": 0,
+    "cronInstalled": 1,
+    "jobs": [
+      {
+        "active": true,
+        "command": "select public.prune_retained_data();delete from cron.job_run_details where end_time<now()-interval '30 days'",
+        "jobname": "biocircuit-retention",
+        "schedule": "17 3 * * *"
+      }
+    ]
+  }
+}

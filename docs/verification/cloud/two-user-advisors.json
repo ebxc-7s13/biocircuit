@@ -1,0 +1,502 @@
+{
+  "projectRef": "ibxubsegrabpspopdgep",
+  "scope": "Read-only hosted system catalog/migration/advisor metadata; no user records or credentials",
+  "result": {
+    "results": [
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.avatar_budget()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/avatar_budget`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "avatar_budget",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_avatar_budget_"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.community_action(action_type text, payload jsonb, request_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/community_action`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "community_action",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_community_action_action_type text, payload jsonb, request_id uuid"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.community_health()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/community_health`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "community_health",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_community_health_"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.confirm_milestone(pid uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/confirm_milestone`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "confirm_milestone",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_confirm_milestone_pid uuid"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.export_personal_data()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/export_personal_data`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "export_personal_data",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_export_personal_data_"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.notification_preferences(selected_categories text[])` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/notification_preferences`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "notification_preferences",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_notification_preferences_selected_categories text[]"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.own_moderation_decisions()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/own_moderation_decisions`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "own_moderation_decisions",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_own_moderation_decisions_"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.project_image_budget(pid uuid, image_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/project_image_budget`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "project_image_budget",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_project_image_budget_pid uuid, image_id uuid"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.search_budget()` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/search_budget`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "search_budget",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_search_budget_"
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "title": "Signed-In Users Can Execute SECURITY DEFINER Function",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Detects `SECURITY DEFINER` functions that are callable by signed-in users. Revoke `EXECUTE`, switch the function to `SECURITY INVOKER`, or move it out of your exposed API schema if signed-in users should not call it.",
+        "detail": "Function `public.trust_action(action_type text, payload jsonb, request_id uuid)` can be executed by the `authenticated` role as a `SECURITY DEFINER` function via `/rest/v1/rpc/trust_action`. Revoke `EXECUTE` or switch it to `SECURITY INVOKER` if that is not intentional.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "metadata": {
+          "name": "trust_action",
+          "schema": "public"
+        },
+        "cacheKey": "authenticated_security_definer_function_executable_public_trust_action_action_type text, payload jsonb, request_id uuid"
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "title": "Leaked Password Protection Disabled",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "SECURITY"
+        ],
+        "description": "Leaked password protection is currently disabled.",
+        "detail": "Supabase Auth prevents the use of compromised passwords by checking against HaveIBeenPwned.org. Enable this feature to enhance security.",
+        "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+        "metadata": {
+          "entity": "Auth",
+          "type": "auth"
+        },
+        "cacheKey": "auth_leaked_password_protection"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.profiles\\` has a row level security policy \\`profiles_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "profiles",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_profiles_profiles_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.roles\\` has a row level security policy \\`role_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "roles",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_roles_role_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.membership_applications\\` has a row level security policy \\`applications_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "membership_applications",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_membership_applications_applications_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.preferences\\` has a row level security policy \\`preferences_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "preferences",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_preferences_preferences_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.blocks\\` has a row level security policy \\`blocks_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "blocks",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_blocks_blocks_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.follows\\` has a row level security policy \\`follows_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "follows",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_follows_follows_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.collaborations\\` has a row level security policy \\`collaboration_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "collaborations",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_collaborations_collaboration_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.paper_saves\\` has a row level security policy \\`paper_saves_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "paper_saves",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_paper_saves_paper_saves_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.bookmarks\\` has a row level security policy \\`bookmarks_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "bookmarks",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_bookmarks_bookmarks_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.notifications\\` has a row level security policy \\`notifications_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "notifications",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_notifications_notifications_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.reports\\` has a row level security policy \\`reports_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "reports",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_reports_reports_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.contributions\\` has a row level security policy \\`contribution_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "contributions",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_contributions_contribution_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.subscriptions\\` has a row level security policy \\`subscriptions_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "subscriptions",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_subscriptions_subscriptions_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.content_appeals\\` has a row level security policy \\`appeal_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "content_appeals",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_content_appeals_appeal_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.posts\\` has a row level security policy \\`posts_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "posts",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_posts_posts_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.paper_reports\\` has a row level security policy \\`paper_reports_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "paper_reports",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_paper_reports_paper_reports_read"
+      },
+      {
+        "name": "auth_rls_initplan",
+        "title": "Auth RLS Initialization Plan",
+        "level": "WARN",
+        "facing": "EXTERNAL",
+        "categories": [
+          "PERFORMANCE"
+        ],
+        "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+        "detail": "Table \\`public.project_images\\` has a row level security policy \\`project_images_read\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "metadata": {
+          "name": "project_images",
+          "schema": "public",
+          "type": "table"
+        },
+        "cacheKey": "auth_rls_init_plan_public_project_images_project_images_read"
+      }
+    ],
+    "message": "db advisors"
+  }
+}
