@@ -1,0 +1,23 @@
+
+> biocircuit@0.1.0 test:edge
+> deno test --allow-env=ALLOWED_ORIGIN,SUPABASE_URL,SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY,NCBI_API_KEY supabase/functions/http_test.ts supabase/functions/pubmed_test.ts supabase/functions/crossref_test.ts
+
+[0m[32mCheck[0m supabase/functions/http_test.ts
+[0m[32mCheck[0m supabase/functions/pubmed_test.ts
+[0m[32mCheck[0m supabase/functions/crossref_test.ts
+[0m[38;5;245mrunning 4 tests from ./supabase/functions/http_test.ts[0m
+strict origin and no private cache ... [0m[32mok[0m [0m[38;5;245m(137ms)[0m
+exact origin list: each listed origin echoed, nothing else ... [0m[32mok[0m [0m[38;5;245m(2ms)[0m
+streaming JSON limit rejects spoofed body length ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+anonymous authentication is never simulated ... [0m[32mok[0m [0m[38;5;245m(764µs)[0m
+[0m[38;5;245mrunning 3 tests from ./supabase/functions/pubmed_test.ts[0m
+PubMed fixture: bounded pagination, year, provenance and reserve per call ... [0m[32mok[0m [0m[38;5;245m(41ms)[0m
+PubMed fixture: exact identifiers avoid search and invalid cursor does no network work ... [0m[32mok[0m [0m[38;5;245m(28ms)[0m
+PubMed fixture: budget denial, upstream rate limit and malformed data fail honestly ... [0m[32mok[0m [0m[38;5;245m(6ms)[0m
+[0m[38;5;245mrunning 3 tests from ./supabase/functions/crossref_test.ts[0m
+Crossref fixture: bounded search, year filter, cursor and provenance ... [0m[32mok[0m [0m[38;5;245m(34ms)[0m
+Crossref fixture: exact DOI lookup, unknown DOI is an honest empty result ... [0m[32mok[0m [0m[38;5;245m(34ms)[0m
+Crossref fixture: budget denial, upstream errors and malformed data fail honestly ... [0m[32mok[0m [0m[38;5;245m(5ms)[0m
+
+[0m[32mok[0m | 10 passed | 0 failed [0m[38;5;245m(876ms)[0m
+

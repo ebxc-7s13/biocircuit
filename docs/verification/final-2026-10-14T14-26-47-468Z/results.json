@@ -1,0 +1,142 @@
+[
+  {
+    "name": "format",
+    "command": "npm.cmd run format:check",
+    "exitCode": 1,
+    "elapsedMs": 9232,
+    "outputWithheld": false
+  },
+  {
+    "name": "lint",
+    "command": "npm.cmd run lint",
+    "exitCode": 1,
+    "elapsedMs": 7745,
+    "outputWithheld": false
+  },
+  {
+    "name": "types",
+    "command": "npm.cmd run typecheck",
+    "exitCode": 0,
+    "elapsedMs": 12892,
+    "outputWithheld": false
+  },
+  {
+    "name": "unit",
+    "command": "npm.cmd test",
+    "exitCode": 0,
+    "elapsedMs": 85366,
+    "outputWithheld": false
+  },
+  {
+    "name": "database",
+    "command": "npm.cmd run test:db",
+    "exitCode": 0,
+    "elapsedMs": 11246,
+    "outputWithheld": false
+  },
+  {
+    "name": "catalog",
+    "command": "npm.cmd run test:cloud-catalog",
+    "exitCode": 0,
+    "elapsedMs": 13956,
+    "outputWithheld": false
+  },
+  {
+    "name": "rls-planner",
+    "command": "node scripts/test-rls-initplan.mjs",
+    "exitCode": 0,
+    "elapsedMs": 9618,
+    "outputWithheld": false
+  },
+  {
+    "name": "edge",
+    "command": "npm.cmd run test:edge",
+    "exitCode": 0,
+    "elapsedMs": 9193,
+    "outputWithheld": false
+  },
+  {
+    "name": "edge-types",
+    "command": "npm.cmd run typecheck:edge",
+    "exitCode": 0,
+    "elapsedMs": 1988,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-demo",
+    "command": "npm.cmd run test:e2e",
+    "exitCode": 0,
+    "elapsedMs": 304186,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-connected",
+    "command": "npm.cmd run test:staging-browser",
+    "exitCode": 0,
+    "elapsedMs": 34524,
+    "outputWithheld": false
+  },
+  {
+    "name": "browser-recovery",
+    "command": "node scripts/test-recovery-staging.mjs",
+    "exitCode": 0,
+    "elapsedMs": 29475,
+    "outputWithheld": false
+  },
+  {
+    "name": "recovery-adoption",
+    "command": "npm.cmd run test:recovery-adoption",
+    "exitCode": 0,
+    "elapsedMs": 27641,
+    "outputWithheld": false
+  },
+  {
+    "name": "build",
+    "command": "npm.cmd run build",
+    "exitCode": 0,
+    "elapsedMs": 69431,
+    "outputWithheld": false
+  },
+  {
+    "name": "bundle",
+    "command": "npm.cmd run check:bundle",
+    "exitCode": 0,
+    "elapsedMs": 893,
+    "outputWithheld": false
+  },
+  {
+    "name": "audit",
+    "command": "npm.cmd audit --audit-level=moderate",
+    "exitCode": 0,
+    "elapsedMs": 4546,
+    "outputWithheld": false
+  },
+  {
+    "name": "production",
+    "command": "npm.cmd run test:production",
+    "exitCode": 0,
+    "elapsedMs": 16912,
+    "outputWithheld": false
+  },
+  {
+    "name": "source-backup",
+    "command": "npm.cmd run cloud:preflight",
+    "exitCode": 0,
+    "elapsedMs": 1175,
+    "outputWithheld": false
+  },
+  {
+    "name": "retention-schedule",
+    "command": "npm.cmd run test:retention-schedule",
+    "exitCode": 0,
+    "elapsedMs": 14774,
+    "outputWithheld": false
+  },
+  {
+    "name": "storage-reconcile",
+    "command": "npm.cmd run storage:reconcile",
+    "exitCode": 0,
+    "elapsedMs": 3233,
+    "outputWithheld": false
+  }
+]

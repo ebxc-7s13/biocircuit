@@ -1,0 +1,7 @@
+
+> biocircuit@0.1.0 format:check
+> prettier --check src scripts tests supabase/functions *.json *.ts *.js
+
+Checking formatting...
+[[33mwarn[39m] scripts/.pwa-probe.tmp.mjs
+[[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.

@@ -118,8 +118,8 @@
       ]
     }
   ],
-  "backup": ".cloud/backups/2026-10-14T09-40-17-398Z",
-  "filesCopied": 165,
+  "backup": ".cloud/backups/2026-10-14T14-37-37-077Z",
+  "filesCopied": 167,
   "fingerprints": [
     {
       "file": "src/App.tsx",
@@ -259,7 +259,7 @@
     },
     {
       "file": "src/main.tsx",
-      "sha256": "9f07858ecc13b089c389cb84447ee31a8dfb5364f2800c0f2a358efc77b4a420"
+      "sha256": "11beb821ade03feb67546b6af56d3ef4e5c411ef7dda5330d53da39e5b3f5fe7"
     },
     {
       "file": "src/styles.css",
@@ -268,6 +268,10 @@
     {
       "file": "src/Workbench.tsx",
       "sha256": "9c6dcebdc7da63e7b715a41dc666bbf2b6c4a1d522913ddc4267a4e14233d138"
+    },
+    {
+      "file": "scripts/.pwa-probe.tmp.mjs",
+      "sha256": "29a9621a19d52342114585bf3ec8628c7138cea68b465849e85034d3a28de1b5"
     },
     {
       "file": "scripts/apply-final-rls.mjs",
@@ -726,6 +730,10 @@
       "sha256": "42b8db8ded1d623b9efa10fb9fbac4a6b9b7ce6127759b556e0bfd68eec0ec82"
     },
     {
+      "file": "public/sw.js",
+      "sha256": "77b5414c5d7a3cecbbd4c33eedb05494d685b0c8725c1535b4cd56b4a0e7a38a"
+    },
+    {
       "file": "public/_headers",
       "sha256": "ba1135127ff428fdc987985d881b88b510f3e11155fb62d8654c12d72e9c7f38"
     },
@@ -755,11 +763,11 @@
     },
     {
       "file": "index.html",
-      "sha256": "16db7a4a4563fa46f2c6afc5bd25282e339864053e2c80b44c962d9a21ec91e7"
+      "sha256": "fd150c20b47ac51be98d329a3360cfca213bf59ab1baa40ab0c349f149012678"
     },
     {
       "file": "vite.config.ts",
-      "sha256": "7df60be193faba3d0c309f9380b9f879d98ea1464a233cae97793ad0f6cd675e"
+      "sha256": "3a074817cc0d0df85539148d529a28c930f6d79a75f9a4058e80a3af50471e81"
     },
     {
       "file": "tsconfig.json",

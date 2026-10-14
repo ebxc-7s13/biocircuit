@@ -1,0 +1,16 @@
+
+> biocircuit@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.3 D:/personal_projects/my apps/biocircuit-source/biocircuit
+
+
+ Test Files  15 passed (15)
+      Tests  94 passed (94)
+   Start at  19:57:20
+   Duration  81.97s (environment 72%, import 16%, tests 9%, transform 3%)
+
+    Isolate  15 workers spawned · ~3.99s startup each (spawn + environment, per file)
+             at least ~55.91s faster with isolate: false — reuses workers across files instead of one per file
+

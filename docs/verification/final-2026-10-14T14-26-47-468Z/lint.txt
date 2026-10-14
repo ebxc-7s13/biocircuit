@@ -1,0 +1,12 @@
+
+> biocircuit@0.1.0 lint
+> eslint src tests scripts
+
+
+D:\personal_projects\my apps\biocircuit-source\biocircuit\scripts\.pwa-probe.tmp.mjs
+   7:83   error  Empty block statement    no-empty
+  19:88   error  'caches' is not defined  no-undef
+  19:132  error  'caches' is not defined  no-undef
+
+✖ 3 problems (3 errors, 0 warnings)
+

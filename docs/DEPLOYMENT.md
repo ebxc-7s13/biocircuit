@@ -45,3 +45,24 @@ The original preparation notes follow.
 - The default email sender allows 2 messages per hour.
 - Image upload, approved-member features and scholarly search positives remain blocked, as documented.
 - GitHub Pages cannot send `frame-ancestors`, HSTS customization or other response headers.
+
+## Installable app (PWA)
+
+The site is also an installable Progressive Web App: `public/manifest.webmanifest` (standalone display, start page `/feed`, icons generated from the logo incl. maskable and Apple touch icons) and `public/sw.js`, registered in production builds only.
+
+The service worker handles only same-origin GET requests within its scope:
+- Pages are network-first (always fresh online; cached copy offline).
+- Hashed `/assets/` are cache-first.
+- Supabase Auth, data and Edge Functions are cross-origin and are **never** intercepted or cached.
+
+Verified with a local preview under `/biocircuit/`:
+- the service worker is active and controls the page;
+- manifest and all icons return 200;
+- the cache holds only own-origin pages and assets;
+- offline, the app shell opens;
+- 0 console errors.
+
+Install it:
+- **Android/Chrome/Edge:** browser menu → *Install app* (or *Add to Home screen*).
+- **iPhone/iPad (Safari):** Share → *Add to Home Screen*.
+- **Desktop Chrome/Edge:** the install icon in the address bar.

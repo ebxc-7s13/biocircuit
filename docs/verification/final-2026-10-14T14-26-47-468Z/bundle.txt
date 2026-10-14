@@ -1,0 +1,83 @@
+
+> biocircuit@0.1.0 check:bundle
+> node scripts/check-bundle.mjs
+
+{
+  "initialJsGzip": 122803,
+  "cssGzip": 9993,
+  "chunks": [
+    {
+      "name": "Account-CTN_mve7.js",
+      "bytes": 21382,
+      "gzip": 7042,
+      "initial": false
+    },
+    {
+      "name": "Composer-iLcTBV7b.js",
+      "bytes": 4981,
+      "gzip": 2019,
+      "initial": false
+    },
+    {
+      "name": "Explore-W-V7frvc.js",
+      "bytes": 7445,
+      "gzip": 2687,
+      "initial": false
+    },
+    {
+      "name": "index-C4G6aZQg.js",
+      "bytes": 396740,
+      "gzip": 122803,
+      "initial": true
+    },
+    {
+      "name": "index-DhOsZu5R.js",
+      "bytes": 227823,
+      "gzip": 59320,
+      "initial": false
+    },
+    {
+      "name": "index-DtIxzhRZ.css",
+      "bytes": 44491,
+      "gzip": 9993,
+      "initial": false
+    },
+    {
+      "name": "Journal-OcQk7h6K.js",
+      "bytes": 5099,
+      "gzip": 2225,
+      "initial": false
+    },
+    {
+      "name": "Member-ewP7GQDO.js",
+      "bytes": 3076,
+      "gzip": 1280,
+      "initial": false
+    },
+    {
+      "name": "PaperMetadataCard-DzHQRn0I.js",
+      "bytes": 2260,
+      "gzip": 1058,
+      "initial": false
+    },
+    {
+      "name": "Projects-DAgNB2n-.js",
+      "bytes": 15397,
+      "gzip": 5197,
+      "initial": false
+    },
+    {
+      "name": "Recovery-TfWIsJLG.js",
+      "bytes": 7532,
+      "gzip": 2745,
+      "initial": false
+    },
+    {
+      "name": "Trust-BDyzm1cb.js",
+      "bytes": 8203,
+      "gzip": 2499,
+      "initial": false
+    }
+  ],
+  "note": "Connected mode also loads the SDK dynamic chunk. This is an entry budget, not a total connected download budget."
+}
