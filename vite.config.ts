@@ -1,4 +1,4 @@
-import { readFileSync, copyFileSync } from 'node:fs'
+import { readFileSync, copyFileSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -6,6 +6,22 @@ import react from '@vitejs/plugin-react'
 // Static hosts without header/rewrite support (GitHub Pages) get the reviewed
 // CSP as a meta tag and a 404.html SPA fallback. frame-ancestors is invalid in
 // <meta>, so it is dropped there; Netlify/Cloudflare-style hosts keep _headers.
+// Static app routes (see Workbench); detail routes like /post/:id use 404.html.
+const staticRoutes = [
+  'feed',
+  'questions',
+  'explore',
+  'projects',
+  'journal',
+  'profile',
+  'collaborators',
+  'settings',
+  'notifications',
+  'saved',
+  'policies',
+  'trust',
+  'account/recovery',
+]
 const githubPages = process.env.STATIC_HOST === 'github-pages'
 const pagesHosting = (): Plugin => ({
   name: 'github-pages-hosting',
@@ -25,7 +41,12 @@ const pagesHosting = (): Plugin => ({
     )
   },
   closeBundle() {
+    // Pages serves /x from x.html with HTTP 200, so every static app route gets
+    // its own copy; only dynamic detail routes fall back to 404.html.
     copyFileSync(resolve('dist/index.html'), resolve('dist/404.html'))
+    mkdirSync(resolve('dist/account'), { recursive: true })
+    for (const route of staticRoutes)
+      copyFileSync(resolve('dist/index.html'), resolve(`dist/${route}.html`))
   },
 })
 

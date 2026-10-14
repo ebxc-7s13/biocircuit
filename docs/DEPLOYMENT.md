@@ -1,6 +1,25 @@
 # Deployment — GitHub Pages (free)
 
-**Status: PREPARED, NOT PUBLISHED.** Publishing a public repository and site, deploying Edge Functions and changing the Edge `ALLOWED_ORIGIN` secret were blocked by Claude Code's permission policy. The owner runs one script. The app remains a **staging preview, not production-ready** (see [FINAL_AUTONOMOUS_RUN_REPORT.md](FINAL_AUTONOMOUS_RUN_REPORT.md)).
+**Status: PUBLISHED (staging preview, not production-ready)** — https://ebxc-7s13.github.io/biocircuit/ · source https://github.com/ebxc-7s13/biocircuit (public; free Pages requires it).
+
+Published 2026-10-14 at the owner's request:
+- public repository created and `main` pushed;
+- public build variables set;
+- Pages enabled with the Actions source (first workflow run succeeded);
+- Edge `ALLOWED_ORIGIN` = `http://127.0.0.1:5190,https://ebxc-7s13.github.io`, and the four functions redeployed.
+
+The owner set Supabase Site URL and the Pages recovery redirect in the dashboard.
+
+**Live verification** (headless browser against the public URL):
+- all main routes render with live staging data;
+- real email sign-in for account A through the site's own dialog: token 200, profile loaded;
+- `avatar` Edge Function 200 from the Pages origin;
+- Edge preflight returns 200 with the exact allow-origin for the Pages origin, and 403 for other origins.
+
+Deep links initially returned HTTP 404 through the `404.html` fallback. Each static route now ships its own `<route>.html`, so Pages serves 200; only detail routes (`/post/:id`, `/project/:id`, `/member/:id`) still use the fallback.
+
+The original preparation notes follow.
+
 
 ## What is ready
 
