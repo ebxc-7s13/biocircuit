@@ -10,8 +10,16 @@
 
 - The site was already public before this run (first deployed 2026-10-14). This run **redeployed** it twice:
   - `f6c317f` changed the fonts. Pages run 38673319641 succeeded, and the live HTML now preloads `fonts/Inter.woff2` and `fonts/PlusJakartaSans.woff2`.
-  - The release commit with the copy, documentation and repository changes. The deploy run and live checks are recorded in the "Deployment record" section below.
+  - `6ab74f8` changed the copy, documentation and repository layout. Pages run 38691884324 succeeded at 06:21Z.
 - Live route probes return 200 for `/`, `/feed`, `/questions`, `/projects`, `/auth/callback`, `/account/recovery`, `/manifest.webmanifest`, `/sw.js` and `/fonts/Inter.woff2`. Unknown detail routes (`/post/<id>`) return HTTP 404 with the SPA fallback page, which then renders the app. That is a documented GitHub Pages limitation.
+
+### Deployment record (live, after `6ab74f8`)
+
+- The page title reads "Open biomedical engineering community (preview)".
+- The status line reads "Open preview · GitHub sign-in to participate · qualifications not verified". The `/policies` page shows the new preview eligibility text.
+- Body text renders in Inter and headings in Plus Jakarta Sans, with the fonts loaded from `/biocircuit/fonts/`.
+- 0 console errors.
+- At 375 px wide there is no horizontal scroll and the bottom navigation is intact.
 
 ## Membership policy (launch gate)
 
