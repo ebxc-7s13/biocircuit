@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-15T06:09:28.382Z",
+  "projectRef": "ibxubsegrabpspopdgep",
+  "trigger": {
+    "anon_exec": false,
+    "auth_exec": false,
+    "enabled": true,
+    "fn": "approve_github_identity",
+    "github_only": true,
+    "security_definer": true
+  },
+  "approved_profiles": 0,
+  "auto_approvals": 0,
+  "github_identities": 0
+}

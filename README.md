@@ -1,70 +1,85 @@
 # BioCircuit
 
-The current visual system uses graphite/cobalt themes, self-hosted typography, glass navigation, a pausable spectral field and accessible project previews. See [the visual art-direction report](docs/VISUAL_ART_DIRECTION_REPORT.md) and [refinement checklist](docs/VISUAL_REFINEMENT_CHECKLIST.md) for current screenshots and verification.
+**Live preview:** https://ebxc-7s13.github.io/biocircuit/
 
-BioCircuit is a social community for biomedical engineers: technical questions, accepted answers, project evidence trails, collaboration requests, and attributed scholarly discovery. The existing React/TypeScript/Vite project has been extended in place. Read [the canonical specification](MASTER_IMPLEMENTATION_PROMPT.md), [implementation status](docs/IMPLEMENTATION_STATUS.md) and [build report](docs/BUILD_REPORT.md) for the exact scope and verification limits. The [social redesign specification](BIOCIRCUIT_SOCIAL_REDESIGN_SPEC.md) supersedes the old horizontal-canvas layout. See the [redesign report](docs/REDESIGN_REPORT.md) for current UI evidence.
+BioCircuit is a community for biomedical engineering research. People post research updates, questions with accepted answers, project evidence logs and collaboration requests, and look up attributed papers. It runs as a static React app on GitHub Pages, with a Supabase backend (Postgres with row-level security, Auth, Edge Functions). It can be installed as a PWA.
 
-## Run the isolated demo
+## Who can take part (public preview policy)
 
-Prerequisites: Node.js 22.12 or later and npm. The tested machine used Node 22.23.2. Dependencies are pinned in package-lock.json.
+- **Anyone can browse.**
+- **Anyone who signs in with GitHub can participate**: posting, replying, reacting, bookmarking and creating projects. Membership is approved automatically by a database trigger when Supabase Auth creates a GitHub identity.
+- **Academic qualifications are not verified.** A GitHub account proves only that a GitHub account exists. Membership in this preview is not a credential, and the site says so.
+- The rule never overrides rejected applications, open appeals or suspensions. Clients cannot call it.
+- Email accounts can sign in, browse and edit their own profile. They join by using **Continue with GitHub** with the same email.
+- Phone (SMS) verification is not configured, because paid SMS is out of scope. The academic review flow still exists for staff-reviewed applications.
 
-~~~sh
+To return to review-only membership, drop the trigger `auth_github_participation` (see `supabase/migrations/20261014000200_github_participation.sql`).
+
+## Features
+
+- Feed, questions, projects/collaborations, journal club, explore, saved items, notifications, profiles and settings
+- Trust and moderation console (reports, appeals, academic review queue) for staff roles
+- Scholarly search through an Edge Function (Crossref/PubMed); results depend on provider availability
+- Email sign-in with password recovery, GitHub OAuth, account export and deletion
+- Light and dark themes, a responsive mobile layout, keyboard and screen-reader support, and offline caching of the app shell
+
+## Run locally
+
+Requires Node.js 22.12+ (tested 22.23.2) and npm. On Windows PowerShell, use `npm.cmd` if script execution is disabled.
+
+```sh
 npm ci
-# Copy .env.example to .env.local and leave VITE_APP_MODE=demo
+cp .env.example .env.local   # leave VITE_APP_MODE=demo for synthetic local data
 npm run dev
-~~~
+```
 
-On PowerShell with script execution disabled, use npm.cmd. Open the localhost URL printed by Vite. Development defaults to a clearly labelled synthetic demo when VITE_APP_MODE is absent. Production defaults to connected mode and shows setup errors if its public configuration is absent; backend errors never fall back to synthetic data.
+Demo mode uses synthetic data stored in the browser. It never contacts a backend or verifies identity. Connected mode needs `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`, which are public values. Never put a secret in a `VITE_` variable. See [docs/SETUP.md](docs/SETUP.md) and [docs/CLOUD_SETUP.md](docs/CLOUD_SETUP.md).
 
-Demo data uses biocircuit-demo-v2 in browser localStorage. Reset it in Settings. It never sends SMS, verifies identity or contains invented live paper records. Original prototype storage keys are retained untouched; original App/styles/README/vision are archived in docs/baseline. Do not enter real sensitive data into demo mode.
+## Checks
 
-## Connect a real development environment
-
-Use a new isolated Supabase staging project, never live user data. Start with the [Docker-free cloud workflow](docs/CLOUD_SETUP.md) and [acceptance checklist](docs/CLOUD_ACCEPTANCE_CHECKLIST.md). The installed CLI supports migration dry-runs, API-based Edge deployment and hosted catalog queries. Complete [SETUP.md](docs/SETUP.md) for the provider and processor contracts. Keep the frontend local; change VITE_APP_MODE to connected only after the exact staging target and public configuration are ready.
-
-Phone verification and academic approval are different states. A newly authenticated user may submit a private application; only a server-approved, active member can contribute. Combined degree pathways require human review. No grade threshold or institutional integration is fabricated.
-
-## Commands
-
-~~~sh
-npm run dev
+```sh
 npm run lint
-npm run typecheck
-npm test
-npm run test:db
-npm run typecheck:edge
-npm run test:edge
-npm exec playwright -- install chromium
-npm run test:e2e
-npm run build
-npm run check:bundle
-npm audit
-npm run evaluate:ranking
-npm run test:production
 npm run format:check
-npm run preview
-~~~
+npm run typecheck
+npm test                 # unit/component (Vitest)
+npm run test:db          # migrations, RLS and authorization (PGlite; Auth/Storage stubbed)
+npm run test:edge        # Edge Function tests (Deno 2)
+npm run typecheck:edge
+npm run test:e2e         # Playwright journeys and axe accessibility scans (demo mode)
+npm run build
+npm audit
+node scripts/check-github-oauth.mjs   # read-only GitHub provider check against staging
+```
 
-Deno 2 is required for Edge checks (tested 2.9.6). Supabase CLI 2.120.0 is pinned as a development dependency. Hosted staging and PostgreSQL/PGlite checks need no Docker. Containers are required only for the optional native local Supabase stack. PGlite tests use explicitly stubbed Auth/Storage services and do not substitute for live Supabase/SMS tests. See [release readiness](docs/RELEASE_READINESS.md) for the current evidence scope.
+## Deployment
+
+Pushes to `main` run [.github/workflows/pages.yml](.github/workflows/pages.yml): `npm ci`, unit tests, a build with `BASE_PATH=/biocircuit/` and `STATIC_HOST=github-pages`, then a GitHub Pages deploy. The build injects the reviewed Content Security Policy as a meta tag and writes per-route HTML copies, so deep links return HTTP 200. Database migrations and Edge Functions deploy separately with the Supabase CLI. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ## Architecture
 
-- src/Workbench.tsx: URL/history-aware social shell, fixed desktop sidebar, native vertical feed, contextual search/top bar, useful right rail and mobile bottom navigation; keyboard/focus, theme and restrained background.
-- src/components/: responsive social navigation, avatars, accessible dialogs and attributed paper metadata cards.
-- src/features/: Explore/search, saved posts/papers, feed, publishing, threads, projects, profiles, eligibility, journal, account, private avatar controls and trust console.
-- src/domain/: entity types, Zod validation, search matching and explainable ranking.
-- src/data/: separate synthetic/connected adapters, bounded queries and mutation orchestration.
-- supabase/migrations/: relational integrity, RLS, privileged transactions, private scholarly cache, abuse budgets, contribution ledger, moderation appeals and private avatar/project image metadata and storage cleanup tombstones.
-- supabase/functions/: authenticated scholarly search (Crossref/PubMed), account deletion and private avatar uploads and project images.
-- scripts/avatar-processor.mjs: first-party Node/Sharp image decoding and re-encoding, separate from the frontend bundle.
-- tests/: unit/component, database authorization, browser journeys and automated accessibility scans.
+- `src/Workbench.tsx`: app shell, routing, navigation and theme
+- `src/features/`: feed, threads, projects, profiles, account, auth, recovery, OAuth callback, trust console
+- `src/domain/`: types, Zod validation, ranking, OAuth/recovery URL handling, base-path helpers
+- `src/data/`: separate demo and connected adapters
+- `supabase/migrations/`: ordered schema, RLS, privileged RPCs and triggers (do not rename or reorder)
+- `supabase/functions/`: scholarly search, account deletion, avatar and project images
+- `tests/`, `supabase/tests/`, `tests/e2e/`: unit, database authorization and browser tests
+- `docs/`: setup, security, operations, release reports and verification evidence; `docs/specs/` holds the original product specifications and work prompts
 
-Only public-safe profile fields are exposed. Phone numbers live in managed Auth; optional marks live in private academic applications. Direct client table writes and direct storage uploads are denied. Operations use authenticated SQL RPCs; role assignment requires a trusted database administrator.
+## Known limitations
 
-## Deployment and current limits
+- **Staging backend.** The site uses a free-tier Supabase staging project, so there is no uptime guarantee and free-tier limits apply.
+- **No SMS.** Phone verification is unavailable.
+- **Email is rate-limited.** Auth email uses Supabase's default sender, roughly 2 messages per hour across the whole project, so password recovery and signup emails can be delayed.
+- **No uploads to a processor.** Image uploads need a first-party image processor that is not hosted, so avatar and project images are unavailable. Document uploads are disabled.
+- **No clickjacking header.** GitHub Pages cannot send HTTP headers, so the `frame-ancestors` protection is absent.
+- **Retention and backups.** Retention jobs and backups follow the free tier; see [docs/OPERATIONS.md](docs/OPERATIONS.md).
+- **Not production ready.** See [docs/RELEASE_READINESS.md](docs/RELEASE_READINESS.md) and [docs/PUBLIC_RELEASE_REPORT.md](docs/PUBLIC_RELEASE_REPORT.md).
 
-Prepare an HTTPS static frontend with SPA fallback and the headers in public/_headers; deploy Supabase functions/database separately. See [OPERATIONS.md](docs/OPERATIONS.md). Nothing has been publicly deployed, purchased, committed or pushed.
+## Security
 
-Real SMS, academic reviewer operations against a deployed service, provider proxies, Storage, deletion and processed avatar uploads still need external configuration and live verification. Project PNG/JPEG images have a private, member-only decoded-image pipeline; it requires the configured first-party processor and deployed function. Academic evidence and PDF/document attachments remain disabled pending a reviewed document validation/scanning pipeline. Email delivery/digests and direct messaging are not enabled. No private material is sent to AI services.
+Report vulnerabilities privately; see [SECURITY.md](SECURITY.md). Controls and tested negative cases are documented in [docs/SECURITY.md](docs/SECURITY.md).
 
-[SECURITY.md](docs/SECURITY.md) documents controls, tested negative cases and remaining release gates. Passing local tests and a zero-advisory dependency scan do not establish production readiness.
+## License
+
+No license file has been added. Public visibility on GitHub does not grant reuse rights beyond GitHub's terms of service. Bundled fonts are under the SIL Open Font License; see `public/fonts/`.

@@ -125,9 +125,9 @@ export default function EmailAuth({
         {mode === 'login' ? 'Welcome back' : 'Create your account'}
       </h3>
       <p className="muted">
-        Sign in with email to browse and manage your own profile. Contributing
-        requires approved academic membership. Email sign-in does not verify
-        your phone.
+        Sign in with email to browse and manage your own profile. During the
+        public preview, contributing requires Continue with GitHub. Email
+        sign-in does not verify your phone.
       </p>
       <form noValidate onSubmit={(e) => void submit(e)} aria-busy={busy}>
         <label htmlFor={id + '-email'}>Email address</label>

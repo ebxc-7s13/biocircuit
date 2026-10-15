@@ -1,6 +1,6 @@
 # Visual refinement checklist
 
-Authority: [BIOCIRCUIT_VISUAL_ART_DIRECTION_PROMPT.md](../BIOCIRCUIT_VISUAL_ART_DIRECTION_PROMPT.md), created from the user's complete authorized requirements and read before source edits.
+Authority: [BIOCIRCUIT_VISUAL_ART_DIRECTION_PROMPT.md](specs/BIOCIRCUIT_VISUAL_ART_DIRECTION_PROMPT.md), created from the user's complete authorized requirements and read before source edits.
 
 | Requirement | Status | Actual evidence |
 | --- | --- | --- |

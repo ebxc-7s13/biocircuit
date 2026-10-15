@@ -303,7 +303,7 @@ function Workbench() {
               {isDemo
                 ? 'DEMO · synthetic research and local persistence · no SMS or academic verification'
                 : configured
-                  ? 'Connected backend · membership review required'
+                  ? 'Open preview · GitHub sign-in to participate · qualifications not verified'
                   : 'SETUP REQUIRED · production backend is not configured'}
               {offline ? ' · Offline' : ''}
             </div>
@@ -474,13 +474,13 @@ function Landing({ onJoin }: { onJoin: () => void }) {
         engineering, medical devices, computational biology and AI, clinical
         engineering, and regulatory translation.
       </p>
-      <h2>Eligibility is a process, not a badge.</h2>
+      <h2>An open preview community.</h2>
       <p>
-        For biomedical engineering undergraduate, postgraduate and doctoral
-        pathways, including current students and result-awaiting applicants.
-        Ambiguous and combined programs receive manual review. Phone access and
-        academic eligibility are separate. Marks are optional and private; no
-        grade threshold or institutional endorsement.
+        Built for biomedical engineering students, graduates and researchers,
+        but open during this preview: anyone who signs in with GitHub can post,
+        reply and collaborate. Academic qualifications are not verified, so a
+        member badge is not a credential. Marks are optional and private; no
+        institutional endorsement.
       </p>
       <Link to="/policies">
         Read privacy, eligibility and community standards before joining →

@@ -175,9 +175,7 @@ test('Auth distinguishes demo phone status and review status, with accessible mo
   await page
     .getByRole('button', { name: 'Demo researcher', exact: true })
     .click()
-  await expect(
-    page.getByText('Identity check', { exact: true }),
-  ).toBeVisible()
+  await expect(page.getByText('Identity check', { exact: true })).toBeVisible()
   await expect(
     page.getByText('Not verified · demo', { exact: false }),
   ).toBeVisible()

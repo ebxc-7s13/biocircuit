@@ -336,8 +336,8 @@ export default function Account({
       <>
         <h1>Your workspace</h1>
         <p>
-          Sign in from the account control to create a profile and submit
-          academic details. Pending applicants have no member access.
+          Sign in from the account control to create a profile. During the
+          public preview, Continue with GitHub grants member access.
         </p>
       </>
     )
@@ -880,6 +880,13 @@ function Policies() {
         clinical care system or certified compliance service.
       </p>
       <h2>Eligibility</h2>
+      <p>
+        Public preview: signing in with GitHub approves membership
+        automatically, without academic review, so membership does not prove any
+        qualification. Rejected, appealed and suspended accounts are never
+        changed by this rule. The review process below remains for accounts that
+        apply without GitHub.
+      </p>
       <p>
         Biomedical engineering undergraduate, postgraduate and doctoral degree
         pathways, current students and result-awaiting applicants are eligible

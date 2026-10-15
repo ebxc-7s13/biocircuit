@@ -4,4 +4,4 @@ playwright-report
 test-results
 docs/baseline
 package-lock.json
-MASTER_IMPLEMENTATION_PROMPT.md
+docs/specs/MASTER_IMPLEMENTATION_PROMPT.md

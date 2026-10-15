@@ -349,11 +349,10 @@ export default function Auth({
         </>
       )}
       <p className="muted">
-        Only biomedical engineering degree pathways are eligible. Combined or
-        ambiguous degrees receive manual review. Exact grades are optional,
-        private and never used for ranking. Credential document upload is
-        disabled pending reviewed document validation/scanning and private
-        reviewer access.
+        Public preview: GitHub sign-in confirms a GitHub account, not a degree.
+        Academic qualifications are not verified, so membership is not a
+        credential. Academic details you submit are optional, private and never
+        used for ranking. Credential document upload is disabled.
       </p>
     </Dialog>
   )

@@ -1,7 +1,6 @@
 @import './fonts.css';
 :root {
-  font-family:
-    'Inter', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -206,11 +205,8 @@ small {
 .eyebrow,
 .figure-label {
   font-weight: 600;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.figure-label {
   color: var(--brand);
+  line-height: 1.6;
 }
 .mono {
   font-family: var(--mono);
@@ -879,10 +875,6 @@ nav[aria-label='Research destinations'] a.active:before {
   right: 0;
   border-radius: 3px;
   background: var(--brand);
-}
-.filter-line .muted {
-  font-size: 11px;
-  margin: 0;
 }
 .filter-toggle {
   display: inline-flex;
@@ -2563,7 +2555,6 @@ kbd {
 
 /* Editorial art direction: reading surfaces stay calm; glass belongs to navigation. */
 h1 {
-  font-family: var(--display);
   font-size: 44px;
   font-weight: 600;
   line-height: 1.08;
@@ -2648,7 +2639,6 @@ nav[aria-label='Research destinations'] a.active:before {
   border: 1px solid var(--border);
 }
 .journal-invite h2 {
-  font-family: var(--display);
   font-size: 31px;
   line-height: 1.1;
   font-weight: 600;
@@ -2672,7 +2662,6 @@ dialog::backdrop {
   backdrop-filter: blur(6px);
 }
 .dialog-head h2 {
-  font-family: var(--display);
   font-size: 30px;
 }
 .notification.unread {
@@ -2688,7 +2677,6 @@ dialog::backdrop {
   border-radius: 10px;
 }
 .project-grid h2 {
-  font-family: var(--display);
   font-size: 31px;
   line-height: 1.12;
   font-weight: 600;

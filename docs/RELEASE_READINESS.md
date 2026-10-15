@@ -1,3 +1,16 @@
+# Release readiness — 2026-10-15 public preview
+
+**Public preview live; NOT PRODUCTION READY.** https://ebxc-7s13.github.io/biocircuit/ is public. Anyone who signs in with GitHub can participate, and academic qualifications are **not** verified. The site copy now says so. Details: [PUBLIC_RELEASE_REPORT.md](PUBLIC_RELEASE_REPORT.md), [checklist](PUBLIC_RELEASE_CHECKLIST.md), [audit](PUBLIC_RELEASE_AUDIT.md).
+
+| Gate | Status |
+| --- | --- |
+| Membership disclosure matches the live trigger | COMPLETE AND VERIFIED |
+| GitHub provider and authorize redirect | COMPLETE AND VERIFIED |
+| Completed real GitHub sign-in → approved member | BLOCKED BY EXTERNAL CONFIGURATION (needs the owner's GitHub login) |
+| Local suite (lint, format, types, 103 unit, 133 DB, 10 Edge, 47 e2e, build, bundle, audit 0) | COMPLETE AND VERIFIED (2026-10-15) |
+| SMS, image processor, full restore, frame-ancestors on Pages | BLOCKED / NOT APPLICABLE (unchanged) |
+
+---
 # Acceptance checkpoint — 2026-10-14 final autonomous run
 
 > **Final update 09:22Z, 2026-10-14 — password recovery COMPLETE AND LIVE-VERIFIED:** account A's real reset via the delivered link passed 11/11 ([evidence](verification/cloud/delivered-recovery-2026-10-14T09-21-23-999Z.json)). The new password works, the old password is rejected, phone/membership/suspension/roles are unchanged, and link reuse is refused. Release decision unchanged: **NOT PRODUCTION READY** (phone verification, member/staff positives, populated protected records, image processor, full restore, manual a11y/load and authorized deployment remain).

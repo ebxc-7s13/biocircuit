@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 
-// User-confirmed reference from BIOCIRCUIT_STAGING_EXECUTION_PROMPT.md.
+// User-confirmed reference from docs/specs/BIOCIRCUIT_STAGING_EXECUTION_PROMPT.md.
 // These anonymous requests cannot establish the actual project name, RLS or deployment.
 const projectRef = 'ibxubsegrabpspopdgep'
 const endpoint = `https://${projectRef}.supabase.co`
