@@ -1,14 +1,21 @@
 @font-face {
-  font-family: 'Barlow Condensed';
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/BarlowCondensed.woff2') format('woff2');
+  src: url('/fonts/Inter.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'Plus Jakarta Sans';
   font-style: normal;
-  font-weight: 300 700;
+  font-weight: 200 800;
   font-display: swap;
-  src: url('/fonts/SpaceGrotesk.woff2') format('woff2');
+  src: url('/fonts/PlusJakartaSans.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('/fonts/JetBrainsMono.woff2') format('woff2');
 }

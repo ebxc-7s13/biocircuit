@@ -1,10 +1,9 @@
 # Self-hosted fonts
 
-Downloaded 2026-10-10 from their authors' repositories:
+Downloaded 2026-10-15 from npm Fontsource variable packages (5.3.0), Latin subset, unmodified:
 
-- SpaceGrotesk.woff2 (49,256 bytes), variable weights 300–700: https://github.com/floriankarsten/space-grotesk/tree/master/fonts/woff2
-- BarlowCondensed.woff2 (60,508 bytes), semibold: https://github.com/jpt/barlow/tree/main/fonts/woff2
+- Inter.woff2 — body and UI text, weights 100–900 (@fontsource-variable/inter)
+- PlusJakartaSans.woff2 — headings and display, weights 200–800 (@fontsource-variable/plus-jakarta-sans)
+- JetBrainsMono.woff2 — labels and code, weights 100–800 (@fontsource-variable/jetbrains-mono)
 
-SIL Open Font License files are included from Google Fonts' corresponding ofl directories / upstream. Files are unmodified and served only from the application origin. Full font files consolidate the initial subset experiment and avoid multiple styles/downloads for extended names. Total font transfer is 109,764 bytes before HTTP compression, reported separately from JavaScript/CSS budgets.
-
-Space Grotesk follows BYLD's readable body family. Barlow Condensed is a deliberately different licensed display family, not BYLD's Ticketing or Microgramma D. Other scripts fall back to the system font stack.
+All are SIL Open Font License 1.1 (license files alongside). Served only from the application origin, so the CSP needs no third-party font host. Other scripts fall back to the system font stack.

@@ -1,7 +1,7 @@
 @import './fonts.css';
 :root {
   font-family:
-    'Space Grotesk', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    'Inter', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +33,7 @@
   --line: var(--border);
   --accent: var(--brand);
   --accent-light: var(--surface-soft);
-  --mono: ui-monospace, 'Cascadia Code', monospace;
+  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
   --radius-sm: 9px;
   --radius: 16px;
   --shadow: 0 8px 24px #2036660a;
@@ -50,7 +50,7 @@
   --z-toast: 30;
   --z-skip: 50;
   --transition: 160ms ease;
-  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --display: 'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif;
   --electric: #0000ff;
   --primary-fill: #315bff;
   --glass: #f9fbffcc;
@@ -168,7 +168,7 @@ summary:focus-visible,
 h1,
 h2,
 h3 {
-  font-family: inherit;
+  font-family: var(--display);
   color: var(--ink);
   text-wrap: pretty;
   letter-spacing: -0.025em;

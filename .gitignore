@@ -21,3 +21,4 @@ secrets/
 credentials/
 *.pem
 *.key
+.claude/

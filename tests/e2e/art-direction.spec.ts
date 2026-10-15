@@ -18,8 +18,8 @@ test('dark first visit, self-hosted typography, glass and persistent motion cont
   expect(
     await page.evaluate(
       () =>
-        document.fonts.check('600 30px "Barlow Condensed"') &&
-        document.fonts.check('400 15px "Space Grotesk"'),
+        document.fonts.check('700 30px "Plus Jakarta Sans"') &&
+        document.fonts.check('400 15px "Inter"'),
     ),
   ).toBe(true)
   await page.mouse.move(500, 300)
